@@ -1,0 +1,54 @@
+<div class="container">
+        <div class="header clearfix">
+       
+<nav>
+    <ul class="nav nav-pills float-right">    
+    	<li class="nav-item">
+            <a class="nav-link" href="/users/loginhistory">Login History</a>
+     	</li>                       
+     	<li class="nav-item">
+            <a class="nav-link" href="/users/logs">Behavioral Logs</a>
+        </li>
+    </ul>
+</nav>
+</div>
+</div>
+<br><br>
+<head><b> Behavioral logs of {{user.username}}</b> </head>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+<table style="width:100%">
+    <tr>
+        <th>Upvote/Downvote</th>
+        <th>Commented/shared on</th>
+        <th>Text Clicked</th>
+        <th>Asked question on</th>
+        <th>Question clicked</th>
+    </tr>
+
+    <tr>
+        <th>
+            <ul>
+                {{#each user.log1}}
+                <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </th>
+        <th> {{#each user.log2}}
+                <li>{{this}}</li>
+                {{/each}}</th>
+        <th> {{#each user.log3}}
+                <li>{{this}}</li>
+                {{/each}}</th>
+        <th> {{#each user.log4}}
+                <li>{{this}}</li>
+                {{/each}}</th>
+        <th> {{#each user.log5}}
+                <li>{{this}}</li>
+                {{/each}}</th>
+    </tr>
+</table>
+
