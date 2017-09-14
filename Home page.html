@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style type="text/css">
+		.logo{
+		margin-bottom: 0px;
+		}
+		
+	</style>
+</head>
+<body>
+
+
+<div class="jumbotron logo">
+	<div class="container">
+	  <h1>WELCOME TO SSGROUP10 BANK</h1>
+	</div>	
+</div>
+
+<nav class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-header">
+			<a href="#" class="navbar-brand">Home</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a href="#">About</a></li>
+			<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Accounts<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Saving account</a></li>
+	            <li><a href="#">Checking account</a></li>
+	            <li><a href="#">Credit card</a></li>
+	          </ul>
+        	</li>
+
+        	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Deposit</a></li>
+	            <li><a href="#">Withdraw</a></li>
+	          </ul>
+        	</li>
+
+        	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pay & Transfer<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Between accounts</a></li>
+	            <li><a href="#">Send to others</a></li>
+	          </ul>
+        	</li>
+		</ul>
+
+
+		<ul class="nav navbar-nav navbar-right">
+			<button type="button" class="btn btn-default navbar-btn"><a href="http://harshaweb.ml/users/register">Sign Up</a></button>
+			<button type="button" class="btn btn-default navbar-btn"><a href="http://harshaweb.ml/users/login">Login</a></button>
+		</ul>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="jumbotron">
+			  <h2>Saving Account Balance</h2>
+			  <p><a class="btn btn-primary btn-sm" href="#" role="button">View Details</a></p>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="jumbotron">
+			  <h2>Checking Account Balance</h2>
+			  <p><a class="btn btn-primary btn-sm" href="#" role="button">View Details</a></p>
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="jumbotron">
+			  <h2>Credit Card Balance</h2>
+			  <p><a class="btn btn-primary btn-sm" href="#" role="button">View Details</a></p>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="jumbotron">
+			  <h2>Minimum Payment Due</h2>
+			  <p><a class="btn btn-primary btn-sm" href="#" role="button">View Details</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
