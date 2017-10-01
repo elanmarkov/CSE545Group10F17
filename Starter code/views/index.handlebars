@@ -1,0 +1,31 @@
+ <head class="page-header"><a target="_blank" href="https://stackoverflow.com/questions/tagged/java?sort=frequent&pageSize=15">Click here to get to stackOverflow page</a></head>
+ 
+<nav>
+    <ul class="nav nav-pills float-right">        
+        <li class="nav-item">
+            <a class="nav-link" href="/users/loginhistory">Login History </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/users/logs">Behavioral Logs</a>
+        </li>
+    </ul>
+</nav>
+<br><br>
+
+
+<p><b>DashBoard of : {{user.username}}</b></p>
+<p> All the events below are tracked with their respective time stamps.</p>
+ <ol>
+    <li><b>Upvote/downvote</b> : Tracking upvotes/downvotes for an answer to a question. Tells us whether the solution, user is seeking for help solved his problem or not. If not can recommend similar questions.</li>
+    <li><b>Initiated Share/comments :</b> Tracks the intitated shares/comments for an answer to question. Can help in estimating the activity of the user and interested specific topics with respect to time. </li>
+    <li><b>Text Clicked: </b>Tracks the text, user is clicking. Indicates the topics user is interestd in reading or questioning or answering.</li>
+    <li><b>Asked a question: </b>Tracks the time the user is asking a question. Can deduce the daily schedule/routine of the users activity. </li>  
+    <li><b>Question viewing:</b> Tracks the questions the user is searching for answers. Will help knowing the user's weaker areas, so that similar discussions can be recommended to the user.</li>
+</ol>
+<b>Login History</b>
+<ol>
+	{{#each user.history}}
+		<li>{{this}}</li>
+	{{/each}}
+</ul>
