@@ -12,11 +12,12 @@ public class DataHash {
 		}
 	}
 	public static String hash(String password, byte[] salt) {
-		// hash the message and return the hash value
+		// hash the message with appended salt and return the hash value
 		String hashVal = "";
 		return hashVal;
 	}
 	public byte[] getNewSalt() {
+		// Make a new salt to be stored for the user.
 		return null;
 	}
 }
