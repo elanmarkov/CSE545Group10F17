@@ -1,15 +1,19 @@
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
 public class DataMaskUnmask {
 	public DataMaskUnmask() {
 		
 	}
-	// Different masking based on the type of input.
-	// Int structure given below, there will be similar function for any other
-	// input structure.
-	public int mask(int valToMask) {
-		return valToMask + 1;
+	// AES Encryption with OFB mode will be used for masking and unmasking.
+	// Key managed elsewhere; this will only deal with encrypt/decrypt
+	// Accepts byte array input; the caller will deal with casting.
+	public byte[] mask(byte[] valToMask, byte[] key) {
+		return null;
 	}
-	public int unMask(int valToUnmask) {
-		return valToUnmask - 1;
+	public byte[] unMask(byte[] valToUnmask, byte key[]) {
+		return null;
 	}
 }
