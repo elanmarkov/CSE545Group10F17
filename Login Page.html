@@ -26,8 +26,7 @@
 		}
 	</style>
 
-	<!-- <script>  
-
+	<script>  
     $(document).ready(function(){
     $('#submit').click(function(){
     var userEmail=$('#userEmail').val();  
@@ -42,7 +41,18 @@
     
     });
   	});
-  	</script>-->
+  	</script>
+
+  	<script>
+		window.onload = function() {
+		  var recaptcha = document.forms["myForm"]["g-recaptcha-response"];
+		  recaptcha.required = true;
+		  recaptcha.oninvalid = function(e) {
+		    // do something
+		    alert("Please complete the captcha");
+		  }
+		}	
+	</script>
 
 
 </head>
@@ -51,7 +61,7 @@
 
 <div class="jumbotron logo">
 	<div class="container">
-	  <h1 id="title">WELCOME TO SSGROUP10 BANK</h1>
+	  <h2 id="title">WELCOME TO GROUP10 BANK</h2>
 	</div>	
 </div>
 
@@ -62,12 +72,12 @@
 
 <div class="container" id="loginBox">
 	<div class="row">
-		<div class="col-lg-4">
+		<div class="col-lg-6">
 			<div class="jumbotron">
-			  <form>
+			  <form name="myForm">
 				  <div class="form-group">
-				    <label for="userName">User Name</label>
-				    <input type="email" class="form-control" id="userEmail" placeholder="User Email" required>
+				    <label for="userName">Username</label>
+				    <input type="email" class="form-control" id="userEmail" placeholder="Username" required>
 				  </div>
 
 				  <div class="form-group">
@@ -75,14 +85,21 @@
 			    	<input type="password" class="form-control" id="userPassword" placeholder="Password" required>
 			  	  </div>
 
+			  	  <div>
+			  	  		<div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
+			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true">
+
+			  	  		<br>
+			  	  		<br>
 				  <button type="submit" class="btn btn-default" id="submit">Login</button>
 			  </form>
+
 			</div>
 		</div>
 	</div>
 </div>
 
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
