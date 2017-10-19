@@ -3,8 +3,7 @@ package com.group10.dbmodels;
 import java.math.BigInteger;
 import java.sql.Date;
 
-public class CrediCard {
-	private int id;
+public class CreditCard {
 	private float interest;
 	private String cc_number;
 	private int credit_limit;
@@ -16,12 +15,6 @@ public class CrediCard {
 	private BigInteger last_bill_amount;
 	private float apr;
 	private BigInteger payment;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public float getInterest() {
 		return interest;
 	}
@@ -88,4 +81,6 @@ public class CrediCard {
 	public void setPayment(BigInteger payment) {
 		this.payment = payment;
 	}
+
+
 }
