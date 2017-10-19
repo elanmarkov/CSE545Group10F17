@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Funds Transfer between accounts</title>
+	<title>Funds Transfer - Send to Others</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -83,18 +83,25 @@
 			<div class="jumbotron">
 
 				<div>
-					<h4><strong>Funds Transfer - Within Account</strong></h4>
+					<h4><strong>Funds Transfer - Send to Others</strong></h4>
 				</div>
 
 				<form>
+
 					<div class="form-group">
-						<label>Please select the account you would like to transfer to</label>
+						<label>Please select the mode you would like to use</label>
 							<select class="form-control">
-							  <option>--please select the account transfer to--</option>
-							  <option>Saving Account</option>
-							  <option>Checking Account</option>
+							  <option>--please select transfer mode--</option>
+							  <option>Payee Email</option>
+							  <option>Payee Phone</option>
+							  <option>Payee Account Number</option>
 							</select>
 					</div>
+
+					<div class="form-group">
+					    <label>Please Enter Payee's Info</label>
+					    <input type="text" class="form-control" placeholder="Payee's Email/Phone/Account Number" required>
+				  	</div>
 
 					<div class="form-group">
 						<label>Please select the account you would like to transfer from</label>
