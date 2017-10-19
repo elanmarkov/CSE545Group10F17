@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import com.group10.dbmodels.CheckingAccount;
 import com.group10.dbmodels.CreditCard;
+import com.group10.dbmodels.SavingsAccount;
 import com.group10.dbmodels.Transaction;
 
 public class CustomerDashboardDaoImpl extends JdbcDaoSupport {
@@ -15,14 +17,14 @@ public class CustomerDashboardDaoImpl extends JdbcDaoSupport {
 		return this.getJdbcTemplate().query(query, new BeanPropertyRowMapper<Transaction>(Transaction.class));
 	}
 	
-	public int savingsAccountDetails(int userId){
+	public SavingsAccount savingsAccountDetails(int userId){
 		String query = "select * from savings_account where user_id=" + userId;
-		return this.getJdbcTemplate().queryForObject(query, Integer.class);	
+		return this.getJdbcTemplate().queryForObject(query, SavingsAccount.class);	
 	}
 
-	public int checkingAccountDetails(int userId){
+	public CheckingAccount checkingAccountDetails(int userId){
 		String query = "select * from checking_account where user_id=" + userId;
-		return this.getJdbcTemplate().queryForObject(query, Integer.class);			
+		return this.getJdbcTemplate().queryForObject(query, CheckingAccount.class);			
 	}
 
 	public CreditCard ccAccountDetails(int userId){
