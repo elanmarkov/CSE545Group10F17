@@ -26,21 +26,18 @@
 		}
 	</style>
 
-	<script>  
-    $(document).ready(function(){
-    $('#submit').click(function(){
-    var userEmail=$('#userEmail').val();  
+	<script language="JavaScript" type="text/javascript"> 
+    function checkEmail(){
+    console.log("called");
+    var userEmail = $('#userEmail').val();  
+    console.log(userEmail);
     var filter = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if(!filter.test(userEmail))
-    {
-      $("#userEmail").focus();
-
-      // $("#errorBox").html("Please Enter a Valid Email Address");
-      return false;
-    }
-    
-    });
-  	});
+            if(!filter.test(userEmail))
+            {
+                $("#errorBox").html("Please Enter a Valid Email Address");
+                return false;
+            }
+  	};
   	</script>
 
   	<script>
@@ -48,7 +45,6 @@
 		  var recaptcha = document.forms["myForm"]["g-recaptcha-response"];
 		  recaptcha.required = true;
 		  recaptcha.oninvalid = function(e) {
-		    // do something
 		    alert("Please complete the captcha");
 		  }
 		}	
@@ -65,16 +61,11 @@
 	</div>	
 </div>
 
-<div class="alert alert-warning hidden" id="errorBox">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    <strong>Warning!</strong> Please Enter a Valid Email Address.
-</div>
-
 <div class="container" id="loginBox">
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-			  <form name="myForm">
+			  <form name="myForm" action="Login" >
 				  <div class="form-group">
 				    <label for="userName">Username</label>
 				    <input type="email" class="form-control" id="userEmail" placeholder="Username" required>
@@ -90,7 +81,8 @@
 			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true">
 
 			  	  		<br>
-				  <button type="submit" class="btn btn-default" id="submit">Login</button>
+			  	  		<div id = "errorBox" class="form-group"></div>
+				  <button type="submit" class="btn btn-default" onClick ="checkEmail()" id="submit">Login</button>
 			  </form>
 
 			</div>
