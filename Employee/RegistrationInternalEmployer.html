@@ -85,7 +85,7 @@
 				  </div>
 
 				  <div class="form-group">
-				    <label for="pincode">Address</label>
+				    <label for="pincode">Zip Code</label>
 				    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
 				  </div>
 				  
@@ -117,6 +117,68 @@
 	</div>
 </div>
 
+<script language="JavaScript" type="text/javascript">
+
+    function Validate() {
+    	$("#errorBox").html("");
+            var name=$('#name').val();
+            var lastname = $('#lastName').val();
+            var userEmail=$('#email').val();
+            var ssn = $('#ssn').val();
+            var phone = $('#phone').val();
+            var address = $('#address').val();
+            var dateOfBirth = $('#dateOfBirth').val();
+            var filter = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if(!filter.test(userEmail))
+            {
+                $("#email").focus();
+                $("#errorBox").html("Please Enter a Valid Email Address");
+                return false;
+            }
+            filter = /^[A-z]+$/;
+
+            if(!filter.test(name))
+            {
+                $("#name").borderColor="red";
+                $("#errorBox").html(" First Name can contain only alphabets");
+                return false;
+            }
+            if(!filter.test(lastname))
+            {
+                $("#lastname").focus();
+                $("#errorBox").html("Last Name can contain only alphabets");
+                return false;
+            }
+            
+            var filter1 =  /^[0-9]+$/;
+            if(!filter1.test(phone))
+            {
+                $("#phone").focus();
+                $("#errorBox").html("Please Enter a Valid phone");
+                return false;
+            }
+             
+            var filterssn =  /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
+            if(!filterssn.test(ssn))
+            {
+                $("#ssn").focus();
+                $("#errorBox").html("Please Enter a Valid SSN");
+                return false;
+            }
+
+			var filterdob =  /^\d{2}\/\d{2}\/\d{4}$/;
+            if(!filterdob.test(dateOfBirth))
+            {
+                $("#dateOfBirth").focus();
+                $("#errorBox").html("Please Enter a Valid date of birth");
+                return false;
+            }
+
+        ;
+
+    }
+
+</script>
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
