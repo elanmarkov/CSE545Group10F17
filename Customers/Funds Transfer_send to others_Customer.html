@@ -90,36 +90,36 @@
 
 					<div class="form-group">
 						<label>Please select the mode you would like to use</label>
-							<select class="form-control">
-							  <option>--please select transfer mode--</option>
-							  <option>Payee Email</option>
-							  <option>Payee Phone</option>
-							  <option>Payee Account Number</option>
+							<select class="form-control" name="transferMode">
+							  <option value="">--please select transfer mode--</option>
+							  <option value="payeeEmail">Payee Email</option>
+							  <option value="payeePhone">Payee Phone</option>
+							  <option value="payeeAccountNumber">Payee Account Number</option>
 							</select>
 					</div>
 
 					<div class="form-group">
 					    <label>Please Enter Payee's Info</label>
-					    <input type="text" class="form-control" placeholder="Payee's Email/Phone/Account Number" required>
+					    <input type="text" class="form-control" placeholder="Payee's Email/Phone/Account Number" name="payeeInfo" required>
 				  	</div>
 
 					<div class="form-group">
 						<label>Please select the account you would like to transfer from</label>
-							<select class="form-control">
-							  <option>--please select the account transfer from--</option>
-							  <option>Saving Account</option>
-							  <option>Checking Account</option>
+							<select class="form-control" name="transferFrom">
+							  <option value="">--please select the account transfer from--</option>
+							  <option value="savingAccount">Saving Account</option>
+							  <option value="checkingAccount">Checking Account</option>
 							</select>
 					</div>
 
 
 					<div class="form-group">
 						<label>Please specify the amount you would like to transfer</label>
-						<input type="number" class="form-control" placeholder="$">
+						<input type="number" class="form-control" placeholder="$" name="transferAmount">
 					</div>
 
 					<div class="form-group">
-					 <button type="submit" class="btn btn-primary">Transfer</button>
+					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
 					</div>
 				</form>
 			</div>
