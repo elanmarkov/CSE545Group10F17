@@ -36,6 +36,29 @@
 	</div>	
 </div>
 
+<div class="panel-body">
+					<div class="col-lg-7">
+						<form action="/BankingApp/searchLogs" method='POST'>
+		      				<label for="userid" class="col-lg-3 control-label">User ID : </label>
+							<div class="col-lg-9 form-margin">
+		       					<input type="text" class="form-control" name="userid" placeholder="User ID">
+		      				</div>
+		      				<label for="type" class="col-lg-3 control-label">Type : </label>
+		      				<div class="col-lg-9 form-margin">
+     								<select class="form-control" name="type" required>
+     									<option value="">Select Type</option>
+        								<option value="internalEmployee">Employee</option>
+        								<option value="externalCustomer">Customer</option>
+     								</select>
+     							
+		      				<br>
+						    <button type="submit" class="btn btn-primary">Submit</button>
+						    </div>
+						</form>
+					</div>
+				</div>
+			</div>
+
 
 <div class="container" id="loginBox">
 	<div class="row">
@@ -54,7 +77,22 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-
+						<c:when test="${empty logs}">
+                        			<tr>
+                                    	<td colspan="2">No Logs found</td>
+                                	</tr>
+                        		</c:when>
+                        		<c:otherwise>
+                        			<c:forEach items="${log}" var="log">
+										<tr>
+											<td>${log.userid}</td>
+											<td>${log.activity}</td>
+											<td>${log.details}</td>
+											<td>${log.timestamp}</td>
+										</tr>
+									</c:forEach>
+                        		</c:otherwise>
+                        	</c:choose>	
 					    		      
 					    </tbody>
 					  </table>
