@@ -3,7 +3,6 @@
 <head>
 	<title>Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
 	<style type="text/css">
 		.logo{
@@ -18,7 +17,7 @@
 		}
 
 		#loginBox{
-			margin: 5% 5% 25% 18%;
+			margin: 5% 5% 5% 10%;
 		}
 
 		.hidden{
@@ -40,71 +39,59 @@
 
 <div class="container" id="loginBox">
 	<div class="row">
-		<div class="col-lg-10">
-			<div class="jumbotron">
+		<div class="col-lg-12">
+			<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 			<h3><strong>Pending Request Management</strong></h3>
 			  <form>
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
 					        <th>Transaction ID</th>
-					        <th>Customer ID</th>
-					        <th>Receiver</th>
-					        <th>Amount</th>
-					        <th>Type</th>
+					        <th>Sender ID</th>
+					        <th>Receiver ID</th>
+					        <th>Transaction Amount</th>
+					        <th>Transaction Type</th>
 					        <th>Critical</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      <tr>
-					        <td >request.id</td>
-					        <td >customer.id</td>
-					        <td >request.type</td>
-					        <td >request.currentValue</td>
-					        <td >request.requestedValue</td>
-					        <td>
-					        	<select>
-					        		<option>Select Type</option>					        
-					        		<option>Approve</option>
-					        		<option>Reject</option>
-					        	</select>
-					        </td>					        
-					      </tr>
-					      <tr>
-					        <td >request.id</td>
-					        <td >customer.id</td>
-					        <td >request.type</td>
-					        <td >request.currentValue</td>
-					        <td >request.requestedValue</td>
-					        <td>
-					        	<select>
-					        		<option>Select Type</option>					        
-					        		<option>Approve</option>
-					        		<option>Reject</option>
-					        	</select>
-					        </td>					        
-					      </tr>
-					      <tr>
-					        <td >request.id</td>
-					        <td >customer.id</td>
-					        <td >request.type</td>
-					        <td >request.currentValue</td>
-					        <td >request.requestedValue</td>
-					        <td>
-					        	<select>
-					        		<option>Select Type</option>					        
-					        		<option>Approve</option>
-					        		<option>Reject</option>
-					        	</select>
-					        </td>					        
-					      </tr>
 
-					      
+					    	<c:when test="${empty pending_list}">
+                        			<tr>
+                                    	<td colspan="7">No Pending Transaction</td>
+                                	</tr>
+                            </c:when>
+                            <c:otherwise>
+                        			<c:forEach items="${pending_list}" var="transaction">
+                        				<c:choose>
+                        					<tr>
+                                    		<td style="text-align:center">${transaction.id}</td>
+											<td style="text-align:center">${transaction.payer_id}</td>
+											<td style="text-align:center">${transaction.payee_id}</td>
+											<td style="text-align:center">${transaction.amount}</td>
+											<td style="text-align:center">${transaction.transaction_type}</td>
+											<td style="text-align:center">${transaction.critical}</td>
+											<td style="text-align:center">
+												<form action = "" method = "post">
+		                                    
+		                                    		<select id="requestType" name="requestType" required>
+				       									<option value="">Select Type</option>
+				          								<option value="approve">Approve Request</option>
+				          								<option value="reject">Reject Request</option>
+				       								</select>
+		                                    		<button type="submit" class="btn btn-default">Submit</button>
+		                                   		</form>
+											</td>
+                                		</tr>
+                        				</c:when>
+                        				            
+                        				</c:choose>
+                            		</c:forEach>
+                        		</c:otherwise>
+                        	</c:choose>			      
 					    </tbody>
 					  </table>
-
-				  <button type="submit" class="btn btn-default" onclick="location.href='OtpVerify.html';">Submit</button>
 			  </form>
 			</div>
 		</div>

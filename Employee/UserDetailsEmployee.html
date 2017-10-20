@@ -133,7 +133,7 @@
 				    		<div class="form-group">
 				    			<label for="requestType" class="col-lg-3 control-label">Request Type</label>
 			    				<div class="col-lg-9 form-margin">
-       								<select class="form-control" name="requestType" required>
+       								<select class="form-control" name="requestType" id ="modifyaccountDropdown" required>
        									<option value="">Select Type</option>
           								<option value="phone">Phone Change</option>
           								<option value="address">Address Change</option>
@@ -141,12 +141,12 @@
        							</div>
        							<label for="newValue" class="col-lg-3 control-label">Enter</label>
       							<div class="col-lg-9">
-        							<input type="text" class="form-control" name="newValue" placeholder="New Detail" required>
+        							<input type="text" class="form-control" name="newValue" id="newValue" placeholder="New Detail" required>
       							</div>
-       							
+       							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;" id = "errorBox"></div>
        							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;">
 	       							<button style="float:right;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        				<button style="float:right;margin-right:15px;" type="submit" class="btn btn-primary">Submit</button>
+			        				<button style="float:right;margin-right:15px;" type="submit" onclick="Validate()" class="btn btn-primary">Submit</button>
       							</div>
 				    		</div>
 				    	</fieldset>
@@ -197,7 +197,30 @@
 		</div>
 	</div> 
 	
-</main> 
+</main>
+
+<script language="JavaScript" type="text/javascript">
+
+    function Validate() {
+    	$("#errorBox").html("");
+            var phone = $('#newValue').val();
+            var modifyaccount = document.getElementById("modifyaccountDropdown");
+            var selectedValue = modifyaccount.selectedIndex;
+            if(selectedIndex == 1)  {
+            var filter1 =  /^[0-9]+$/;
+            $("#errorBox").html(selectedValue);
+            if(!filter1.test(phone))
+            {
+                $("#newValue").focus();
+                $("#errorBox").html("Please Enter a Valid phone");
+                return false;
+            }
+        }
+        ;
+
+    }
+
+</script> 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
