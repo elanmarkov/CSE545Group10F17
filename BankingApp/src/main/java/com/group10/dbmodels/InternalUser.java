@@ -1,19 +1,20 @@
 package com.group10.dbmodels;
 
 public class InternalUser {
-	private int id;
+	//private int id;
 	private String name;
+	private String email;
+
 	private String designation;
 	private String address;
 	private String city;
 	private String state;
 	private String country;
-	private int pincode;
-	private int phone;
-	private String email;
+	private String pincode;
+	private String phone;
 	private String dob;
 	private String ssn;
-	private String userid;
+	private String username;
 
 
 	public String getEmail() {
@@ -22,12 +23,7 @@ public class InternalUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}
@@ -58,22 +54,17 @@ public class InternalUser {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public int getPincode() {
+	
+	public String getPincode() {
 		return pincode;
 	}
-	public void setPincode(int pincode) {
+	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getDob() {
@@ -88,11 +79,21 @@ public class InternalUser {
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
-	public String getUserid() {
-		return userid;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getCountry() {
+		return country;
+		// TODO Auto-generated method stub
+		
+	}
+	public void setCountry(String country) {
+		this.country =  country;
+		// TODO Auto-generated method stub
+		
 	}
 
 }

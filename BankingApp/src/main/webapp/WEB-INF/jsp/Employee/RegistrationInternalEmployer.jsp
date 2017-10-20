@@ -46,7 +46,7 @@
     				<h3 class="panel-title"><strong>Registration</strong></h3>
  				 </div>
 			<div class="jumbotron">
-			  <form action="/employee/internalreg" method="POST">
+			  <form action="/BankingApp/employee/internalreg" method="POST">
 			  	<fieldset>
 			  		
 				  <div class="form-group">

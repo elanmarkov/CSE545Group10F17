@@ -22,6 +22,7 @@ E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\JdbcSup
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\InternalUser.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\transaction\ExternalTransactionDaoImpl.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\jdbc\test.java
+E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\employee\security\HandlerClass.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\CustomerDashboardController.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\UserDetails.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\Customer.java

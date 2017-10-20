@@ -15,6 +15,7 @@ com\group10\dao\transaction\ExternalTransactionDaoImpl.class
 com\group10\dbmodels\ExternalUser.class
 com\group10\dao\customerDashboard\CustomerDashboardDao.class
 com\group10\dao\transaction\TransactionDaoImpl.class
+com\group10\controllers\employee\security\HandlerClass.class
 com\group10\dao\JdbcSupport.class
 com\group10\controllers\CustomerDashboardController.class
 com\group10\dao\CreditCardGenerator.class

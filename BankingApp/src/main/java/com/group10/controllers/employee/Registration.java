@@ -8,12 +8,15 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.group10.controllers.employee.security.HandlerClass;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
@@ -23,10 +26,23 @@ import com.group10.dbmodels.InternalUser;
 
 @Controller
 public class Registration {
+		
+	@ExceptionHandler(HandlerClass.class)
+    public String handleResourceNotFoundException() {
+        return "redirect:/exception";
+    }
 	
-	@RequestMapping("/Employee/RegistrationInternalEmployer")
-	//public ModelAndView InternalRegister(@ModelAttribute("user1") InternalUser newUser, RedirectAttributes redir){
-		/*
+	@RequestMapping("/employee/RegistrationInternalEmployer")
+	public  ModelAndView InternalRegisterform(){
+		return new ModelAndView("/employee/RegistrationInternalEmployer");
+	}
+	
+	
+	@RequestMapping("/employee/internalreg")
+	public ModelAndView InternalRegister(@ModelAttribute("user") InternalUser newUser, RedirectAttributes redir){
+		try{
+				ModelAndView model = new ModelAndView();
+			
 		String name = newUser.getName();
 		String email = newUser.getEmail();
 		String designation = newUser.getDesignation();
@@ -34,11 +50,11 @@ public class Registration {
 		String city = newUser.getCity();
 		String state = newUser.getState();
 		String country = newUser.getCountry();
-		int pincode = newUser.getPincode();
-		int number = newUser.getPhone();
+		String pincode = newUser.getPincode();
+		String number = newUser.getPhone();
 		String dob = newUser.getDob();
 		String ssn = newUser.getSsn();
-		String username = newUser.getUserid();
+		String username = newUser.getUsername();
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		
 		/*
@@ -90,24 +106,24 @@ public class Registration {
 			logsDao.saveLogs(dblogs, "internal");
 		}
 		
-		ModelAndView model = new ModelAndView();
-		model.addObject(newUser);
+		*/
+		model.addObject("newUser",  newUser);
+			
+			model.setViewName("dashboard");
+			return model;
 		
-		model.setViewName("redirect:/employee/management");
-		return model;
-	*/
-	public ModelAndView InternalRegister(){
-		ModelAndView model = new ModelAndView("dashboard");
-	   // model.addObject("InternalUser", newUser);	
-	    return model;
+		}catch(Exception e){
+			throw new HandlerClass();
+			//System.out.println(e); 
+	
+		}
 	}
 	
 	
 	/*
-	
 
 	@RequestMapping(value = "/employee/externalreg", method =RequestMethod.POST)
-	public ModelAndView InternalRegister(@ModelAttribute("user1") ExternalUser newUser, RedirectAttributes redir){
+	public ModelAndView InternalRegister(@ModelAttribute("user1") ExternalUser newUser){
 		
 		String name = newUser.getName();
 		String email = newUser.getEmail();
@@ -174,5 +190,5 @@ public class Registration {
 		return model;
 	}
 	
-	*/
+*/	
 }
