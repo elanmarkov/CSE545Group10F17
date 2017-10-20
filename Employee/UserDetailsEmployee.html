@@ -128,7 +128,7 @@
 				    <h3 class="panel-title">Edit Account</h3>
 				  </div>
 				  <div class="panel-body">
-				    <form class="form-horizontal" action="addrequest" method="POST">
+				    <form class="form-horizontal" action="/BankingApp/addRequest" method="POST">
 				    	<fieldset>
 				    		<div class="form-group">
 				    			<label for="requestType" class="col-lg-3 control-label">Request Type</label>
@@ -146,7 +146,7 @@
        							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;" id = "errorBox"></div>
        							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;">
 	       							<button style="float:right;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        				<button style="float:right;margin-right:15px;" type="submit" onclick="Validate()" class="btn btn-primary">Submit</button>
+			        				<button style="float:right;margin-right:15px;" type="submit" onclick="return Validate()" class="btn btn-primary">Submit</button>
       							</div>
 				    		</div>
 				    	</fieldset>
@@ -204,11 +204,12 @@
     function Validate() {
     	$("#errorBox").html("");
             var phone = $('#newValue').val();
+            console.log(phone);
             var modifyaccount = document.getElementById("modifyaccountDropdown");
             var selectedValue = modifyaccount.selectedIndex;
-            if(selectedIndex == 1)  {
+            console.log(selectedValue);
+            if(selectedValue == "1")  {
             var filter1 =  /^[0-9]+$/;
-            $("#errorBox").html(selectedValue);
             if(!filter1.test(phone))
             {
                 $("#newValue").focus();
