@@ -30,8 +30,12 @@ public class TransactionController {
 			SavingsAccount savingsAccount = new SavingsAccount();
 			savingsAccount.setAccount_no(12495);
 			
+			CheckingAccount checkingAccount = new CheckingAccount();
+			checkingAccount.setAccount_no(88493);
+			
 			ModelAndView model = new ModelAndView("transaction");
 			model.addObject("savings",savingsAccount);
+			model.addObject("checking", checkingAccount);
 			return model;
 		} catch(Exception e){
 			System.out.println(e);
