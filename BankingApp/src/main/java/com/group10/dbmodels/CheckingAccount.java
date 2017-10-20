@@ -3,7 +3,11 @@ package com.group10.dbmodels;
 import java.math.BigInteger;
 
 public class CheckingAccount {
+	
 	private int user_id;
+	private int account_no;
+	private BigInteger balance;
+	
 	public int getUser_id() {
 		return user_id;
 	}
@@ -22,6 +26,5 @@ public class CheckingAccount {
 	public void setBalance(BigInteger balance) {
 		this.balance = balance;
 	}
-	private int account_no;
-	private BigInteger balance;
+	
 }

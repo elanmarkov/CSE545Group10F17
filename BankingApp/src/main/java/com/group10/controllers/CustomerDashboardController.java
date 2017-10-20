@@ -1,7 +1,9 @@
 package com.group10.controllers;
 
-
+import com.group10.dbmodels.*;
 import java.util.List;
+
+import com.group10.dbmodels.*;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
