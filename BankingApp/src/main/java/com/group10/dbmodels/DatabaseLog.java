@@ -1,12 +1,12 @@
 package com.group10.dbmodels;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
-public class DbLogs {
+public class DatabaseLog {
 	private String activity;
 	private int userid;
 	private String details;
-	private Timestamp timestamp;
+	private Date timestamp;
 	
 	public String getActivity() {
 		return activity;
@@ -26,12 +26,11 @@ public class DbLogs {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	public Timestamp getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
-	
 	
 }

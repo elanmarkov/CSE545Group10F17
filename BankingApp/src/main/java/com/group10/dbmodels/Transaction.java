@@ -71,7 +71,7 @@ public class Transaction {
 	public void setApprover(String approver) {
 		this.approver = approver;
 	}
-	public boolean getCritical() {
+	public boolean isCritical() {
 		return critical;
 	}
 	public void setCritical(boolean critical) {
