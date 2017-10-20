@@ -10,10 +10,12 @@ E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\transac
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\HelloController.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\DbLogs.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\JdbcSupport.java
+E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\CheckingAccount.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\transaction\ExternalTransactionDaoImpl.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\Transaction.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\transaction\TransactionDao.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\customerDashboard\CustomerDashboardDao.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\jdbc\test.java
+E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\CustomerDashboardController.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\Customer.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\JdbcSup.java

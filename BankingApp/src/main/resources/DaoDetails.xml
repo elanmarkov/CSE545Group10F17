@@ -31,4 +31,11 @@
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
 	 
+	 <bean id = "customerDashboardDaoImpl" class="com.group10.dao.customerDashboard.CustomerDashboardDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	  <bean id = "userRegistrationDaoImpl" class="com.group10.dao.employee.UserRegistrationDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 
 </beans>
