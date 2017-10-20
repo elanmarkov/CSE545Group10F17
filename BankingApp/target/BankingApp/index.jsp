@@ -4,7 +4,7 @@
 
 <%= java.util.Calendar.getInstance().getTime() %>
 
-<a href="hello">click here</a>
+<a href="/Employee/RegistrationInternalEmployer">click here</a>
 
 </body>
 </html>

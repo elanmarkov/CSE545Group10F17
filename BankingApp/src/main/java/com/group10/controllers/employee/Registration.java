@@ -24,9 +24,9 @@ import com.group10.dbmodels.InternalUser;
 @Controller
 public class Registration {
 	
-	@RequestMapping(value = "/employee/internalreg", method =RequestMethod.POST)
-	public ModelAndView InternalRegister(@ModelAttribute("user1") InternalUser newUser, RedirectAttributes redir){
-		
+	@RequestMapping("/Employee/RegistrationInternalEmployer")
+	//public ModelAndView InternalRegister(@ModelAttribute("user1") InternalUser newUser, RedirectAttributes redir){
+		/*
 		String name = newUser.getName();
 		String email = newUser.getEmail();
 		String designation = newUser.getDesignation();
@@ -41,6 +41,7 @@ public class Registration {
 		String username = newUser.getUserid();
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		
+		/*
 		//Validation of form fields
 		Validator validator = new Validator();
 		Boolean isValidated = true;
@@ -88,13 +89,21 @@ public class Registration {
 			//dblogs.setUserid(userid);
 			logsDao.saveLogs(dblogs, "internal");
 		}
+		
 		ModelAndView model = new ModelAndView();
+		model.addObject(newUser);
+		
 		model.setViewName("redirect:/employee/management");
 		return model;
+	*/
+	public ModelAndView InternalRegister(){
+		ModelAndView model = new ModelAndView("dashboard");
+	   // model.addObject("InternalUser", newUser);	
+	    return model;
 	}
 	
 	
-	
+	/*
 	
 
 	@RequestMapping(value = "/employee/externalreg", method =RequestMethod.POST)
@@ -165,5 +174,5 @@ public class Registration {
 		return model;
 	}
 	
-	
+	*/
 }

@@ -9,6 +9,6 @@ public class HelloController {
 
 	@RequestMapping("/hello")
 	public ModelAndView mymethod(){
-		return new ModelAndView("Homepage");
+		return new ModelAndView("hellopage");
 	}
 }

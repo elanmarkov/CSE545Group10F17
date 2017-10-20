@@ -16,7 +16,7 @@ public class Validator{
 	}
 	public Boolean validateNumber(int number){
 		String pattern = "[0-9]+";
-		return Pattern.matches(pattern, number);
+		return Pattern.matches(pattern, String.valueOf(number));
 	}
 	public Boolean validatePassword(String password ){
 		String pattern =  "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,16}$";
