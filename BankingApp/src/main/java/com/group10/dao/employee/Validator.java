@@ -14,7 +14,7 @@ public class Validator{
 		String pattern = "[a-zA-Z\\s]+";
 		return Pattern.matches(pattern, name);
 	}
-	public Boolean validateNumber(int number){
+	public Boolean validateNumber(String number){
 		String pattern = "[0-9]+";
 		return Pattern.matches(pattern, String.valueOf(number));
 	}
