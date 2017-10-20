@@ -213,6 +213,9 @@
             if(!filter1.test(phone))
             {
                 $("#newValue").focus();
+                window.setTimeout(function () { 
+    document.getElementById('newValue').focus(); 
+}, 0); 
                 $("#errorBox").html("Please Enter a Valid phone");
                 return false;
             }
