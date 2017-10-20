@@ -93,8 +93,8 @@
 				    		<h4><strong>Checking Account Dashboard</strong></h4> 
 				    	</div>
 				    	<div class="panel-body">
-				    		<p><h5>Account Number: <span>checkingAccount.accountNumber</span></h5></p>
-					    	<p><h5>Account Balance: <span>checkingAccount.balance</span></h5></p>
+				    		<p><h5>Account Number: <span>${checkingAccount.accountNumber}</span></h5></p>
+					    	<p><h5>Account Balance: <span>${checkingAccount.balance}</span></h5></p>
 					    	<button type="button" class="btn btn-default pull-right"><a href="#">Download Statements</a></button>
 					    	
 				    	</div>
@@ -115,13 +115,13 @@
 					    </thead>
 					    <tbody>
 					      <tr>
-					        <td>1</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
+					        <td>${transaction.id}</td>
+					        <td>${transaction.description}</td>
+					        <td>${transaction.transaction_type}</td>
+					        <td>${payee.name}</td>
+					        <td>${transaction.amount}</td>
+					        <td>${transaction.status}</td>
+					        <td>${transaction.date}</td>			        
 					      </tr>					      
 					    </tbody>
 					  </table>
