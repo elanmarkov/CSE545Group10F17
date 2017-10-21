@@ -46,7 +46,7 @@ CREATE TABLE savings_accounts (
 CREATE TABLE credit_accounts (
     id int NOT NULL,
     external_users_id int NOT NULL,
-    account_no vavrchar(20) NOT NULL,
+    account_no varchar(20) NOT NULL,
     balance double NOT NULL,
     PRIMARY KEY (id)
 );
