@@ -33,6 +33,30 @@
 	</div>
 
 
+<nav class="navbar navbar-default">
+	<div class="container">
+		<ul class="nav navbar-nav">
+			<li><a href="#">Home</a></li>
+        	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Internal</a></li>
+	            <li><a href="#">External</a></li>
+	          </ul>
+        	</li>
+
+        	<li><a href="#">Pending Request</a></li>
+		</ul>
+
+
+		<ul class="nav navbar-nav navbar-right">
+			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+		</ul>
+	</div>
+</nav>
+
+
 	<div class="container" id="loginBox">
 		<h3><strong>Search Employee</strong></h3>
 		<form class="form-margin" action = "/BankingApp/searchInternalUser" method = "post">
