@@ -1,8 +1,8 @@
 package com.group10.controllers.employee;
 
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group10.controllers.security.HandlerClass;
@@ -26,7 +25,18 @@ import com.group10.dbmodels.InternalUser;
 
 @Controller
 public class Registration {
-		
+	
+	String role;
+	int userID;
+	String username;
+	
+	
+	public void setGlobals(HttpServletRequest request){
+		role = (String) request.getSession().getAttribute("role");
+		userID = 1;
+		username = (String) request.getSession().getAttribute("username");		
+	}
+	
 	@ExceptionHandler(HandlerClass.class)
     public String handleResourceNotFoundException() {
         return "redirect:/exception";
@@ -57,7 +67,7 @@ public class Registration {
 		String username = newUser.getUsername();
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		
-		/*
+		
 		//Validation of form fields
 		Validator validator = new Validator();
 		Boolean isValidated = true;
@@ -106,7 +116,7 @@ public class Registration {
 			logsDao.saveLogs(dblogs, "internal");
 		}
 		
-		*/
+		
 		model.addObject("newUser",  newUser);
 			
 			model.setViewName("dashboard");
@@ -119,11 +129,14 @@ public class Registration {
 		}
 	}
 	
+	@RequestMapping("/employee/RegistrationExternalEmployer")
+	public  ModelAndView ExternalRegisterform(){
+		return new ModelAndView("/employee/RegistrationExternalEmployer");
+	}
 	
-	/*
 
 	@RequestMapping(value = "/employee/externalreg", method =RequestMethod.POST)
-	public ModelAndView InternalRegister(@ModelAttribute("user1") ExternalUser newUser){
+	public ModelAndView InternalRegister(@ModelAttribute("user1") ExternalUser newUser, RedirectAttributes redir){
 		
 		String name = newUser.getName();
 		String email = newUser.getEmail();
@@ -131,11 +144,11 @@ public class Registration {
 		String city = newUser.getCity();
 		String state = newUser.getState();
 		String country = newUser.getCountry();
-		int pincode = newUser.getPincode();
-		int number = newUser.getPhone();
+		String pincode = newUser.getPincode();
+		String number = newUser.getPhone();
 		String dob = newUser.getDob();
 		String ssn = newUser.getSsn();
-		String username = newUser.getUserid();
+		String username = newUser.getUsername();
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		
 		//Validation of form fields
@@ -172,7 +185,7 @@ public class Registration {
 			DbLogs dblogs = new DbLogs();
 			dblogs.setActivity("External User creation");
 			dblogs.setDetails("Successful");
-			//dblogs.setUserid(userid);
+			dblogs.setUserid(userID);
 			logsDao.saveLogs(dblogs, "external");
         	redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
 
@@ -182,7 +195,7 @@ public class Registration {
 			DbLogs dblogs = new DbLogs();
 			dblogs.setActivity("External User creation");
 			dblogs.setDetails("Error occured due to existing email/phone/username");
-			//dblogs.setUserid(userid);
+			dblogs.setUserid(userID);
 			logsDao.saveLogs(dblogs, "external");
 		}
 		ModelAndView model = new ModelAndView();
@@ -190,5 +203,5 @@ public class Registration {
 		return model;
 	}
 	
-*/	
+
 }

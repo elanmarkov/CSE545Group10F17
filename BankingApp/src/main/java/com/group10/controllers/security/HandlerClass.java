@@ -1,5 +1,4 @@
-package com.group10.controllers.employee.security;
-
+package com.group10.controllers.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

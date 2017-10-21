@@ -1,5 +1,4 @@
-package com.group10.controllers;
-
+package com.group10.controllers.customer;
 import com.group10.dbmodels.*;
 import java.util.List;
 
