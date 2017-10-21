@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Customer Dashboard</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
+	
+	<style type="text/css">
+		.logo{
+	
+		margin-bottom: 0px;
+		}
+
+		#title{
+			/*color: #FAEBD7;*/
+			margin: auto;
+			text-align: center;
+		}
+
+		#tabContent{
+			margin: 5% 5% 10% 10%;
+		}
+
+		.hidden{
+			visibility: hidden;
+		}
+
+		
+		
+	</style>
+
+
+</head>
+<body>
+
+
+<div class="jumbotron logo">
+	<div class="container">
+	  <h2 id="title">GROUP10 BANK</h2>
+	</div>	
+</div>
+
+
+
+
+
+<nav class="navbar navbar-default">
+	<div class="container">
+		<ul class="nav navbar-nav">
+			<li><a href="#">Home</a></li>
+        	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Deposit</a></li>
+	            <li><a href="#">Withdraw</a></li>
+	          </ul>
+        	</li>
+
+        	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Between accounts</a></li>
+	            <li><a href="#">Send to others</a></li>
+	          </ul>
+        	</li>
+
+        	<li><a href="#">Pending Request</a></li>
+        	<li><a href="/BankingApp/merchantMakePayment">Merchant Panel</a></li>
+		</ul>
+
+
+		<ul class="nav navbar-nav navbar-right">
+			<button type="button" class="btn btn-default navbar-btn"><a href="#">My Profile</a></button>
+			<button type="button" class="btn btn-default navbar-btn"><a href="#">Log out</a></button>
+		</ul>
+	</div>
+</nav>
+
+
+
+<div class="container float-left" id="tabContent">
+	<div class="row">
+		<div class="col-lg-13">
+			<div class="jumbotron float-left">
+			
+				<ul class="nav nav-tabs">
+				  <li class="active"><a data-toggle="tab" href="#checkingAccount">Checking Account</a></li>
+				  <li><a data-toggle="tab" href="#savingAccount">Savings Account</a></li>
+				  <li><a data-toggle="tab" href="#creditCard">Credit Card</a></li>
+				</ul>
+
+				<div class="tab-content">
+				  <div id="checkingAccount" class="tab-pane fade in active">
+				    <div>
+				    	<p><strong><h4>Checking Account Number: <span>checkingAccount.accountNumber</span></h4></strong></p>
+				    	<p><strong><h4>Current Balance: <span>checkingAccount.balance</span></h4></strong></p>
+				    	
+				    </div>
+
+				    <div>
+				    	<p><h4>Last 5 transactions</h4></p>
+				    	<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>#</th>
+					        <th>Description</th>
+					        <th>Transaction Type</th>
+					        <th>Payee</th>
+					        <th>Amount</th>
+					        <th>Status</th>
+					        <th>Date</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td>1</td>
+					        <td>transaction.description</td>
+					        <td>Checking</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+					      
+					      <tr>
+					        <td>2</td>
+					        <td>transaction.description</td>
+					        <td>Checking</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>3</td>
+					        <td>transaction.description</td>
+					        <td>Checking</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>4</td>
+					        <td>transaction.description</td>
+					        <td>Checking</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>5</td>
+					        <td>transaction.description</td>
+					        <td>Checking</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+					    </tbody>
+					  </table>
+					  <button type="button" class="btn btn-default"><a href="http://harshaweb.ml/users/register">View Details</a></button>
+				    </div>
+				    
+				  </div>
+				  <div id="savingAccount" class="tab-pane fade">
+				    <p><strong><h4>Saving Account Number: <span>savingAccount.accountNumber</span></h4></strong></p>
+				    <p><strong><h4>Current Balance: <span>savingAccount.balance</span></h4></strong></p>
+					<div>
+						<p><h4>Last 5 transactions</h4></p>
+				    	<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>#</th>
+					        <th>Description</th>
+					        <th>Transaction Type</th>
+					        <th>Payee</th>
+					        <th>Amount</th>
+					        <th>Status</th>
+					        <th>Date</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td>1</td>
+					        <td>transaction.description</td>
+					        <td>Saving</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+					      
+					      <tr>
+					        <td>2</td>
+					        <td>transaction.description</td>
+					        <td>Saving</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>3</td>
+					        <td>transaction.description</td>
+					        <td>Saving</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>4</td>
+					        <td>transaction.description</td>
+					        <td>Saving</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>5</td>
+					        <td>transaction.description</td>
+					        <td>Saving</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+					    </tbody>
+					  </table>
+					  <button type="button" class="btn btn-default"><a href="http://harshaweb.ml/users/register">View Details</a></button>
+				    </div>
+
+
+
+
+				  </div>
+				  <div id="creditCard" class="tab-pane fade">
+				    <p><strong><h4>Credit Card Number: <span>creditCardNumber.accountNumber</span></h4></strong></p>
+				    <p><strong><h4>Current Balance: <span>creditCardNumber.balance</span></h4></strong></p>
+				    <div>
+				    	<p><h4>Last 5 transactions</h4></p>
+				    	<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>#</th>
+					        <th>Description</th>
+					        <th>Transaction Type</th>
+					        <th>Payee</th>
+					        <th>Amount</th>
+					        <th>Status</th>
+					        <th>Date</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td>1</td>
+					        <td>transaction.description</td>
+					        <td>Credit</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+					      
+					      <tr>
+					        <td>2</td>
+					        <td>transaction.description</td>
+					        <td>Credit</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>3</td>
+					        <td>transaction.description</td>
+					        <td>Credit</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>4</td>
+					        <td>transaction.description</td>
+					        <td>Credit</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+
+					      <tr>
+					        <td>5</td>
+					        <td>transaction.description</td>
+					        <td>Credit</td>
+					        <td>payee.name</td>
+					        <td>transaction.amount</td>
+					        <td>transaction.status</td>
+					        <td>transaction.date</td>			        
+					      </tr>
+					    </tbody>
+					  </table>
+					  <button type="button" class="btn btn-default"><a href="#">View Details</a></button>
+				    </div>
+				  </div>
+				  
+
+
+				</div>
+
+			  
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
