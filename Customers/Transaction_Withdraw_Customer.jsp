@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Savings Account Dashboard</title>
+	<title>Withdraw</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -17,22 +17,16 @@
 			text-align: center;
 		}
 
-		#loginBox{
-			margin: 5% 5% 25% 10%;
+		#tabContent{
+			margin: 5% 5% 10% 10%;
 		}
 
 		.hidden{
 			visibility: hidden;
 		}
 
-		#creditInfo{
-			/*background: whitesmoke;*/
-			height: 10%;
-			width: 50%;
-			padding: 0px;
-		}
-
-
+		
+		
 	</style>
 
 
@@ -45,6 +39,9 @@
 	  <h2 id="title">GROUP10 BANK</h2>
 	</div>	
 </div>
+
+
+
 
 
 <nav class="navbar navbar-default">
@@ -79,55 +76,38 @@
 	</div>
 </nav>
 
-
 <div class="container">
 	<div class="row">
-		<div class="col-lg-14">
+		<div class="col-lg-6">
 			<div class="jumbotron">
-			
+				<form action="/BankingApp/withdrawMoney" method="post">
+					<div class="form-group">
+						<label>Please select the account you would like to withdraw</label>
+							<select class="form-control" name="withdrawAccount">
+							  <option value="">--please select your account--</option>
+							  <option value="savingAccount">Saving Account</option>
+							  <option value="checkingAccount">Checking Account</option>
+							</select>
+					</div>
+					<div class="form-group">
+						<label>Please specify the amount you would like to withdraw</label>
+						<input type="number" class="form-control" placeholder="$">
+					</div>
 
-				    <div class="panel panel-default" id="creditInfo">
-				    	<div class="panel-heading">
-				    		<h4><strong>Savings Account Dashboard</strong></h4> 
-				    	</div>
-				    	<div class="panel-body">
-				    		<p><h5>Account Number: <span>savingsAccount.accountNumber</span></h5></p>
-					    	<p><h5>Account Balance: <span>savingsAccount.balance</span></h5></p>
-					    	<a href="#"><button type="button" class="btn btn-default pull-right">Download Statements</button></a>
-					    	
-				    	</div>
-				    </div>
-			  <div>
-				    	<p><h4>Transaction History</h4></p>
-				    	<table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th>#</th>
-					        <th>Description</th>
-					        <th>Transaction Type</th>
-					        <th>Payee</th>
-					        <th>Amount</th>
-					        <th>Status</th>
-					        <th>Date</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr>
-					        <td>1</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>					      
-					    </tbody>
-					  </table>
-				    </div>
+					<div class="form-group">
+					 <button type="submit" class="btn btn-primary" value="Submit">Withdraw</button>
+					</div>
+				</form>
+		</div>
+
+		
+	</div>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
