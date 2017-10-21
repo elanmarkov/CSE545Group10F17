@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Funds Transfer between accounts </title>
+	<title>Transfer Confirmation</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -17,16 +17,22 @@
 			text-align: center;
 		}
 
-		#tabContent{
-			margin: 5% 5% 10% 10%;
+		#loginBox{
+			margin: 5% 5% 25% 10%;
 		}
 
 		.hidden{
 			visibility: hidden;
 		}
-   
-		
-		
+
+		#creditInfo{
+			/*background: whitesmoke;*/
+			height: 10%;
+			width: 50%;
+			padding: 0px;
+		}
+
+
 	</style>
 
 
@@ -39,8 +45,6 @@
 	  <h2 id="title">GROUP10 BANK</h2>
 	</div>	
 </div>
-
-
 
 
 
@@ -66,7 +70,7 @@
 
         	<li><a href="#">Pending Request</a></li>
         	<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
-
+        	
 		</ul>
 
 
@@ -77,46 +81,26 @@
 	</div>
 </nav>
 
-  
 
 <div class="container">
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-14">
 			<div class="jumbotron">
+			
 
-				<div>
-					<h4><strong>Funds Transfer - Within Accounts</strong></h4>
-				</div>
-
-				<form action="" method="post">
-					<div class="form-group">
-						<label>Please select the account you would like to transfer to</label>
-							<select class="form-control" name="transferTo">
-							  <option value="">--please select the account transfer to--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
-							</select>
-					</div>
-
-					<div class="form-group">
-						<label>Please select the account you would like to transfer from</label>
-							<select class="form-control" name="transferFrom">
-							  <option value="">--please select the account transfer from--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
-							</select>
-					</div>
-
-
-					<div class="form-group">
-						<label>Please specify the amount you would like to transfer</label>
-						<input type="number" class="form-control" placeholder="$" name="transferAmount">
-					</div>
-
-					<div class="form-group">
-					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
-					</div>
-				</form>
+				    <div class="panel panel-default" id="creditInfo">
+				    	<div class="panel-heading">
+				    		<h4><strong>Transfer Confirmation</strong></h4> 
+				    	</div>
+				    	<div class="panel-body">
+				    		<p><h5>Transfer To: <span>${payee.accountNumber}</span></h5></p>
+					    	<p><h5>Transfer From: <span>${payer.accountNumber}</span></h5></p>
+					    	<p><h5>Amount: <span>${amount}</span></h5></p>
+					    	<button type="button" class="btn btn-default pull-right"><a href="#">Make Another Payment</a></button>
+					    	
+				    	</div>
+				    </div>
+			  
 			</div>
 		</div>
 	</div>

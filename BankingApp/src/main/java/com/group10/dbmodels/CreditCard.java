@@ -5,7 +5,6 @@ import java.sql.Date;
 
 public class CreditCard {
 	private float interest;
-	private String cc_number;
 	private int credit_limit;
 	private BigInteger available_balance;
 	private BigInteger current_amount_due;
@@ -14,19 +13,14 @@ public class CreditCard {
 	private int account_number;
 	private BigInteger last_bill_amount;
 	private float apr;
-	private BigInteger payment;
+	
 	public float getInterest() {
 		return interest;
 	}
 	public void setInterest(float interest) {
 		this.interest = interest;
 	}
-	public String getCc_number() {
-		return cc_number;
-	}
-	public void setCc_number(String cc_number) {
-		this.cc_number = cc_number;
-	}
+	
 	public int getCredit_limit() {
 		return credit_limit;
 	}
@@ -75,12 +69,7 @@ public class CreditCard {
 	public void setApr(float apr) {
 		this.apr = apr;
 	}
-	public BigInteger getPayment() {
-		return payment;
-	}
-	public void setPayment(BigInteger payment) {
-		this.payment = payment;
-	}
+	
 
 
 }

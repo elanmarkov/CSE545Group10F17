@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.group10.controllers.employee.security.HandlerClass;
+import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;

@@ -24,6 +24,8 @@ com\group10\dbmodels\Customer.class
 com\group10\jdbc\test.class
 com\group10\dao\transaction\TransactionDao.class
 com\group10\dao\logs\LogsDaoImpl.class
+com\group10\controllers\TransactionController.class
 com\group10\dbmodels\CreditCard.class
 com\group10\dao\logs\LogsDao.class
 com\group10\dao\employee\UserRegistrationDaoImpl.class
+com\group10\controllers\LoginController.class

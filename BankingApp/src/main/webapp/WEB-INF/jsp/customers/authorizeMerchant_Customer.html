@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Funds Transfer between accounts </title>
+	<title>Authorize Merchant</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -24,7 +24,7 @@
 		.hidden{
 			visibility: hidden;
 		}
-   
+
 		
 		
 	</style>
@@ -66,7 +66,6 @@
 
         	<li><a href="#">Pending Request</a></li>
         	<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
-
 		</ul>
 
 
@@ -77,46 +76,59 @@
 	</div>
 </nav>
 
-  
 
-<div class="container">
+
+<div class="container" id="">
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-10">
 			<div class="jumbotron">
 
+				<!-- <h3><strong>Merchant Infomation</strong></h3> -->
+				<hr size="30">
+				<hr size="30">
+
 				<div>
-					<h4><strong>Funds Transfer - Within Accounts</strong></h4>
+					<h4><strong>Merchant List</strong></h4>
+					<form action="/BankingApp" method="post">
+					
+					  <select name="merchantSelection">
+			        		<option value="">Please Select</option>					        
+			        		<option value="merchant.id">merchant.id</option>
+			        		<option value="merchant.id">merchant.id</option>
+					  </select>
+					  <input type="submit" name="merchant.id.merchantAction" value="Add">
+				
+				  </form>
+
+
 				</div>
-
-				<form action="" method="post">
-					<div class="form-group">
-						<label>Please select the account you would like to transfer to</label>
-							<select class="form-control" name="transferTo">
-							  <option value="">--please select the account transfer to--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
-							</select>
-					</div>
-
-					<div class="form-group">
-						<label>Please select the account you would like to transfer from</label>
-							<select class="form-control" name="transferFrom">
-							  <option value="">--please select the account transfer from--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
-							</select>
-					</div>
+				
+			
+				<hr size="30">
+				<hr size="30">
 
 
-					<div class="form-group">
-						<label>Please specify the amount you would like to transfer</label>
-						<input type="number" class="form-control" placeholder="$" name="transferAmount">
-					</div>
+			<h4><strong>Authorized Merchant</strong></h4>
 
-					<div class="form-group">
-					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
-					</div>
-				</form>
+			  <form action="/BankingApp" method="post">
+				  <table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>Merchant Name</th>
+					        <th>Action</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td >merchant.id</td>
+					        <td>
+					        	<input type="checkbox" name="merchant.id.merchantAction" value="revoke">Revoke<br>
+					        </td>					        
+					      </tr>					      
+					    </tbody>
+					  </table>
+				  <button type="submit" class="btn btn-default btn-sm" >Submit</button>
+			  </form>
 			</div>
 		</div>
 	</div>

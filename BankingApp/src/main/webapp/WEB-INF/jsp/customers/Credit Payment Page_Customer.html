@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Funds Transfer between accounts </title>
+	<title>Credit Card Payment</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -24,7 +24,7 @@
 		.hidden{
 			visibility: hidden;
 		}
-   
+
 		
 		
 	</style>
@@ -65,8 +65,8 @@
         	</li>
 
         	<li><a href="#">Pending Request</a></li>
-        	<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
-
+         	<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
+       	
 		</ul>
 
 
@@ -77,7 +77,7 @@
 	</div>
 </nav>
 
-  
+
 
 <div class="container">
 	<div class="row">
@@ -85,36 +85,28 @@
 			<div class="jumbotron">
 
 				<div>
-					<h4><strong>Funds Transfer - Within Accounts</strong></h4>
+					<h4><strong>Credit Card Payment</strong></h4>
 				</div>
 
-				<form action="" method="post">
+    			<div>
+		    		<p><h5>Account Number: <span>${creditAccount.account_number}</span></h5></p>
+		    		<p><h5>Next Payment Date: <span>${creditAccount.due_date}</span></h5></p>
+			    	<p><h5>Outstanding Balance: <span>${creditAccount.available_balance}</span></h5></p>
+    			</div>
+
+				<form action="/BankingApp" method="post">
 					<div class="form-group">
-						<label>Please select the account you would like to transfer to</label>
-							<select class="form-control" name="transferTo">
-							  <option value="">--please select the account transfer to--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
-							</select>
+					    <label>Please Enter the Amount to Pay</label>
+					    <input type="number" class="form-control" placeholder="$" name="amountToPay" required>
+				  	</div>
+
+					<div class="form-group">
+						<label>Checking Account Balance</label>
+						<input type="number" class="form-control" placeholder="$" name="checkingAccount.balance">
 					</div>
 
 					<div class="form-group">
-						<label>Please select the account you would like to transfer from</label>
-							<select class="form-control" name="transferFrom">
-							  <option value="">--please select the account transfer from--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
-							</select>
-					</div>
-
-
-					<div class="form-group">
-						<label>Please specify the amount you would like to transfer</label>
-						<input type="number" class="form-control" placeholder="$" name="transferAmount">
-					</div>
-
-					<div class="form-group">
-					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
+					 <button type="submit" class="btn btn-primary" name="submit">Pay</button>
 					</div>
 				</form>
 			</div>

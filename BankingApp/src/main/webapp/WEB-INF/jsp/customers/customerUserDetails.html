@@ -5,26 +5,22 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
-	<style type="text/css">
+	<style  type="text/css">
 		.logo{
 	
 		margin-bottom: 0px;
 		}
-
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
-
 		#tabContent{
 			margin: 5% 5% 10% 10%;
 		}
-
 		.hidden{
 			visibility: hidden;
 		}
-
 		
 		
 	</style>
@@ -43,8 +39,24 @@
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="#">Home</a></li>
-			<li><a href="#">User Management</a></li>
+        	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Deposit</a></li>
+	            <li><a href="#">Withdraw</a></li>
+	          </ul>
+        	</li>
+
+        	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Between accounts</a></li>
+	            <li><a href="#">Send to others</a></li>
+	          </ul>
+        	</li>
+
         	<li><a href="#">Pending Request</a></li>
+        	<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
 		</ul>
 
 
@@ -128,7 +140,7 @@
 				    <h3 class="panel-title">Edit Account</h3>
 				  </div>
 				  <div class="panel-body">
-				    <form class="form-horizontal" action="/BankingApp/addRequest" method="POST">
+				    <form class="form-horizontal" action="addrequest" method="POST">
 				    	<fieldset>
 				    		<div class="form-group">
 				    			<label for="requestType" class="col-lg-3 control-label">Request Type</label>
@@ -146,7 +158,7 @@
        							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;" id = "errorBox"></div>
        							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;">
 	       							<button style="float:right;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        				<button style="float:right;margin-right:15px;" type="submit" onclick="return Validate()" class="btn btn-primary">Submit</button>
+			        				<button style="float:right;margin-right:15px;" type="submit" onclick="Validate()" class="btn btn-primary">Submit</button>
       							</div>
 				    		</div>
 				    	</fieldset>
@@ -200,30 +212,23 @@
 </main>
 
 <script language="JavaScript" type="text/javascript">
-
     function Validate() {
     	$("#errorBox").html("");
             var phone = $('#newValue').val();
-            console.log(phone);
             var modifyaccount = document.getElementById("modifyaccountDropdown");
             var selectedValue = modifyaccount.selectedIndex;
-            console.log(selectedValue);
-            if(selectedValue == "1")  {
+            if(selectedIndex == 1)  {
             var filter1 =  /^[0-9]+$/;
+            $("#errorBox").html(selectedValue);
             if(!filter1.test(phone))
             {
                 $("#newValue").focus();
-                window.setTimeout(function () { 
-    document.getElementById('newValue').focus(); 
-}, 0); 
                 $("#errorBox").html("Please Enter a Valid phone");
                 return false;
             }
         }
         ;
-
     }
-
 </script> 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
