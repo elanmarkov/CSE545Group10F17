@@ -78,7 +78,7 @@
 
 
 
-<div class="container float-left" id="tabContent">
+<div class="container-fluid float-left" id="tabContent">
 	<div class="row">
 		<div class="col-lg-13">
 			<div class="jumbotron float-left">
@@ -92,227 +92,194 @@
 				<div class="tab-content">
 				  <div id="checkingAccount" class="tab-pane fade in active">
 				    <div>
-				    	<p><strong><h4>Checking Account Number: <span>checkingAccount.accountNumber</span></h4></strong></p>
-				    	<p><strong><h4>Current Balance: <span>checkingAccount.balance</span></h4></strong></p>
+				    	<p><strong><h4>Checking Account Number: <span>$checkingAccount.accountNumber</span></h4></strong></p>
+				    	<p><strong><h4>Current Balance: <span>$checkingAccount.balance</span></h4></strong></p>
 				    	
 				    </div>
 
 				    <div>
 				    	<p><h4>Last 5 transactions</h4></p>
-				    	<table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th>#</th>
-					        <th>Description</th>
-					        <th>Transaction Type</th>
-					        <th>Payee</th>
-					        <th>Amount</th>
-					        <th>Status</th>
-					        <th>Date</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr>
-					        <td>1</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
-					      
-					      <tr>
-					        <td>2</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
+				    		<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Description</th>
+												<th>Transaction Type</th>
+												<th>Payee</th>
+												<th>Amount</th>
+												<th>Status</th>
+												<th>Date</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
 
-					      <tr>
-					        <td>3</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
+											<tr>
+												<th scope="row">${loop.index + 1}</th>
+												<td>${transaction.description}</td>
+												<td>${transaction.transactionType}</td>
+												<!-- <c:choose>
+												<c:when test="${payer_id!=payee_id }">
+												<c:choose>
+												<c:when test="${account_number==payee_id}">
+												<td>CREDIT</td>
+											</c:when>
+											<c:otherwise>
+											<td>DEBIT</td>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+								<c:choose>
+								<c:when test="${description==depo_desc}">
+								<td>CREDIT</td>
+							</c:when>
+							<c:otherwise>
+							<td>DEBIT</td>  
+						</c:otherwise>
+					</c:choose>														
+				</c:otherwise>
+			</c:choose> -->
 
-					      <tr>
-					        <td>4</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
+			<td>${transaction.payee_id}</td>
+			<td>${transaction.amount}</td>
+			<td>${transaction.status}</td>
+			<td>${transaction.timestamp_updated}</td>
+		</tr>
+	</c:forEach>
 
-					      <tr>
-					        <td>5</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
-					    </tbody>
-					  </table>
-					  <button type="button" class="btn btn-default"><a href="http://harshaweb.ml/users/register">View Details</a></button>
-				    </div>
-				    
-				  </div>
-				  <div id="savingAccount" class="tab-pane fade">
-				    <p><strong><h4>Saving Account Number: <span>savingAccount.accountNumber</span></h4></strong></p>
-				    <p><strong><h4>Current Balance: <span>savingAccount.balance</span></h4></strong></p>
-					<div>
-						<p><h4>Last 5 transactions</h4></p>
-				    	<table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th>#</th>
-					        <th>Description</th>
-					        <th>Transaction Type</th>
-					        <th>Payee</th>
-					        <th>Amount</th>
-					        <th>Status</th>
-					        <th>Date</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr>
-					        <td>1</td>
-					        <td>transaction.description</td>
-					        <td>Saving</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
-					      
-					      <tr>
-					        <td>2</td>
-					        <td>transaction.description</td>
-					        <td>Saving</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
 
-					      <tr>
-					        <td>3</td>
-					        <td>transaction.description</td>
-					        <td>Saving</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
 
-					      <tr>
-					        <td>4</td>
-					        <td>transaction.description</td>
-					        <td>Saving</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
+	</tbody>
+	</table>
+	<button type="button" class="btn btn-default"><a href="/BankingApp/showCheckingTransactions">View Details</a></button>
+	</div>
 
-					      <tr>
-					        <td>5</td>
-					        <td>transaction.description</td>
-					        <td>Saving</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
-					    </tbody>
-					  </table>
-					  <button type="button" class="btn btn-default"><a href="http://harshaweb.ml/users/register">View Details</a></button>
-				    </div>
+	</div>
+	<div id="savingAccount" class="tab-pane fade">
+		<p><strong><h4>Saving Account Number: <span>$savingAccount.accountNumber</span></h4></strong></p>
+		<p><strong><h4>Current Balance: <span>$savingAccount.balance</span></h4></strong></p>
+		<div>
+			<p><h4>Last 5 transactions</h4></p>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Description</th>
+						<th>Transaction Type</th>
+						<th>Payee</th>
+						<th>Amount</th>
+						<th>Status</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
+
+							<tr>
+								<th scope="row">${loop.index + 1}</th>
+								<td>${transaction.description}</td>
+								<td>${transaction.transactionType}</td>
+
+								
+                                                                               
+                                    	<!-- <c:choose>
+                                    		<c:when test="${payer_id!=payee_id }">
+                                    			<c:choose>
+  													<c:when test="${account_number==payee_id}">
+  														<td>CREDIT</td>
+  													</c:when>
+  													<c:otherwise>
+  														<td>DEBIT</td>
+  													</c:otherwise>
+  												</c:choose>
+  											</c:when>
+  											<c:otherwise>
+  												<c:choose>
+  													<c:when test="${description==depo_desc}">
+  														<td>CREDIT</td>
+													</c:when>
+													<c:otherwise>
+														<td>DEBIT</td>  
+													</c:otherwise>
+												</c:choose>														
+  											</c:otherwise>
+										</c:choose> -->
+                                    
+								<td>${transaction.payee_id}</td>
+								<td>${transaction.amount}</td>
+								<td>${transaction.status}</td>
+								<td>${transaction.timestamp_updated}</td>
+							</tr>
+						</c:forEach>
+				
+				</tbody>
+			</table>
+			<button type="button" class="btn btn-default"><a href="/BankingApp/showSavingTransactions">View Details</a></button>
+		</div>
 
 
 
 
-				  </div>
-				  <div id="creditCard" class="tab-pane fade">
-				    <p><strong><h4>Credit Card Number: <span>creditCardNumber.accountNumber</span></h4></strong></p>
-				    <p><strong><h4>Current Balance: <span>creditCardNumber.balance</span></h4></strong></p>
-				    <div>
-				    	<p><h4>Last 5 transactions</h4></p>
-				    	<table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th>#</th>
-					        <th>Description</th>
-					        <th>Transaction Type</th>
-					        <th>Payee</th>
-					        <th>Amount</th>
-					        <th>Status</th>
-					        <th>Date</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr>
-					        <td>1</td>
-					        <td>transaction.description</td>
-					        <td>Credit</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
-					      
-					      <tr>
-					        <td>2</td>
-					        <td>transaction.description</td>
-					        <td>Credit</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
+	</div>
+	<div id="creditCard" class="tab-pane fade">
+		<p><strong><h4>Credit Card Number: <span>$creditCardNumber.accountNumber</span></h4></strong></p>
+		<p><strong><h4>Current Balance: <span>$creditCardNumber.balance</span></h4></strong></p>
+		<div>
+			<p><h4>Last 5 transactions</h4></p>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Description</th>
+						<th>Transaction Type</th>
+						<th>Payee</th>
+						<th>Amount</th>
+						<th>Status</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
 
-					      <tr>
-					        <td>3</td>
-					        <td>transaction.description</td>
-					        <td>Credit</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
+							<tr>
+								<th scope="row">${loop.index + 1}</th>
+								<td>${transaction.description}</td>
+								<td>${transaction.transactionType}</td>  
+                                                                               
+                                    	<!-- <c:choose>
+                                    		<c:when test="${payer_id!=payee_id }">
+                                    			<c:choose>
+  													<c:when test="${account_number==payee_id}">
+  														<td>CREDIT</td>
+  													</c:when>
+  													<c:otherwise>
+  														<td>DEBIT</td>
+  													</c:otherwise>
+  												</c:choose>
+  											</c:when>
+  											<c:otherwise>
+  												<c:choose>
+  													<c:when test="${description==depo_desc}">
+  														<td>CREDIT</td>
+													</c:when>
+													<c:otherwise>
+														<td>DEBIT</td>  
+													</c:otherwise>
+												</c:choose>														
+  											</c:otherwise>
+										</c:choose> -->
+                                    
+								<td>${transaction.payee_id}</td>
+								<td>${transaction.amount}</td>
+								<td>${transaction.status}</td>
+								<td>${transaction.timestamp_updated}</td>
+							</tr>
+						</c:forEach>
 
-					      <tr>
-					        <td>4</td>
-					        <td>transaction.description</td>
-					        <td>Credit</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
-
-					      <tr>
-					        <td>5</td>
-					        <td>transaction.description</td>
-					        <td>Credit</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>			        
-					      </tr>
-					    </tbody>
-					  </table>
-					  <button type="button" class="btn btn-default"><a href="#">View Details</a></button>
+				</tbody>
+			</table>
+					  <button type="button" class="btn btn-default"><a href="/BankingApp/showCreditTransactions">View Details</a></button>
 				    </div>
 				  </div>
 				  
