@@ -4,12 +4,21 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group10.controllers.security.HandlerClass;
+import com.group10.dao.employee.UserRegistrationDaoImpl;
+import com.group10.dao.employee.Validator;
+import com.group10.dao.logs.LogsDaoImpl;
+import com.group10.dao.otp.OtpDaoImpl;
+import com.group10.dbmodels.DbLogs;
 
 @Controller
 public class ForgotPassword {
@@ -26,21 +35,91 @@ public class ForgotPassword {
 	
 	@ExceptionHandler(HandlerClass.class)
     public String handleResourceNotFoundException() {
-        return "redirect:/raiseexception";
+        return "redirect:/exception";
     }
 	
 	
 	@RequestMapping("forgotpassowrd")
 		public ModelAndView ForgotPass(){
-			return new ModelAndView("/commons/ForgotPassword");
+			return new ModelAndView("/login/ForgotPassword");
 		}
-	@RequestMapping("verifyemail")
-		public ModelAndView verifyEmail(HttpServletRequest servlet){
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");	
-		OtpDaoImpl odao = ctx.getBean("otpDaoImpl", OtpDaoImpl.class);
+	@RequestMapping(value = "forgotpassword/verifyemail", method = RequestMethod.POST)
+		public ModelAndView verifyEmail(HttpServletRequest request, @RequestParam("Email") String email){
 		
-		return model;
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");	
+			OtpDaoImpl odao = ctx.getBean("otpDaoImpl", OtpDaoImpl.class);
+			String message = odao.verifyEmail(email);
+			if(message.equalsIgnoreCase("Exceeded otp limits. Account locked. Contact bank")){
+				ModelAndView model = new ModelAndView("/login/login");
+				ctx.close();
+				return model;
+			}
+			else{
+				ModelAndView model = new ModelAndView("/login/ForgotPasswordOtp");
+				request.getSession().removeAttribute("forgotpassemail");
+		        request.getSession().setAttribute("forgotpassemail", email);
+		        model.addObject("message", message);
+		        ctx.close();
+				return model;
+			}
+		}
+	
+	@RequestMapping(value = "forgotpassword/verifyotp", method = RequestMethod.POST)
+	public ModelAndView verifyOtp(HttpServletRequest request, @RequestParam("otp") String otp){
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		OtpDaoImpl odao = ctx.getBean("otpDaoImpl",OtpDaoImpl.class);
+		String email = (String) request.getSession().getAttribute("forgotpassemail");
+		String message = odao.verifyOTP(otp, email);
+		if(message.equalsIgnoreCase("Incorrect OTP") || message.equalsIgnoreCase("Error in verifying OTP")){
+			ModelAndView model = new ModelAndView("/login/ForgotPasswordOtp");
+			model.addObject("message", message);
+			ctx.close();
+			return model;
+		}else{
+			ModelAndView model = new ModelAndView("ChangePassword");
+	        model.addObject("message", message);
+	        ctx.close();
+	        return model;
+		}
 	}
 	
-	
+	@RequestMapping(value = "forgotpassword/changepassword", method = RequestMethod.POST)
+	public ModelAndView changePassword(RedirectAttributes redir, HttpServletRequest request, @RequestParam("newpassword") String newPassword,@RequestParam("confirmpassword") String confirmPassword) {
+		ModelAndView model = new ModelAndView();
+		String username = (String)request.getSession().getAttribute("forgotpassemail");
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+        UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
+        String type;
+        if(role.equals("ROLE_ADMIN")||role.equals("ROLE_TIER2")||role.equals("ROLE_TIER1"))
+	    	type = "internal";
+	    else type = "external";
+        Validator validator = new Validator();
+        if(newPassword.equals(confirmPassword) && validator.validatePassword(newPassword))
+        {
+        	BCryptPasswordEncoder Encoder = new BCryptPasswordEncoder();
+            udao.updatePassword(Encoder.encode(newPassword), username);
+	        model.setViewName("redirect:/login");
+
+            LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class); 	    
+    	    DbLogs dblog = new DbLogs();    
+    	    dblog.setActivity("Forgot password : " + username);
+    	    dblog.setDetails("passsword changed successfully");
+            dblog.setUserid(userID);
+            ldao.saveLogs(dblog, type);      	
+            ctx.close();
+            return model;
+        }
+        else{
+            model.setViewName("redirect:/forgotpassword/changepassword");
+        	LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+     	     DbLogs dblog = new DbLogs();
+     	     dblog.setActivity("Forgot password : " + username);
+     	     dblog.setDetails("passsword change falied");
+             dblog.setUserid(userID);
+             ldao.saveLogs(dblog, type);    
+             redir.addFlashAttribute("exception_message","password validation failed, try again");
+             ctx.close();
+             return model;
+        }
+	}
 }

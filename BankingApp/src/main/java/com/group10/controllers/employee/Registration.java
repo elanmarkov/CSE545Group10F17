@@ -42,9 +42,9 @@ public class Registration {
         return "redirect:/exception";
     }
 	
-	@RequestMapping("/employee/RegistrationInternalEmployer")
+	@RequestMapping("/employee/RegistrationInternalEmployee")
 	public  ModelAndView InternalRegisterform(){
-		return new ModelAndView("/employee/RegistrationInternalEmployer");
+		return new ModelAndView("/employee/RegistrationInternalEmployee");
 	}
 	
 	
@@ -129,9 +129,9 @@ public class Registration {
 		}
 	}
 	
-	@RequestMapping("/employee/RegistrationExternalEmployer")
+	@RequestMapping("/employee/RegistrationExternalEmployee")
 	public  ModelAndView ExternalRegisterform(){
-		return new ModelAndView("/employee/RegistrationExternalEmployer");
+		return new ModelAndView("/employee/RegistrationExternalEmployee");
 	}
 	
 

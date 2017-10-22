@@ -190,6 +190,16 @@ CREATE TABLE merchant_payment(
     PRIMARY KEY (id)
 ); 
 
+CREATE TABLE OTP(
+	email varchar(40) NOT NULL,
+	otp varchar(10) NOT NULL,
+	stamp Timestamp NOT NULL,
+	attempts int NOT NULL	
+);
+
+CREATE TABLE user_authentication(
+);
+
 
 INSERT INTO user_login (role, username, password, user_id) VALUES ("adim", "admin_username", "1234", 1234)
 

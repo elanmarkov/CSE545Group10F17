@@ -39,5 +39,9 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport  implements UserRegi
 		this.getJdbcTemplate().update(sql, new Object[]{name, address, city, state, country, pincode, phone, email, dob, ssn, username});
 	}
 	
+	public void updatePassword(String username,  String newPassword){
+		String sql = "update users set password = " + newPassword + "where username="+ username;
+		this.getJdbcTemplate().update(sql);
+	}
 	
 }
