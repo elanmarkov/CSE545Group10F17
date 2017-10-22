@@ -1,6 +1,9 @@
 import javax.crypto.Cipher;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.Base64;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -9,14 +12,25 @@ import java.util.Calendar;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class TimestampingAuthority {
-    public static KeyPair generateKeyPair() throws Exception {
-        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(2048, new SecureRandom());
-        KeyPair pair = generator.generateKeyPair();
-        return pair;
+	
+	private static PublicKey pubKey;
+	
+    TimestampingAuthority() throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
+    {
+    	InputStream ins = TimestampingAuthority.class.getResourceAsStream("/keystore.jks");
+
+        KeyStore keyStore = KeyStore.getInstance("JCEKS");
+        keyStore.load(ins, "group10store".toCharArray());   //Keystore password
+        java.security.cert.Certificate cert = keyStore.getCertificate("TSAkey");
+        PublicKey publicKey = cert.getPublicKey();
+        pubKey = publicKey;
     }
 
-    public static KeyPair getKeyPairFromKeyStore() throws Exception {
+    public static PublicKey getPublicKey()
+    {
+    	return pubKey;
+    }
+    public static PrivateKey getPrivKeyFromStore() throws Exception {
         //Generated with:
     	// keytool -genkeypair -alias TSAkey -storepass group10store -keypass SSis#1 -keyalg RSA -keystore keystore.jks
     	// CN=TSA, OU=Group10, O=Software Security, L=Phoenix, ST=AZ, C=AZ
@@ -28,12 +42,9 @@ public class TimestampingAuthority {
         KeyStore.PasswordProtection keyPassword = new KeyStore.PasswordProtection("SSis#1".toCharArray());    //Key password
 
         KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("TSAkey", keyPassword);
-
-        java.security.cert.Certificate cert = keyStore.getCertificate("TSAkey");
-        PublicKey publicKey = cert.getPublicKey();
         PrivateKey privateKey = privateKeyEntry.getPrivateKey();
 
-        return new KeyPair(publicKey, privateKey);
+        return privateKey;
     }
 
     public static String encryptTimestamp(Timestamp time, PublicKey publicKey) throws Exception {
@@ -45,18 +56,19 @@ public class TimestampingAuthority {
         return Base64.getEncoder().encodeToString(cipher);
     }
 
-    public static String decryptTimestamp(String cipherText, PrivateKey privateKey) throws Exception {
+    public static String decryptTimestamp(String cipherText) throws Exception {
         byte[] bytes = Base64.getDecoder().decode(cipherText);
-
+        PrivateKey privKey = getPrivKeyFromStore();
         Cipher decript = Cipher.getInstance("RSA");
-        decript.init(Cipher.DECRYPT_MODE, privateKey);
+        decript.init(Cipher.DECRYPT_MODE, privKey);
 
         return new String(decript.doFinal(bytes), UTF_8);
     }
 
-    public static String signTimestamp(Timestamp time, PrivateKey privateKey) throws Exception {
+    public static String signTimestamp(Timestamp time) throws Exception {
+    	PrivateKey privKey = getPrivKeyFromStore();
         Signature privateSignature = Signature.getInstance("SHA256withRSA");
-        privateSignature.initSign(privateKey);
+        privateSignature.initSign(privKey);
         privateSignature.update(time.toString().getBytes(UTF_8));
 
         byte[] signature = privateSignature.sign();
@@ -81,28 +93,25 @@ public class TimestampingAuthority {
     	Calendar calendar = Calendar.getInstance();
     	Date now = calendar.getTime();
     	Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+    	TimestampingAuthority TSA = new TimestampingAuthority();
     	
     	System.out.println(currentTimestamp.toString());
-    	
-        //First generate a public/private key pair
-        //KeyPair pair = generateKeyPair();
-        KeyPair pair = getKeyPairFromKeyStore();
 
         //Encrypt
-        String cipherText = encryptTimestamp(currentTimestamp, pair.getPublic());
+        String cipherText = encryptTimestamp(currentTimestamp, getPublicKey());
         System.out.println(cipherText);
 
         //Now decrypt
-        String decipheredMessage = decryptTimestamp(cipherText, pair.getPrivate());
+        String decipheredMessage = decryptTimestamp(cipherText);
 
         System.out.println(decipheredMessage);
 
         //Let's sign our message
-        String signature = signTimestamp(currentTimestamp, pair.getPrivate());
+        String signature = signTimestamp(currentTimestamp);
         System.out.println(signature);
 
         //Let's check the signature
-        boolean isCorrect = verifyTimestamp(currentTimestamp.toString(), signature, pair.getPublic());
+        boolean isCorrect = verifyTimestamp(currentTimestamp.toString(), signature, getPublicKey());
         System.out.println("Signature correct: " + isCorrect);
     }
 }
