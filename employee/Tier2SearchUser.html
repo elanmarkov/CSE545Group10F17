@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 	<html lang="en">
 	<head>
-		<title>Search Employee</title>
+		<title>Tier 2 Search</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		
 		<style type="text/css">
@@ -59,18 +59,19 @@
 
 	<div class="container" id="loginBox">
 		<h3><strong>Search Employee</strong></h3>
-		<form class="form-margin" action = "/BankingApp/searchInternalUser" method = "post">
+		<form class="form-margin" action = "/BankingApp/tier2/searchInternalUser" method = "post">
 	            	<div>
 	            		<input class="form-control" type="text" name="employeeID" placeholder="Employee ID" required>
 	            	</div>
 	            	<br>
 		       		<button type="submit" class="btn btn-sm btn-primary">Search Employee</button>
-	            </form>
+	     </form>
+
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 				
-				  <form>
+				  <form >
 					  <table class="table table-hover">
 						    <thead>
 						      <tr>
@@ -94,10 +95,11 @@
 	                                			<td>${employeeObj.id}</td>
 	                                			<td>${employeeObj.email}</td>
 	                                			<td>
-	                                				<form action = "/BankingApp/showAccountDetails" method = "post" style="display:inline">
-			                                    		
+	                                				<form action = "/BankingApp/tier2/showInternalAccount" method = "post" style="display:inline">
+			                                    		<input type="hidden" name="employeeID" value="${employeeObj.id}">
 			                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
 			                                    	</form>
+			                                    	
 	                                			</td>
 	                                		</tr>
 	                        		</c:otherwise>
@@ -114,7 +116,7 @@
 	<br><br>	
 	<h3>Search Customer</h3>
 
-	<form class="form-margin" action = "/BankingApp/SearchExternalUser" method = "post">
+	<form class="form-margin" action = "/BankingApp/tier2/SearchExternalUser" method = "post">
 	            	<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 	            		<input class="form-control" type="text" name="customerID" placeholder="Customer ID">
 	            	</div>
@@ -149,9 +151,13 @@
 	                                			<td>${customerObj.id}</td>
 	                                			<td>${customerObj.email}</td>
 	                                			<td>
-	                                				<form action = "/BankingApp/showAccountDetails" method = "post" style="display:inline">
-			                             
+	                                				<form action = "/BankingApp/tier2/showExternalAccount" method = "post" style="display:inline">
+			                                    		<input type="hidden" name="customerID" value="${customerObj.id}">
 			                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
+			                                    	</form>
+			                                    	<form action = "/BankingApp/tier2/deleteExternalUser" method = "post" style="display:inline">
+			                                    		<input type="hidden" name="customerID" value="${customerObj.id}">
+			                                    		<button type="submit" class="btn btn-sm btn-primary">Delete Account</button>
 			                                    	</form>
 	                                			</td>
 	                                		</tr>

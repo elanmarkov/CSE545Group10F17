@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Accounts Transaction</title>
+	<title>Tier 2 Transaction Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -87,6 +87,7 @@
 					    </thead>
 					    
 					      <tbody>
+					      	<c:forEach items="${transaction_list}" var="transaction">
         					<tr>
 	                    		<td>${transaction.id}</td>
 								<td>${transaction.payer_id}</td>
@@ -94,11 +95,10 @@
 								<td>${transaction.amount}</td>
 								<td>${transaction.transaction_type}</td>
 								<td>
-	                        		<form action = "processaccdebitcredit" method = "post">
+	                        		<form action = "/BankingApp/tier2/transactionReview" method = "post">
 	                        			<div class="form-group">
 											<input type="hidden" name="transactionID" value="${transaction.id}">
-                                    		<input type="hidden" name="extUserID" value="${extUserID}">
-                                    		<select id="requestType" name="requestType" style="float" required>
+                                    		<select id="requestDecision" name="requestDecision" style="float" required>
 		       									<option value="">Please Select</option>
 		          								<option value="approve">Approve</option>
 		          								<option value="reject">Reject</option>
@@ -108,6 +108,7 @@
                                		</form>
 								</td>
 	                		</tr>
+	                		</c:forEach>
                         				
                         </tbody>
 					  </table>
@@ -120,17 +121,17 @@
 			<div class="jumbotron">
 			<h3><strong>Add New Transaction</strong></h3>
 			
-			<form action="/BankingApp" method="post">
+			<form action="/BankingApp/tier2/transactionNew" method="post">
 					
 					<div class="form-group">
 						<label>Sender Account</label>
-						<input type="number" class="form-control" name="senderAccount.number" placeholder="Sender Account Number">
+						<input type="number" class="form-control" name="senderAccountNumber" placeholder="Sender Account Number">
 					</div>
 
 
 					<div class="form-group">
 						<label>Receiver Account</label>
-						<input type="number" class="form-control" name="receiverAccount.number" placeholder="Receiver Account Number">
+						<input type="number" class="form-control" name="receiverAccountNumber" placeholder="Receiver Account Number">
 					</div>
 
 					<div class="form-group">

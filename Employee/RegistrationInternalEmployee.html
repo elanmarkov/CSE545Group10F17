@@ -39,8 +39,7 @@
 	    				<h3 class="panel-title"><strong>Registration</strong></h3>
 	 				 </div>
 				<div class="jumbotron">
-				  <form action="/employee/internalreg" method="POST">
-				  	<fieldset>
+			  <form action="/BankingApp/employee/internalreg" method="POST">
 				  		
 					  <div class="form-group">
 					    <label for="firstName">Name</label>
@@ -55,10 +54,10 @@
 					  <div class="form-group">
 							<label for="select">Role</label>
 							        <select class="form-control" name="designation" id="designation" required>
-							          <option value="">Select Option</option>
-							          <option value="ROLE_REGULAR">Regular</option>
-							          <option value="ROLE_MANAGER">Manager</option>
-							          <option value="ROLE_ADMIN">Admin</option>
+							          <option value="">Please Select</option>
+							          <option value="regular">Regular</option>
+							          <option value="manager">Manager</option>
+							          <option value="admin">Admin</option>
 							        </select>
 					  </div>
 
@@ -94,7 +93,7 @@
 
 					  <div class="form-group">
 					    <label for="ssn">SSN</label>
-					    <input type="text" class="form-control" id="ssn" name="SSN" placeholder="XXX-XX-XXXX" required>
+					    <input type="text" class="form-control" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
 					  </div>
 					  
 					   <div class="form-group">
@@ -104,8 +103,9 @@
 						<div id = "errorBox" class="form-group"></div>
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
-					  </fieldset>
-				  </form>
+
+			  </form>
+
 				</div>
 			</div>
 		</div>

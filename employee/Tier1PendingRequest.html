@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Pending Request Management</title>
+	<title>Tier 2 Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	
 	<style type="text/css">
@@ -96,12 +96,12 @@
 											<td style="text-align:center">${transaction.transaction_type}</td>
 											<td style="text-align:center">${transaction.critical}</td>
 											<td style="text-align:center">
-												<form action = "/BankingApp/employee/PendingRequestManagement" method = "post">
-		                                    
-		                                    		<select id="requestType" name="requestType" required>
-				       									<option value="">Select Type</option>
-				          								<option value="approve">Approve Request</option>
-				          								<option value="reject">Reject Request</option>
+												<form action = "/BankingApp/employee/tier2req" method = "post">
+		                                    	<input type="hidden" name="requestID" value="${request.id}">
+		                                    		<select id="requestType" name="requestDecision" required>
+				       									<option value="">Please Select</option>
+				          								<option value="approve">Approve</option>
+				          								<option value="reject">Reject</option>
 				       								</select>
 		                                    		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 		                                   		</form>
