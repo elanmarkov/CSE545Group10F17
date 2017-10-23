@@ -44,8 +44,7 @@
     				<h3 class="panel-title">Registration</h3>
  				 </div>
 			<div class="jumbotron">
-			  <form action="internalregister" method="POST">
-			  	<fieldset>
+			  <form action="/BankingApp/employee/externalreg" method="post">
 
 			  		<div class="form-group">
 				    <label for="firstName">Name</label>
@@ -63,17 +62,17 @@
 					<div class="form-group">
 						<label for="select">Role</label>
 						        <select class="form-control" name="designation" id="designation" required>
-						          <option value="">Select Option</option>
-						          <option value="ROLE_REGULAR">Regular</option>
-						          <option value="ROLE_MANAGER">Manager</option>
-						          <option value="ROLE_ADMIN">Admin</option>
+						          <option value="">Please Select</option>
+						          <option value="regular">Regular</option>
+						          <option value="manager">Manager</option>
+						          <option value="admin">Admin</option>
 						        </select>
 					</div>
 				  
 
 				  <div class="form-group">
 				    <label for="address">Address</label>
-				    <input type="text" class="form-control" id="address" placeholder="Address" required>
+				    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
 				  </div>
 
 				  <div class="form-group">
@@ -93,28 +92,27 @@
 				  
 				  <div class="form-group">
 				    <label for="phone">Phone Number</label>
-				    <input type="text" class="form-control" id="phone" placeholder="Phone Number" required>
+				    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
 				  </div>
 
 				  <div class="form-group">
 				    <label for="dateOfBirth">Date of Birth</label>
-				    <input type="text" class="form-control" id="dateOfBirth" placeholder="mm/dd/yyyy" required>
+				    <input type="text" class="form-control" id="dateOfBirth" name="DoB" placeholder="mm/dd/yyyy" required>
 				  </div>
 
 				 <div class="form-group">
 				    <label for="ssn">SSN</label>
-				    <input type="text" class="form-control" id="ssn" placeholder="XXX-XX-XXXX" required>
+				    <input type="text" class="form-control" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
 				  </div>
 
 				  <div class="form-group">
-				    <label for="userName">User Name</label>
-				    <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name" required>
+				    <label for="username">Username</label>
+				    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
 				  </div>
 				  
 					<div id = "errorBox" class="form-group"></div>
 				  <button type="submit" id="submit" class="btn btn-default"onclick="Validate()">Submit</button>
 
-				  </fieldset>
 			  </form>
 			</div>
 		</div>

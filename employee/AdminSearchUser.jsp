@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 	<html lang="en">
 	<head>
-		<title>Search Employee</title>
+		<title>Admin Search</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		
 		<style type="text/css">
@@ -36,134 +36,84 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
-        	<li class="dropdown">
+			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+        	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="#">Internal</a></li>
-	            <li><a href="#">External</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
 	          </ul>
         	</li>
 
-        	<li><a href="#">Pending Request</a></li>
-		</ul>
+        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
+		</ul> -->
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+		
 		</ul>
 	</div>
 </nav>
 
 
-	<div class="container" id="loginBox">
-		<h3><strong>Search Employee</strong></h3>
-		<form class="form-margin" action = "/BankingApp/searchInternalUser" method = "post">
-	            	<div>
-	            		<input class="form-control" type="text" name="employeeID" placeholder="Employee ID" required>
-	            	</div>
-	            	<br>
-		       		<button type="submit" class="btn btn-sm btn-primary">Search Employee</button>
-	            </form>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
-				
-				  <form>
-					  <table class="table table-hover">
-						    <thead>
-						      <tr>
-						        <th class="active">Employee ID</th>
-						        <th class="active">Employee Email</th>
-						        <th class="active">Action</th>
-						       
-						      </tr>
-						    </thead>
-						    <tbody>
+<div class="container" id="loginBox">
+	<div class="row">
+		<div class="col-lg-16">
+			<div class="jumbotron">
+			<h3><strong>Search Employee</strong></h3>
+			<form class="form-margin" action = "/BankingApp/admin/searchInternalUser" method = "post">
+	        	<div>
+	        		<input class="form-control" type="text" name="employeeID" placeholder="Employee ID" required>
+	        	</div>
+	        	<br>
+	       		<button type="submit" class="btn btn-sm btn-primary">Search Employee</button>
+	        </form>
+			<br>
+			
+			  <table class="table table-hover">
+			    <thead>
+			      <tr>
+			        <th>Employee ID</th>
+			        <th>Employee Email</th>
+			        <th>Action</th>
+			      </tr>
+			    </thead>
+			    <tbody>
 
-						    	<c:choose>
-		                        		<c:when test="${empty employeeObj}">
-		                        			<tr>
-		                                    	<td colspan="3">No Results</td>
-		                                	</tr>
-		                        		</c:when>
+			    	<c:choose>
+                    		<c:when test="${empty employeeObj}">
+                    			<tr>
+                                	<td colspan="3">No Results</td>
+                            	</tr>
+                    		</c:when>
 
-		                        		<c:otherwise>
-	                                		<tr>
-	                                			<td>${employeeObj.id}</td>
-	                                			<td>${employeeObj.email}</td>
-	                                			<td>
-	                                				<form action = "/BankingApp/showAccountDetails" method = "post" style="display:inline">
-			                                    		
-			                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
-			                                    	</form>
-	                                			</td>
-	                                		</tr>
-	                        		</c:otherwise>
-	                        	</c:choose>
+                    		<c:otherwise>
+                        		<tr>
+                        			<td>${employeeObj.id}</td>
+                        			<td>${employeeObj.email}</td>
+                        			<td>
+                        				<form action = "/BankingApp/admin/showAccountDetails" method = "post" style="display:inline">
+                                    		<input type="hidden" name="employeeID" value="${employeeObj.id}">
+                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
+                                    	</form>
+                                    	<form action = "/BankingApp/admin/deleteExternalUser" method = "post" style="display:inline">
+                                    		<input type="hidden" name="employeeID" value="${employeeObj.id}">
+                                    		<button type="submit" class="btn btn-sm btn-primary">Delete Account</button>
+                                    	</form>
+                        			</td>
+                        		</tr>
+                		</c:otherwise>
+                	</c:choose>
 
-						    			      
-						    </tbody>
-						  </table>
-				  </form>
-				</div>
-			</div>
-		</div>
+			    			      
+			    </tbody>
+			  </table>
+		
 
 	<br><br>	
-	<h3>Search Customer</h3>
-
-	<form class="form-margin" action = "/BankingApp/SearchExternalUser" method = "post">
-	            	<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
-	            		<input class="form-control" type="text" name="customerID" placeholder="Customer ID">
-	            	</div>
-	            	<br>
-
-		       		<button type="submit" class="btn btn-sm btn-primary">Search Customer</button>
-	            </form>
-
-		<div class="row">
-	                        <div class="col-lg-12">
-	                
-	                <div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
-	                    <table id="content-table" class="table table-hover">
-	                        <thead>
-	                            <tr>
-	                                <th class="active">Customer ID</th>
-	                                <th class="active">Customer Email</th>
-	                                <th class="active">Action</th>
-	                            </tr>
-	                        </thead>
-	                        <tbody>
-
-						    	<c:choose>
-		                        		<c:when test="${empty employeeObj}">
-		                        			<tr>
-		                                    	<td colspan="3">No Results</td>
-		                                	</tr>
-		                        		</c:when>
-
-		                        		<c:otherwise>
-	                                		<tr>
-	                                			<td>${customerObj.id}</td>
-	                                			<td>${customerObj.email}</td>
-	                                			<td>
-	                                				<form action = "/BankingApp/showAccountDetails" method = "post" style="display:inline">
-			                             
-			                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
-			                                    	</form>
-	                                			</td>
-	                                		</tr>
-	                        		</c:otherwise>
-	                        	</c:choose>
-
-						    			      
-						    </tbody>
-	                    </table>
-	                </div>
-	            </div>
-	        </div>
+	
 	</div>
 
 

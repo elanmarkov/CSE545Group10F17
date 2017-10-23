@@ -39,7 +39,7 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
         	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">

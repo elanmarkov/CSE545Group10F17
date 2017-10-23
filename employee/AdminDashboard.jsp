@@ -81,7 +81,7 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			  <h3>Pending Request</h3>
-			  <a href="/BankingApp/employee/PendingRequestManagement"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
+			  <a href="/BankingApp/employee/AdminPendingRequest"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
 			</div>
 		</div>
 	</div>

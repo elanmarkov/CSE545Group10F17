@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Pending Request Management</title>
+	<title>Tier 2 Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	
 	<style type="text/css">
@@ -39,22 +39,23 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
-        	<li class="dropdown">
+			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
+        	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="#">Internal</a></li>
-	            <li><a href="#">External</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
 	          </ul>
         	</li>
 
-        	<li><a href="#">Pending Request</a></li>
-		</ul>
+        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
+		</ul> -->
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+		
 		</ul>
 	</div>
 </nav>
@@ -63,9 +64,7 @@
 	<div class="row">
 		<div class="col-lg-16">
 			<div class="jumbotron">
-			<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 			<h3><strong>Pending Request Management</strong></h3>
-			  <form>
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -79,6 +78,7 @@
 					      </tr>
 					    </thead>
 					    <tbody>
+                        	<c:choose>			      
 
 					    	<c:when test="${empty pending_list}">
                         			<tr>
@@ -87,35 +87,31 @@
                             </c:when>
                             <c:otherwise>
                         			<c:forEach items="${pending_list}" var="transaction">
-                        				<c:choose>
                         					<tr>
-                                    		<td style="text-align:center">${transaction.id}</td>
-											<td style="text-align:center">${transaction.payer_id}</td>
-											<td style="text-align:center">${transaction.payee_id}</td>
-											<td style="text-align:center">${transaction.amount}</td>
-											<td style="text-align:center">${transaction.transaction_type}</td>
-											<td style="text-align:center">${transaction.critical}</td>
-											<td style="text-align:center">
-												<form action = "/BankingApp/employee/PendingRequestManagement" method = "post">
-		                                    
-		                                    		<select id="requestType" name="requestType" required>
-				       									<option value="">Select Type</option>
-				          								<option value="approve">Approve Request</option>
-				          								<option value="reject">Reject Request</option>
+                                    		<td>${transaction.id}</td>
+											<td>${transaction.payer_id}</td>
+											<td>${transaction.payee_id}</td>
+											<td>${transaction.amount}</td>
+											<td>${transaction.transaction_type}</td>
+											<td>${transaction.critical}</td>
+											<td>
+												<form action = "/BankingApp/employee/tier1req" method = "post">
+		                                    	<input type="hidden" name="requestID" value="${request.id}">
+		                                    		<select id="requestType" name="requestDecision" required>
+				       									<option value="">Please Select</option>
+				          								<option value="approve">Approve</option>
+				          								<option value="reject">Reject</option>
 				       								</select>
 		                                    		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 		                                   		</form>
 											</td>
                                 		</tr>
-                        				</c:when>
                         				            
-                        				</c:choose>
                             		</c:forEach>
                         		</c:otherwise>
                         	</c:choose>			      
 					    </tbody>
 					  </table>
-			  </form>
 			</div>
 			</div>
 		</div>
