@@ -91,8 +91,8 @@
 						<label>Please select the account you would like to transfer to</label>
 							<select class="form-control" name="transferTo">
 							  <option value="">--please select the account transfer to--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
+							  <option value="savings">Savings Account</option>
+							  <option value="checking">Checking Account</option>
 							</select>
 					</div>
 
@@ -100,8 +100,8 @@
 						<label>Please select the account you would like to transfer from</label>
 							<select class="form-control" name="transferFrom">
 							  <option value="">--please select the account transfer from--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
+							  <option value="savings">Saving Account</option>
+							  <option value="checking">Checking Account</option>
 							</select>
 					</div>
 

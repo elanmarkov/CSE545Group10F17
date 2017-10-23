@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>System Logs</title>
+	<title>Tier 1 Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
 	<style type="text/css">
 		.logo{
@@ -17,12 +18,15 @@
 		}
 
 		#loginBox{
-			margin: 5% 5% 5% 10%;
+			margin: 5% 5% 10% 7%;
 		}
 
 		.hidden{
 			visibility: hidden;
 		}
+
+		
+		
 	</style>
 
 
@@ -36,10 +40,14 @@
 	</div>	
 </div>
 
+
+
+
+
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
         	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
@@ -61,47 +69,44 @@
 </nav>
 
 
-
-<div class="container" id="loginBox">
+<div class="container-fluid" id="loginBox">
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-14">
 			<div class="jumbotron">
 
-			<h3><strong>System Logs</strong></h3>
-				  <table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th>Employee ID</th>
-					        <th>Activity</th>
-					        <th>Details</th>
-					        <th>Timestamp</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-						<c:choose>
-						<c:when test="${empty logs}">
-                			<tr>
-                            	<td colspan="4">No Logs found</td>
-                        	</tr>
-                		</c:when>
-                		<c:otherwise>
-                			<c:forEach items="${loglist}" var="log">
-								<tr>
-									<td>${log.userid}</td>
-									<td>${log.activity}</td>
-									<td>${log.details}</td>
-									<td>${log.timestamp}</td>
-								</tr>
-							</c:forEach>
-                		</c:otherwise>
-                    	</c:choose>	
-				    		      
-					    </tbody>
-					  </table>
+			<h3><strong>Creat User Accounts</strong></h3>
+			<form action="/BankingApp/employee/creatAccounts" method="post">
+					
+					<div class="form-group">
+						<label>Username</label>
+						<input type="text" class="form-control" name="userName" placeholder="Username" required>
+					</div>
+
+					<div class="form-group">
+						<label class="checkbox-inline">
+					      <input type="checkbox" name="checking" value="yes">Checking Account
+					    </label>
+					    <label class="checkbox-inline">
+					      <input type="checkbox" name="savings" value="yes">Savings Account
+					    </label>
+					    <label class="checkbox-inline">
+					      <input type="checkbox" name="credit" value="yes">Credit Card
+					    </label>
+					</div>
+
+					 <input type="submit" value="Create">
+
+			</form>
+
 			</div>
 		</div>
 	</div>
 </div>
+
+
+
+
+
 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>

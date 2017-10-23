@@ -1,5 +1,6 @@
 package com.group10.dao.logs;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,8 +23,13 @@ public class LogsDaoImpl extends JdbcDaoSupport implements LogsDao {
 	}
 
 	public Boolean saveLogs(DbLogs log, String table){
-		String query = "INSERT INTO " + table + "(activity, userid, details, timestamp) values (?,?,?,?)";
+		String query = "INSERT INTO " + table + "_log (activity, userid, details, timestamp) values (?,?,?,?)";
 		return this.getJdbcTemplate().update(query, new Object[]{log.getActivity(), log.getUserid(), log.getDetails(), log.getTimestamp()})==1?true:false; 
+	}
+	
+	public void saveLogs(String activity, String details, int userid, String table){
+		String query = "INSERT INTO " + table + "_log (activity, userid, details, timestamp) values (?,?,?, NOW())";
+		 this.getJdbcTemplate().update(query, new Object[]{activity, userid, details }); 
 	}
 	
 	public int number(){

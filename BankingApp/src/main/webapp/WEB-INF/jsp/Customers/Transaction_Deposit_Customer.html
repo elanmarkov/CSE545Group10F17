@@ -84,13 +84,13 @@
 						<label>Please select the account you would like to deposit</label>
 							<select class="form-control" name="depositAccount">
 							  <option value="">--please select your account--</option>
-							  <option value="savingAccount">Saving Account</option>
-							  <option value="checkingAccount">Checking Account</option>
+							  <option value="savings">Savings Account</option>
+							  <option value="checking">Checking Account</option>
 							</select>
 					</div>
 					<div class="form-group">
 						<label>Please specify the amount you would like to deposit</label>
-						<input type="number" class="form-control" placeholder="$">
+						<input type="number" class="form-control" name="amount" placeholder="$">
 					</div>
 
 					<div class="form-group">

@@ -206,14 +206,14 @@ INSERT INTO user_login (role, username, password, user_id) VALUES ("adim", "admi
 -- INTERNAL REQUESTS (CHANGE USER ACCOUNT INFO)
 -- CREATE TABLE pending_internal_requests (
 --   id int NOT NULL,
---   name varchar(255),
 --   address varchar(255),
---   state varchar(255),
 --   city varchar(255),
---   zip_code varchar(255) ,
+
+--   state varchar(255),
+--   zipcode varchar(255) ,
 --   country varchar(255),
 --   phone varchar(255),
---   email varchar(255),
+--   email varchar(255), (not taken in dao)
 --   description varchar(255) NOT NULL,
 --   CONSTRAINT id PRIMARY KEY (id)
 -- );

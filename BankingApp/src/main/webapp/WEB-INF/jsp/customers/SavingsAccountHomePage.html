@@ -16,7 +16,7 @@
 			text-align: center;
 		}
 		#loginBox{
-			margin: 5% 5% 25% 10%;
+			margin: 5% 5% 25% 7%;
 		}
 		.hidden{
 			visibility: hidden;
@@ -74,7 +74,7 @@
 </nav>
 
 
-<div class="container">
+<div class="container-fluid"  id="loginBox">
 	<div class="row">
 		<div class="col-lg-14">
 			<div class="jumbotron">
@@ -85,8 +85,8 @@
 				    		<h4><strong>Savings Account Dashboard</strong></h4>
 				    	</div>
 				    	<div class="panel-body">
-				    		<p><h5>Account Number: <span>savingsAccount.accountNumber</span></h5></p>
-					    	<p><h5>Account Balance: <span>savingsAccount.balance</span></h5></p>
+				    		<p><h5>Account Number: <span>${savingsAccount.accountNumber}</span></h5></p>
+					    	<p><h5>Account Balance: <span>${savingsAccount.balance}</span></h5></p>
 					    	<a href="#"><button type="button" class="btn btn-default pull-right">Download Statements</button></a>
 
 				    	</div>
@@ -106,15 +106,26 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-					      <tr>
-					        <td>1</td>
-					        <td>transaction.description</td>
-					        <td>Checking</td>
-					        <td>payee.name</td>
-					        <td>transaction.amount</td>
-					        <td>transaction.status</td>
-					        <td>transaction.date</td>
-					      </tr>
+					      <c:choose>			      
+					    	<c:when test="${empty transactionList}">
+                        			<tr>
+                                    	<td colspan="3">No Transaction</td>
+                                	</tr>
+                            </c:when>
+                            <c:otherwise>
+                        			<c:forEach items="${transactionList}" var="transaction">
+								      <tr>
+								        <td>${transaction.id}</td>
+								        <td>${transaction.description}</td>
+								        <td>${transaction.transaction_type}</td>
+								        <td>${payee.name}</td>
+								        <td>${transaction.amount}</td>
+								        <td>${transaction.status}</td>
+								        <td>${transaction.timestamp_created}</td>
+								      </tr>
+								      </c:forEach>
+                    		</c:otherwise>
+                    	</c:choose>
 					    </tbody>
 					  </table>
 				    </div>

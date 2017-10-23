@@ -98,7 +98,7 @@ public class ForgotPassword {
         {
         	BCryptPasswordEncoder Encoder = new BCryptPasswordEncoder();
             udao.updatePassword(Encoder.encode(newPassword), username);
-	        model.setViewName("redirect:/login");
+	        model.setViewName("redirect:/login/login");
 
             LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class); 	    
     	    DbLogs dblog = new DbLogs();    

@@ -81,12 +81,12 @@
 									<h4><strong>Credit Card Dashboard</strong></h4> 
 								</div>
 								<div class="panel-body">
-									<p><h5>Next Payment Date: <span>$creditAccount.dueDate</span></h5></p>
-									<p><h5>Outstanding Balance: <span>$creditAccount.availableBalance</span></h5></p>
-									<p><h5>Credit Limit: <span>$creditAccount.creditLimit</span></h5></p>
-									<p><h5>Current Due Amount: <span>$creditAccount.currentDueAmount</span></h5></p>
-									<p><h5>Cycle Date: <span>$creditAccount.cycleDate</span></h5></p>
-									<p><h5>APR: <span>$creditAccount.APR</span></h5></p>
+									<p><h5>Next Payment Date: <span>${creditAccount.dueDate}</span></h5></p>
+									<p><h5>Outstanding Balance: <span>${creditAccount.availableBalance}</span></h5></p>
+									<p><h5>Credit Limit: <span>${creditAccount.creditLimit}</span></h5></p>
+									<p><h5>Current Due Amount: <span>${creditAccount.currentDueAmount}</span></h5></p>
+									<p><h5>Cycle Date: <span>${creditAccount.cycleDate}</span></h5></p>
+									<p><h5>APR: <span>${creditAccount.APR}</span></h5></p>
 									<a href="/BankingApp/creditPayment"><button type="button" class="btn btn-default pull-right">Make Payment</button></a>
 
 								</div>
@@ -110,7 +110,14 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="trans" items="${transations}" varStatus="loop">
+									<c:choose>			      
+							    	<c:when test="${empty transationList}">
+		                        			<tr>
+		                                    	<td colspan="7">No Transaction</td>
+		                                	</tr>
+		                            </c:when>
+		                            <c:otherwise>
+										<c:forEach var="trans" items="${transationList}" varStatus="loop">
 										<tr>
 											<th scope="row">${loop.index + 1}</th>
 											<td>${trans.description}</td>
@@ -121,6 +128,8 @@
 											<td>${trans.timestamp_updated}</td>
 										</tr>
 									</c:forEach>
+									</c:otherwise>
+		                        	</c:choose>	
 								</tbody>
 							</table>
 						</div>

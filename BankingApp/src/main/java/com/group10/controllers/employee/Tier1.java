@@ -45,9 +45,8 @@ public class Tier1 {
 	}
 	
 
-
 	@RequestMapping(value = "/employee/externalreg", method =RequestMethod.POST)
-	public ModelAndView InternalRegister(@ModelAttribute("user1") ExternalUser newUser, RedirectAttributes redir){
+	public ModelAndView ExternalRegister (@ModelAttribute("user1") ExternalUser newUser, RedirectAttributes redir){
 		try{
 		 ModelAndView model = new ModelAndView();
 		String name = newUser.getName();
@@ -111,11 +110,15 @@ public class Tier1 {
 			logsDao.saveLogs(dblogs, "external");
 		}
 		model.setViewName("redirect:/employee/RegistrationExternalEmployee");
+		ctx.close();
 		return model;
 	}catch(Exception e){
 		throw new HandlerClass();
 	}
 	}
+	
+	
+	
 }
 
 

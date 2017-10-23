@@ -15,8 +15,8 @@
 			margin: auto;
 			text-align: center;
 		}
-		#tabContent{
-			margin: 5% 5% 10% 10%;
+		#loginBox{
+			margin: 5% 5% 10% 8%;
 		}
 		.hidden{
 			visibility: hidden;
@@ -39,175 +39,199 @@
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="#">Home</a></li>
-        	<li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Deposit</a></li>
-	            <li><a href="#">Withdraw</a></li>
-	          </ul>
-        	</li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#">Deposit</a></li>
+					<li><a href="#">Withdraw</a></li>
+				</ul>
+			</li>
 
-        	<li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Between accounts</a></li>
-	            <li><a href="#">Send to others</a></li>
-	          </ul>
-        	</li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#">Between accounts</a></li>
+					<li><a href="#">Send to others</a></li>
+				</ul>
+			</li>
 
-        	<li><a href="#">Pending Request</a></li>
-        	<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
+			<li><a href="#">Pending Request</a></li>
+			<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
 		</ul>
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<button type="button" class="btn btn-default navbar-btn"><a href="#">My Profile</a></button>
-			<button type="button" class="btn btn-default navbar-btn"><a href="#">Log out</a></button>
+			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		</ul>
 	</div>
 </nav>
 
-	<div>
-		<div class="col-md-12" id="page-content">
-			
-			<a href="#modifyaccount" class="btn btn-default" style="margin-bottom:20px;" data-toggle="modal">Modify Account</a>
-			<a href="#changepassword" class="btn btn-default" style="margin-left: 15px;margin-bottom:20px;" data-toggle="modal">Change Password</a>
-			
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">User Details</h3>
-				</div>
-				<div class="panel-body no-padding">
-					<table id="content-table">
-						<tbody>
-							<tr>
-								<td class="active" style="width:30%">User ID</td>
-								<td>${user.id}</td>
-							</tr>
-							<tr>
-								<td class="active">Name</td>
-								<td>${user.name}</td>
-							</tr>
-							<tr>
-								<td class="active">Designation</td>
-								<td>${user.designation}</td>
-							</tr>
-							<tr>
-								<td class="active">Email</td>
-								<td>${user.email}</td>
-							</tr>
-							<tr>
-								<td class="active">Phone</td>
-								<td>${user.phone}</td>
-							</tr>	
-							<tr>
-								<td class="active">Address</td>
-								<td>${user.address}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>					
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">PII Information</h3>
-				</div>
-				<div class="panel-body no-padding">
-					<table id="content-table">
-						<thead>
-							<tr>
-								<th class="active">SSN</th>
-								<th class="active">Date Of Birth</th>
-							</tr>
-						</thead>
-						<tbody>
-						<tr>
-							<td>${user.ssn}</td>
-							<td>${user.date_of_birth}</td>
-						</tr>	
-						</tbody>
-					</table>
-				</div>					
-			</div>
-		</div>
 
-		<div class="modal" id="modifyaccount">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-body no-padding">
-		        <div class="panel panel-success no-margin">
-				  <div class="panel-heading">
-				    <h3 class="panel-title">Edit Account</h3>
-				  </div>
-				  <div class="panel-body">
-				    <form class="form-horizontal" action="addrequest" method="POST">
-				    	<fieldset>
-				    		<div class="form-group">
-				    			<label for="requestType" class="col-lg-3 control-label">Request Type</label>
-			    				<div class="col-lg-9 form-margin">
-       								<select class="form-control" name="requestType" id ="modifyaccountDropdown" required>
-       									<option value="">Select Type</option>
-          								<option value="phone">Phone Change</option>
-          								<option value="address">Address Change</option>
-       								</select>
-       							</div>
-       							<label for="newValue" class="col-lg-3 control-label">Enter</label>
-      							<div class="col-lg-9">
-        							<input type="text" class="form-control" name="newValue" id="newValue" placeholder="New Detail" required>
-      							</div>
-       							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;" id = "errorBox"></div>
-       							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;">
-	       							<button style="float:right;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        				<button style="float:right;margin-right:15px;" type="submit" onclick="Validate()" class="btn btn-primary">Submit</button>
-      							</div>
-				    		</div>
-				    	</fieldset>
-				    </form>
-				  </div>
-				</div>
-		      </div>
-		    </div>
-		  </div>
+<div class="container-fluid" id="loginBox">
+	<div class="row">
+		<div class="col-lg-14">
+			<div class="jumbotron">
+			<h3><strong>User Details</strong></h3>
+			
+				  <table class="table table-hover">
+					    <thead>
+					      <tr>
+					          <th>User ID</th>
+						      <th>Name</th>
+						      <th>Designation</th>
+						      <th>Email</th>
+						      <th>Phone</th>
+						      <th>Address</th>
+					      </tr>
+					    </thead>
+					    
+					      <tbody>
+        					<tr>
+	                    		<td>${user.id}</td>
+                    			<td>${user.name}</td>
+                    			<td>${user.designation}</td>
+                    			<td>${user.email}</td>
+                    			<td>${user.phone}</td>
+                    			<td>${user.address}</td>
+	                		</tr>
+                        </tbody>
+					  </table>
+				<a href="#modifyaccount" class="btn btn-default"  data-toggle="modal">Modify Account</a>
+				<a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a>
+
+			</div>
 		</div>
-		<div class="modal" id="changepassword">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-body no-padding">
-		        <div class="panel panel-success no-margin">
-				  <div class="panel-heading">
-				    <h3 class="panel-title">Change Password</h3>
-				  </div>
-				  <div class="panel-body">
-				    <form class="form-horizontal" action="changepassword" method="POST">
-				    	<fieldset>
-				    		<div class="form-group">
-       							<label for="oldpassword" class="col-lg-3 control-label">Old Password</label>
-      							<div class="col-lg-9 form-margin">
-        							<input type="password" class="form-control" name="oldpassword" placeholder="Old Password" required>
-      							</div>
-      							<label for="newpassword" class="col-lg-3 control-label">New Password</label>
-      							<div class="col-lg-9 form-margin">
-        							<input type="password" class="form-control" name="newpassword" placeholder="New Password" required>
-      							</div>
-      							<label for="confirmpassword" class="col-lg-3 control-label">Confirm</label>
-      							<div class="col-lg-9 form-margin">
-        							<input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" required>
-      							</div>
-       							
-       							<div class="col-lg-10 col-lg-offset-2" style="margin-top:15px;">
-	       							<button style="float:right;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        				<button style="float:right;margin-right:15px;" type="submit" class="btn btn-primary">Submit</button>
-      							</div>
-				    		</div>
-				    	</fieldset>
-				    </form>
-				  </div>
-				</div>
-		      </div>
-		    </div>
-		  </div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-14">
+			<div class="jumbotron">
+			<h3><strong>PII Information</strong></h3>			
+				<table class="table table-hover">
+					    <thead>
+					      <tr>
+					           <th>SSN</th>
+                               <th>Date of Birth</th>
+					      </tr>
+					    </thead>
+					    
+					      <tbody>
+        					<tr>
+	                    		<td>${user.ssn}</td>
+                    			<td>${user.dateOfBirth}</td>
+								
+	                		</tr>
+                        				
+	                </tbody>
+				  </table>
+			
+			
+
+			</div>
 		</div>
-	</div> 
+	</div>
+
+</div>
+
+<div class="modal fade" id="modifyaccount" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><strong>Account Info</strong></h4>
+        </div>
+        <div class="modal-body">
+          <form action="/BankingApp/employee/internalreg" method="POST">
+				  		
+					  <div class="form-group">
+					    <label for="address">Address</label>
+					    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="city">City</label>
+					    <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="state">State</label>
+					    <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="pincode">Zip Code</label>
+					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					  </div>
+					  
+					  <div class="form-group">
+					    <label for="phone">Phone Number</label>
+					    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
+					  </div>
+					  
+						<div id = "errorBox" class="form-group"></div>
+
+					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
+
+			  </form>
+
+        </div>
+        <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal" style="float:right">Close</button>
+        </div>
+      </div>
+      
+    </div>
+
+</div>
+
+<div class="modal fade" id="changepassword" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><strong>Change Password</strong></h4>
+        </div>
+        <div class="modal-body">
+          <form action="/BankingApp/employee/internalreg" method="POST">
+				  		
+					  <div class="form-group">
+					    <label for="oldPassward">Old Password</label>
+					    <input type="password" class="form-control" id="oldPassward" name="oldPassward" placeholder="Old Password" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="newPassward">New Password</label>
+					    <input type="password" class="form-control" id="newPassward" name="newPassward" placeholder="New Password" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="confirmPassward">Confirm Password</label>
+					    <input type="password" class="form-control" id="confirmPassward" name="confirmPassward" placeholder="Confirm Password" required>
+					  </div>
+					  
+						<div id = "errorBox" class="form-group"></div>
+
+					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
+
+			  </form>
+        </div>
+    	<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+      
+    </div>
+
+</div>
+
+
+
 	
 </main>
 

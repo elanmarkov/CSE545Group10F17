@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Pending Request Management</title>
+	<title>Admin Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
 	<style type="text/css">
 		.logo{
@@ -37,81 +36,63 @@
 	</div>	
 </div>
 
-
-
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Deposit</a></li>
-					<li><a href="#">Withdraw</a></li>
-				</ul>
-			</li>
+			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+        	<!-- <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
+	          </ul>
+        	</li>
 
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Between accounts</a></li>
-					<li><a href="#">Send to others</a></li>
-				</ul>
-			</li>
-
-			<li><a href="#">Pending Request</a></li>
-			<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
-		</ul>
+        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
+		</ul> -->
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+		
 		</ul>
 	</div>
 </nav>
-
-
-
-
 
 <div class="container-fluid" id="loginBox">
 	<div class="row">
 		<div class="col-lg-16">
 			<div class="jumbotron">
+			<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 			<h3><strong>Pending Request Management</strong></h3>
+			  <form action="/BankingApp/employee/adminreq" method="post">
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
 					        <th>Request ID</th>
-					        <th>Payer ID</th>
-					        <th>Payee ID</th>
-					        <th>Amount</th>
-					        <th>Type</th>
-					        <th>Critical Transaction</th>
+					        <th>Internal User ID</th>
+					        <th>Request Type</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-            				<c:choose>
-					    	<c:when test="${empty transactionList}">
+        				<c:choose>
+					    	<c:when test="${empty pending_list}">
                         			<tr>
                                     	<td colspan="7">No Pending Request</td>
                                 	</tr>
                             </c:when>
                             <c:otherwise>
-                        			<c:forEach items="${transactionList}" var="transaction">
+                        			<c:forEach items="${pending_list}" var="request">
                         					<tr>
-                                    		<td>${transaction.id}</td>
-											<td>${transaction.payer_id}</td>
-											<td>${transaction.payee_id}</td>
-											<td>${transaction.amount}</td>
-											<td>${transaction.transaction_type}</td>
-											<td>${transaction.critical}</td>
+                                    		<td>${request.id}</td>
+                                    		<td>${request.internalUser.id}</td>
+											<td>${request.internalUser.id.requestType}</td>
 											<td>
-												<form action = "/BankingApp/employee/PendingRequestManagement" method = "post">
-		                                    
-		                                    		<select id="requestType" name="requestType" required>
+												<form action = "/BankingApp/employee/adminPendingRequest" method = "post">
+		                                    		<input type="hidden" name="requestID" value="${request.id}">
+		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
 				          								<option value="approve">Approve</option>
 				          								<option value="reject">Reject</option>
@@ -125,6 +106,8 @@
                         	</c:choose>			      
 					    </tbody>
 					  </table>
+			  </form>
+			</div>
 			</div>
 		</div>
 	</div>

@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>Merchant Dashboard</title>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
-	<style type="text/css">
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<title>Customer Dashboard</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">	
+		<style type="text/css">
 		.logo{
-	
-		margin-bottom: 0px;
+
+			margin-bottom: 0px;
 		}
 
 		#title{
-			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
@@ -24,141 +21,107 @@
 		.hidden{
 			visibility: hidden;
 		}
-
-		
-		
-	</style>
-
-
-</head>
-<body>
+		</style>
+	</head>
+	<body>
 
 
-<div class="jumbotron logo">
-	<div class="container">
-	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
-</div>
+		<div class="jumbotron logo">
+			<div class="container">
+				<h2 id="title">GROUP10 BANK</h2>
+			</div>	
+		</div>
 
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<ul class="nav navbar-nav">
+					<li><a href="#">Home</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Deposit</a></li>
+							<li><a href="#">Withdraw</a></li>
+						</ul>
+					</li>
 
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Between accounts</a></li>
+							<li><a href="#">Send to others</a></li>
+						</ul>
+					</li>
 
-
-
-<nav class="navbar navbar-default">
-	<div class="container">
-		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Deposit</a></li>
-					<li><a href="#">Withdraw</a></li>
+					<li><a href="#">Pending Request</a></li>
+					<li><a href="/BankingApp/MerchantMakePayment">Merchant Panel</a></li>
 				</ul>
-			</li>
 
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Between accounts</a></li>
-					<li><a href="#">Send to others</a></li>
+
+				<ul class="nav navbar-nav navbar-right">
+					<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+					<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 				</ul>
-			</li>
-
-			<li><a href="#">Pending Request</a></li>
-			<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
-		</ul>
-
-
-		<ul class="nav navbar-nav navbar-right">
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		</ul>
-	</div>
-</nav>
+			</div>
+		</nav>
 
 
 
 <div class="container-fluid float-left" id="tabContent">
 	<div class="row">
-		<div class="col-lg-13">
+		<div class="col-lg-17">
 			<div class="jumbotron float-left">
-			
+
 				<ul class="nav nav-tabs">
-				  <li class="active"><a data-toggle="tab" href="#checkingAccount">Checking Account</a></li>
-				  <li><a data-toggle="tab" href="#savingAccount">Savings Account</a></li>
-				  <li><a data-toggle="tab" href="#creditCard">Credit Card</a></li>
+					<li class="active"><a data-toggle="tab" href="#checkingAccount">Checking Account</a></li>
+					<li><a data-toggle="tab" href="#savingAccount">Savings Account</a></li>
+					<li><a data-toggle="tab" href="#creditCard">Credit Card</a></li>
 				</ul>
 
 				<div class="tab-content">
-				  <div id="checkingAccount" class="tab-pane fade in active">
-				    <div>
-				    	<p><strong><h4>Checking Account Number: <span>$checkingAccount.accountNumber</span></h4></strong></p>
-				    	<p><strong><h4>Current Balance: <span>$checkingAccount.balance</span></h4></strong></p>
-				    	
-				    </div>
+					<div id="checkingAccount" class="tab-pane fade in active">
+						<div>
+							<p><strong><h4>Checking Account Number: <span>${checkingAccount.accountNumber}</span></h4></strong></p>
+							<p><strong><h4>Current Balance: <span>${checkingAccount.balance}</span></h4></strong></p>
+						</div>
 
-				    <div>
-				    	<p><h4>Last 5 transactions</h4></p>
-				    		<table class="table table-hover">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Description</th>
-												<th>Transaction Type</th>
-												<th>Payee</th>
-												<th>Amount</th>
-												<th>Status</th>
-												<th>Date</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
-
-											<tr>
-												<th scope="row">${loop.index + 1}</th>
-												<td>${transaction.description}</td>
-												<td>${transaction.transactionType}</td>
-												<!-- <c:choose>
-												<c:when test="${payer_id!=payee_id }">
-												<c:choose>
-												<c:when test="${account_number==payee_id}">
-												<td>CREDIT</td>
-											</c:when>
-											<c:otherwise>
-											<td>DEBIT</td>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:otherwise>
-								<c:choose>
-								<c:when test="${description==depo_desc}">
-								<td>CREDIT</td>
-							</c:when>
-							<c:otherwise>
-							<td>DEBIT</td>  
-						</c:otherwise>
-					</c:choose>														
-				</c:otherwise>
-			</c:choose> -->
-
-			<td>${transaction.payee_id}</td>
-			<td>${transaction.amount}</td>
-			<td>${transaction.status}</td>
-			<td>${transaction.timestamp_updated}</td>
-		</tr>
-	</c:forEach>
+						<div>
+							<p><h4>Last 5 transactions</h4></p>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Description</th>
+										<th>Transaction Type</th>
+										<th>Payee</th>
+										<th>Amount</th>
+										<th>Status</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="transaction" items="${checkingList}" varStatus="loop">
+										<tr>
+											<th scope="row">${loop.index + 1}</th>
+											<td>${transaction.description}</td>
+											<td>${transaction.transactionType}</td>
+											<td>${transaction.payee_id}</td>
+											<td>${transaction.amount}</td>
+											<td>${transaction.status}</td>
+											<td>${transaction.timestamp_updated}</td>
+										</tr>
+									</c:forEach>
 
 
 
-	</tbody>
-	</table>
-	<a href="/BankingApp/showCheckingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
-	</div>
+								</tbody>
+								</table>
+							<a href="/BankingApp/showCheckingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
+						</div>
+				</div>
 
-	</div>
 	<div id="savingAccount" class="tab-pane fade">
-		<p><strong><h4>Saving Account Number: <span>$savingAccount.accountNumber</span></h4></strong></p>
-		<p><strong><h4>Current Balance: <span>$savingAccount.balance</span></h4></strong></p>
+		<p><strong><h4>Saving Account Number: <span>${savingAccount.accountNumber}</span></h4></strong></p>
+		<p><strong><h4>Current Balance: <span>${savingAccount.balance}</span></h4></strong></p>
 		<div>
 			<p><h4>Last 5 transactions</h4></p>
 			<table class="table table-hover">
@@ -174,57 +137,27 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
-
-							<tr>
-								<th scope="row">${loop.index + 1}</th>
-								<td>${transaction.description}</td>
-								<td>${transaction.transactionType}</td>
-
-								
-                                                                               
-                                    	<!-- <c:choose>
-                                    		<c:when test="${payer_id!=payee_id }">
-                                    			<c:choose>
-  													<c:when test="${account_number==payee_id}">
-  														<td>CREDIT</td>
-  													</c:when>
-  													<c:otherwise>
-  														<td>DEBIT</td>
-  													</c:otherwise>
-  												</c:choose>
-  											</c:when>
-  											<c:otherwise>
-  												<c:choose>
-  													<c:when test="${description==depo_desc}">
-  														<td>CREDIT</td>
-													</c:when>
-													<c:otherwise>
-														<td>DEBIT</td>  
-													</c:otherwise>
-												</c:choose>														
-  											</c:otherwise>
-										</c:choose> -->
-                                    
-								<td>${transaction.payee_id}</td>
-								<td>${transaction.amount}</td>
-								<td>${transaction.status}</td>
-								<td>${transaction.timestamp_updated}</td>
-							</tr>
-						</c:forEach>
+					<c:forEach var="transaction" items="${savingsList}" varStatus="loop">
+						<tr>
+							<th scope="row">${loop.index + 1}</th>
+							<td>${transaction.description}</td>
+							<td>${transaction.transactionType}</td>
+							<td>${transaction.payee_id}</td>
+							<td>${transaction.amount}</td>
+							<td>${transaction.status}</td>
+							<td>${transaction.timestamp_updated}</td>
+						</tr>
+					</c:forEach>
 				
 				</tbody>
 			</table>
 			<a href="/BankingApp/showSavingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
 		</div>
-
-
-
-
 	</div>
+
 	<div id="creditCard" class="tab-pane fade">
-		<p><strong><h4>Credit Card Number: <span>$creditCardNumber.accountNumber</span></h4></strong></p>
-		<p><strong><h4>Current Balance: <span>$creditCardNumber.balance</span></h4></strong></p>
+		<p><strong><h4>Credit Card Number: <span>${creditCardNumber.accountNumber}</span></h4></strong></p>
+		<p><strong><h4>Current Balance: <span>${creditCardNumber.balance}</span></h4></strong></p>
 		<div>
 			<p><h4>Last 5 transactions</h4></p>
 			<table class="table table-hover">
@@ -240,61 +173,36 @@
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
-
-							<tr>
-								<th scope="row">${loop.index + 1}</th>
-								<td>${transaction.description}</td>
-								<td>${transaction.transactionType}</td>  
-                                                                               
-                                    	<!-- <c:choose>
-                                    		<c:when test="${payer_id!=payee_id }">
-                                    			<c:choose>
-  													<c:when test="${account_number==payee_id}">
-  														<td>CREDIT</td>
-  													</c:when>
-  													<c:otherwise>
-  														<td>DEBIT</td>
-  													</c:otherwise>
-  												</c:choose>
-  											</c:when>
-  											<c:otherwise>
-  												<c:choose>
-  													<c:when test="${description==depo_desc}">
-  														<td>CREDIT</td>
-													</c:when>
-													<c:otherwise>
-														<td>DEBIT</td>  
-													</c:otherwise>
-												</c:choose>														
-  											</c:otherwise>
-										</c:choose> -->
-                                    
-								<td>${transaction.payee_id}</td>
-								<td>${transaction.amount}</td>
-								<td>${transaction.status}</td>
-								<td>${transaction.timestamp_updated}</td>
-							</tr>
-						</c:forEach>
+				<c:forEach var="transaction" items="${creditList}" varStatus="loop">
+					<tr>
+						<th scope="row">${loop.index + 1}</th>
+						<td>${transaction.description}</td>
+						<td>${transaction.transactionType}</td>  
+						<td>${transaction.payee_id}</td>
+						<td>${transaction.amount}</td>
+						<td>${transaction.status}</td>
+						<td>${transaction.timestamp_updated}</td>
+					</tr>
+				</c:forEach>
 
 				</tbody>
 			</table>
-					  <a href="/BankingApp/showCreditTransactions"><button type="button" class="btn btn-default">View Details</button></a>
-				    </div>
-				  </div>
-				  
-
-
-				</div>
-
-			  
-			</div>
+			<a href="/BankingApp/showCreditTransactions"><button type="button" class="btn btn-default">View Details</button></a>
 		</div>
 	</div>
-</div>
 
 
-<script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</body>
-</html>
+
+	</div>
+
+
+	</div>
+	</div>
+	</div>
+	</div>
+
+
+	<script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</body>
+	</html>
