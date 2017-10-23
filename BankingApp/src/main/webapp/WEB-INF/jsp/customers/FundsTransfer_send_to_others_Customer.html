@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Withdraw</title>
+	<title>Funds Transfer - Send to Others</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -41,9 +41,6 @@
 </div>
 
 
-
-
-
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
@@ -76,38 +73,57 @@
 	</div>
 </nav>
 
+
+
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-				<form action="/BankingApp/withdrawMoney" method="post">
+
+				<div>
+					<h4><strong>Funds Transfer - Send to Others</strong></h4>
+				</div>
+
+				<form action="/BankingApp/transferfundsToOthersAccounts" method="post">
+
 					<div class="form-group">
-						<label>Please select the account you would like to withdraw</label>
-							<select class="form-control" name="withdrawAccount">
-							  <option value="">--please select your account--</option>
+						<label>Please select the mode you would like to use</label>
+							<select class="form-control" name="transferMode">
+							  <option value="">--please select transfer mode--</option>
+							  <option value="payeeEmail">Payee Email</option>
+							  <option value="payeePhone">Payee Phone</option>
+							  <option value="payeeAccountNumber">Payee Account Number</option>
+							</select>
+					</div>
+
+					<div class="form-group">
+					    <label>Please Enter Payee's Info</label>
+					    <input type="text" class="form-control" placeholder="Payee's Email/Phone/Account Number" name="payeeInfo" required>
+				  	</div>
+
+					<div class="form-group">
+						<label>Please select the account you would like to transfer from</label>
+							<select class="form-control" name="transferFrom">
+							  <option value="">--please select the account transfer from--</option>
 							  <option value="savingAccount">Saving Account</option>
 							  <option value="checkingAccount">Checking Account</option>
 							</select>
 					</div>
+
+
 					<div class="form-group">
-						<label>Please specify the amount you would like to withdraw</label>
-						<input type="number" class="form-control" placeholder="$">
+						<label>Please specify the amount you would like to transfer</label>
+						<input type="number" class="form-control" placeholder="$" name="transferAmount">
 					</div>
 
 					<div class="form-group">
-					 <button type="submit" class="btn btn-primary" value="Submit">Withdraw</button>
+					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
 					</div>
-				</form>
-		</div>
-
-		
-	</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>

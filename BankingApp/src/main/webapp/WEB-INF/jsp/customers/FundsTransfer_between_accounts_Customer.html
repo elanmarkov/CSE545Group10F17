@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Withdraw</title>
+	<title>Funds Transfer between accounts </title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -24,7 +24,7 @@
 		.hidden{
 			visibility: hidden;
 		}
-
+   
 		
 		
 	</style>
@@ -39,7 +39,6 @@
 	  <h2 id="title">GROUP10 BANK</h2>
 	</div>	
 </div>
-
 
 
 
@@ -76,38 +75,50 @@
 	</div>
 </nav>
 
+  
+
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-				<form action="/BankingApp/withdrawMoney" method="post">
+
+				<div>
+					<h4><strong>Funds Transfer - Within Accounts</strong></h4>
+				</div>
+
+				<form action="/BankingApp/transferfundsBetweenAccounts" method="post">
 					<div class="form-group">
-						<label>Please select the account you would like to withdraw</label>
-							<select class="form-control" name="withdrawAccount">
-							  <option value="">--please select your account--</option>
+						<label>Please select the account you would like to transfer to</label>
+							<select class="form-control" name="transferTo">
+							  <option value="">--please select the account transfer to--</option>
 							  <option value="savingAccount">Saving Account</option>
 							  <option value="checkingAccount">Checking Account</option>
 							</select>
 					</div>
+
 					<div class="form-group">
-						<label>Please specify the amount you would like to withdraw</label>
-						<input type="number" class="form-control" placeholder="$">
+						<label>Please select the account you would like to transfer from</label>
+							<select class="form-control" name="transferFrom">
+							  <option value="">--please select the account transfer from--</option>
+							  <option value="savingAccount">Saving Account</option>
+							  <option value="checkingAccount">Checking Account</option>
+							</select>
+					</div>
+
+
+					<div class="form-group">
+						<label>Please specify the amount you would like to transfer</label>
+						<input type="number" class="form-control" placeholder="$" name="transferAmount">
 					</div>
 
 					<div class="form-group">
-					 <button type="submit" class="btn btn-primary" value="Submit">Withdraw</button>
+					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
 					</div>
-				</form>
-		</div>
-
-		
-	</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>

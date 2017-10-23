@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Authorize Merchant</title>
+	<title>Checking Account Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
-
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
-
-		#tabContent{
-			margin: 5% 5% 10% 10%;
+		#loginBox{
+			margin: 5% 5% 25% 8%;
 		}
-
 		.hidden{
 			visibility: hidden;
 		}
-
-		
-		
+		#creditInfo{
+			/*background: whitesmoke;*/
+			height: 10%;
+			width: 50%;
+			padding: 0px;
+		}
 	</style>
 
 
@@ -37,10 +37,12 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
-		<nav class="navbar navbar-default">
+
+
+	<nav class="navbar navbar-default">
 			<div class="container">
 				<ul class="nav navbar-nav">
 					<li><a href="#">Home</a></li>
@@ -74,59 +76,50 @@
 
 
 
-<div class="container" id="">
+<div class="container-fluid"  id="loginBox">
 	<div class="row">
-		<div class="col-lg-10">
+		<div class="col-lg-14">
 			<div class="jumbotron">
 
-				<!-- <h3><strong>Merchant Infomation</strong></h3> -->
-				<hr size="30">
-				<hr size="30">
 
-				<div>
-					<h4><strong>Merchant List</strong></h4>
-					<form action="/BankingApp" method="post">
-					
-					  <select name="merchantSelection" id="select">
-			        		<option value="">Please Select</option>					        
-			        		<c:forEach items="${allMerchantAccounts}" var="item">
-                                    <option value="${merchant}">${item}</option>
-                                </c:forEach> </select>
-					  </select>
-					  <input type="submit" value="Add">
-				
-				  </form>
+				    <div class="panel panel-default" id="creditInfo">
+				    	<div class="panel-heading">
+				    		<h4><strong>Checking Account Dashboard</strong></h4>
+				    	</div>
+				    	<div class="panel-body">
+				    		<p><h5>Account Number: <span>${checkingAccount.account_no}</span></h5></p>
+					    	<p><h5>Account Balance: <span>${checkingAccount.balance}</span></h5></p>
+					    	<a href="#"><button type="button" class="btn btn-default pull-right">Download Statements</button></a>
 
-
-				</div>
-				
-			
-				<hr size="30">
-				<hr size="30">
-
-
-			<h4><strong>Authorized Merchant</strong></h4>
-
-			  <form action="/BankingApp" method="post">
-				  <table class="table table-hover">
+				    	</div>
+				    </div>
+			  <div>
+				    	<p><h4>Transaction History</h4></p>
+				    	<table class="table table-hover">
 					    <thead>
 					      <tr>
-					        <th>Merchant Name</th>
-					        <th>Action</th>
+					        <th>#</th>
+					        <th>Description</th>
+					        <th>Transaction Type</th>
+					        <th>Payee</th>
+					        <th>Amount</th>
+					        <th>Status</th>
+					        <th>Date</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					    	
-					      <!-- <tr>
-					        <td >merchant.id</td>
-					        <td>
-					        	<input type="checkbox" name="merchant.id.merchantAction" value="revoke">Revoke<br>
-					        </td>					        
-					      </tr>	 -->				      
+					      <tr>
+					        <td>${transaction.id}</td>
+					        <td>${transaction.description}</td>
+					        <td>${transaction.transaction_type}</td>
+					        <td>${payee.name}</td>
+					        <td>${transaction.amount}</td>
+					        <td>${transaction.status}</td>
+					        <td>${transaction.timestamp_created}</td>
+					      </tr>
 					    </tbody>
 					  </table>
-				  <button type="submit" class="btn btn-default btn-sm" >Submit</button>
-			  </form>
+				    </div>
 			</div>
 		</div>
 	</div>

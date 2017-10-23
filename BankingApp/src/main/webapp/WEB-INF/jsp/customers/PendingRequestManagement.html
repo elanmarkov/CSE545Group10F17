@@ -3,6 +3,7 @@
 <head>
 	<title>Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
 	<style type="text/css">
 		.logo{
@@ -36,19 +37,30 @@
 	</div>	
 </div>
 
+
+
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="#">Home</a></li>
-        	<li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Internal</a></li>
-	            <li><a href="#">External</a></li>
-	          </ul>
-        	</li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#">Deposit</a></li>
+					<li><a href="#">Withdraw</a></li>
+				</ul>
+			</li>
 
-        	<li><a href="#">Pending Request</a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="#">Between accounts</a></li>
+					<li><a href="#">Send to others</a></li>
+				</ul>
+			</li>
+
+			<li><a href="#">Pending Request</a></li>
+			<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
 		</ul>
 
 
@@ -59,21 +71,24 @@
 	</div>
 </nav>
 
+
+
+
+
 <div class="container-fluid" id="loginBox">
 	<div class="row">
 		<div class="col-lg-16">
 			<div class="jumbotron">
-			<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 			<h3><strong>Pending Request Management</strong></h3>
 			  <form>
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
-					        <th>Transaction ID</th>
+					        <th>Request ID</th>
 					        <th>Payer ID</th>
 					        <th>Payee ID</th>
-					        <th>Transaction Amount</th>
-					        <th>Transaction Type</th>
+					        <th>Amount</th>
+					        <th>Type</th>
 					        <th>Critical Transaction</th>
 					        <th>Action</th>
 					      </tr>
@@ -115,8 +130,9 @@
                         	</c:choose>			      
 					    </tbody>
 					  </table>
+
+				  
 			  </form>
-			</div>
 			</div>
 		</div>
 	</div>
