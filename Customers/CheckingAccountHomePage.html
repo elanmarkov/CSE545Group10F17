@@ -16,7 +16,7 @@
 			text-align: center;
 		}
 		#loginBox{
-			margin: 5% 5% 25% 8%;
+			margin: 5% 5% 25% 7%;
 		}
 		.hidden{
 			visibility: hidden;
@@ -108,15 +108,26 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-					      <tr>
-					        <td>${transaction.id}</td>
-					        <td>${transaction.description}</td>
-					        <td>${transaction.transaction_type}</td>
-					        <td>${payee.name}</td>
-					        <td>${transaction.amount}</td>
-					        <td>${transaction.status}</td>
-					        <td>${transaction.timestamp_created}</td>
-					      </tr>
+						<c:choose>			      
+					    	<c:when test="${empty transactionList}">
+                        			<tr>
+                                    	<td colspan="3">No Transaction</td>
+                                	</tr>
+                            </c:when>
+                            <c:otherwise>
+                        			<c:forEach items="${transactionList}" var="transaction">
+								      <tr>
+								        <td>${transaction.id}</td>
+								        <td>${transaction.description}</td>
+								        <td>${transaction.transaction_type}</td>
+								        <td>${payee.name}</td>
+								        <td>${transaction.amount}</td>
+								        <td>${transaction.status}</td>
+								        <td>${transaction.timestamp_created}</td>
+								      </tr>
+								      </c:forEach>
+                    		</c:otherwise>
+                    	</c:choose>	
 					    </tbody>
 					  </table>
 				    </div>

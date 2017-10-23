@@ -66,87 +66,62 @@
 
 
 
-		<div class="container-fluid float-left" id="tabContent">
-			<div class="row">
-				<div class="col-lg-17">
-					<div class="jumbotron float-left">
+<div class="container-fluid float-left" id="tabContent">
+	<div class="row">
+		<div class="col-lg-17">
+			<div class="jumbotron float-left">
 
-						<ul class="nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#checkingAccount">Checking Account</a></li>
-							<li><a data-toggle="tab" href="#savingAccount">Savings Account</a></li>
-							<li><a data-toggle="tab" href="#creditCard">Credit Card</a></li>
-						</ul>
+				<ul class="nav nav-tabs">
+					<li class="active"><a data-toggle="tab" href="#checkingAccount">Checking Account</a></li>
+					<li><a data-toggle="tab" href="#savingAccount">Savings Account</a></li>
+					<li><a data-toggle="tab" href="#creditCard">Credit Card</a></li>
+				</ul>
 
-						<div class="tab-content">
-							<div id="checkingAccount" class="tab-pane fade in active">
-								<div>
-									<p><strong><h4>Checking Account Number: <span>$checkingAccount.accountNumber</span></h4></strong></p>
-									<p><strong><h4>Current Balance: <span>$checkingAccount.balance</span></h4></strong></p>
+				<div class="tab-content">
+					<div id="checkingAccount" class="tab-pane fade in active">
+						<div>
+							<p><strong><h4>Checking Account Number: <span>${checkingAccount.accountNumber}</span></h4></strong></p>
+							<p><strong><h4>Current Balance: <span>${checkingAccount.balance}</span></h4></strong></p>
+						</div>
 
-								</div>
-
-								<div>
-									<p><h4>Last 5 transactions</h4></p>
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Description</th>
-												<th>Transaction Type</th>
-												<th>Payee</th>
-												<th>Amount</th>
-												<th>Status</th>
-												<th>Date</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
-
-											<tr>
-												<th scope="row">${loop.index + 1}</th>
-												<td>${transaction.description}</td>
-												<td>${transaction.transactionType}</td>
-												<!-- <c:choose>
-												<c:when test="${payer_id!=payee_id }">
-												<c:choose>
-												<c:when test="${account_number==payee_id}">
-												<td>CREDIT</td>
-											</c:when>
-											<c:otherwise>
-											<td>DEBIT</td>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:otherwise>
-								<c:choose>
-								<c:when test="${description==depo_desc}">
-								<td>CREDIT</td>
-							</c:when>
-							<c:otherwise>
-							<td>DEBIT</td>  
-						</c:otherwise>
-					</c:choose>														
-				</c:otherwise>
-			</c:choose> -->
-
-			<td>${transaction.payee_id}</td>
-			<td>${transaction.amount}</td>
-			<td>${transaction.status}</td>
-			<td>${transaction.timestamp_updated}</td>
-		</tr>
-	</c:forEach>
+						<div>
+							<p><h4>Last 5 transactions</h4></p>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Description</th>
+										<th>Transaction Type</th>
+										<th>Payee</th>
+										<th>Amount</th>
+										<th>Status</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="transaction" items="${checkingList}" varStatus="loop">
+										<tr>
+											<th scope="row">${loop.index + 1}</th>
+											<td>${transaction.description}</td>
+											<td>${transaction.transactionType}</td>
+											<td>${transaction.payee_id}</td>
+											<td>${transaction.amount}</td>
+											<td>${transaction.status}</td>
+											<td>${transaction.timestamp_updated}</td>
+										</tr>
+									</c:forEach>
 
 
 
-	</tbody>
-	</table>
-	<a href="/BankingApp/showCheckingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
-	</div>
+								</tbody>
+								</table>
+							<a href="/BankingApp/showCheckingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
+						</div>
+				</div>
 
-	</div>
 	<div id="savingAccount" class="tab-pane fade">
-		<p><strong><h4>Saving Account Number: <span>$savingAccount.accountNumber</span></h4></strong></p>
-		<p><strong><h4>Current Balance: <span>$savingAccount.balance</span></h4></strong></p>
+		<p><strong><h4>Saving Account Number: <span>${savingAccount.accountNumber}</span></h4></strong></p>
+		<p><strong><h4>Current Balance: <span>${savingAccount.balance}</span></h4></strong></p>
 		<div>
 			<p><h4>Last 5 transactions</h4></p>
 			<table class="table table-hover">
@@ -162,57 +137,27 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
-
-							<tr>
-								<th scope="row">${loop.index + 1}</th>
-								<td>${transaction.description}</td>
-								<td>${transaction.transactionType}</td>
-
-								
-                                                                               
-                                    	<!-- <c:choose>
-                                    		<c:when test="${payer_id!=payee_id }">
-                                    			<c:choose>
-  													<c:when test="${account_number==payee_id}">
-  														<td>CREDIT</td>
-  													</c:when>
-  													<c:otherwise>
-  														<td>DEBIT</td>
-  													</c:otherwise>
-  												</c:choose>
-  											</c:when>
-  											<c:otherwise>
-  												<c:choose>
-  													<c:when test="${description==depo_desc}">
-  														<td>CREDIT</td>
-													</c:when>
-													<c:otherwise>
-														<td>DEBIT</td>  
-													</c:otherwise>
-												</c:choose>														
-  											</c:otherwise>
-										</c:choose> -->
-                                    
-								<td>${transaction.payee_id}</td>
-								<td>${transaction.amount}</td>
-								<td>${transaction.status}</td>
-								<td>${transaction.timestamp_updated}</td>
-							</tr>
-						</c:forEach>
+					<c:forEach var="transaction" items="${savingsList}" varStatus="loop">
+						<tr>
+							<th scope="row">${loop.index + 1}</th>
+							<td>${transaction.description}</td>
+							<td>${transaction.transactionType}</td>
+							<td>${transaction.payee_id}</td>
+							<td>${transaction.amount}</td>
+							<td>${transaction.status}</td>
+							<td>${transaction.timestamp_updated}</td>
+						</tr>
+					</c:forEach>
 				
 				</tbody>
 			</table>
 			<a href="/BankingApp/showSavingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
 		</div>
-
-
-
-
 	</div>
+
 	<div id="creditCard" class="tab-pane fade">
-		<p><strong><h4>Credit Card Number: <span>$creditCardNumber.accountNumber</span></h4></strong></p>
-		<p><strong><h4>Current Balance: <span>$creditCardNumber.balance</span></h4></strong></p>
+		<p><strong><h4>Credit Card Number: <span>${creditCardNumber.accountNumber}</span></h4></strong></p>
+		<p><strong><h4>Current Balance: <span>${creditCardNumber.balance}</span></h4></strong></p>
 		<div>
 			<p><h4>Last 5 transactions</h4></p>
 			<table class="table table-hover">
@@ -228,42 +173,17 @@
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var="transaction" items="${TransactionArr}" varStatus="loop">
-
-							<tr>
-								<th scope="row">${loop.index + 1}</th>
-								<td>${transaction.description}</td>
-								<td>${transaction.transactionType}</td>  
-                                                                               
-                                    	<!-- <c:choose>
-                                    		<c:when test="${payer_id!=payee_id }">
-                                    			<c:choose>
-  													<c:when test="${account_number==payee_id}">
-  														<td>CREDIT</td>
-  													</c:when>
-  													<c:otherwise>
-  														<td>DEBIT</td>
-  													</c:otherwise>
-  												</c:choose>
-  											</c:when>
-  											<c:otherwise>
-  												<c:choose>
-  													<c:when test="${description==depo_desc}">
-  														<td>CREDIT</td>
-													</c:when>
-													<c:otherwise>
-														<td>DEBIT</td>  
-													</c:otherwise>
-												</c:choose>														
-  											</c:otherwise>
-										</c:choose> -->
-                                    
-								<td>${transaction.payee_id}</td>
-								<td>${transaction.amount}</td>
-								<td>${transaction.status}</td>
-								<td>${transaction.timestamp_updated}</td>
-							</tr>
-						</c:forEach>
+				<c:forEach var="transaction" items="${creditList}" varStatus="loop">
+					<tr>
+						<th scope="row">${loop.index + 1}</th>
+						<td>${transaction.description}</td>
+						<td>${transaction.transactionType}</td>  
+						<td>${transaction.payee_id}</td>
+						<td>${transaction.amount}</td>
+						<td>${transaction.status}</td>
+						<td>${transaction.timestamp_updated}</td>
+					</tr>
+				</c:forEach>
 
 				</tbody>
 			</table>

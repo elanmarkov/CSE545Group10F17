@@ -88,7 +88,7 @@
 
 						<div class="form-group">
 							<label>Checking Account Balance</label>
-							<input type="number" class="form-control" placeholder="$" name="checkingAccount.balance">
+							<input type="number" class="form-control" placeholder="$" name="checkingAccountBalance">
 						</div>
 
 						<div class="form-group">

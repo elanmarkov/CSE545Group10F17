@@ -91,10 +91,9 @@
 			        		<option value="">Please Select</option>					        
 			        		<c:forEach items="${allMerchantAccounts}" var="item">
                                     <option value="${merchant}">${item}</option>
-                                </c:forEach> </select>
+                            </c:forEach> 
 					  </select>
 					  <input type="submit" value="Add">
-				
 				  </form>
 
 
@@ -116,16 +115,26 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-					    	
-					      <!-- <tr>
-					        <td >merchant.id</td>
-					        <td>
-					        	<input type="checkbox" name="merchant.id.merchantAction" value="revoke">Revoke<br>
-					        </td>					        
-					      </tr>	 -->				      
+					    	<c:choose>
+					    	<c:when test="${empty merchantList}">
+                        			<tr>
+                                    	<td colspan="7">No Merchant</td>
+                                	</tr>
+                            </c:when>
+                            <c:otherwise>
+                        			<c:forEach items="${merchantList}" var="merchant">
+								      <tr>
+								        <td >merchant.id</td>
+								        <td>
+								        	<input type="checkbox" name=${merchant.id.merchantAction} value="yes">Revoke<br>
+								        </td>					        
+								      </tr>
+								      </c:forEach>
+                        		</c:otherwise>
+                        	</c:choose>					      
 					    </tbody>
 					  </table>
-				  <button type="submit" class="btn btn-default btn-sm" >Submit</button>
+				  <button type="submit" class="btn btn-default btn-sm">Submit</button>
 			  </form>
 			</div>
 		</div>

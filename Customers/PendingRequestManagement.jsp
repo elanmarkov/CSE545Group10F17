@@ -80,7 +80,6 @@
 		<div class="col-lg-16">
 			<div class="jumbotron">
 			<h3><strong>Pending Request Management</strong></h3>
-			  <form>
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -94,45 +93,38 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-
-					    	<c:when test="${empty pending_list}">
+            				<c:choose>
+					    	<c:when test="${empty transactionList}">
                         			<tr>
-                                    	<td colspan="7">No Pending Transaction</td>
+                                    	<td colspan="7">No Pending Request</td>
                                 	</tr>
                             </c:when>
                             <c:otherwise>
-                        			<c:forEach items="${pending_list}" var="transaction">
-                        				<c:choose>
+                        			<c:forEach items="${transactionList}" var="transaction">
                         					<tr>
-                                    		<td style="text-align:center">${transaction.id}</td>
-											<td style="text-align:center">${transaction.payer_id}</td>
-											<td style="text-align:center">${transaction.payee_id}</td>
-											<td style="text-align:center">${transaction.amount}</td>
-											<td style="text-align:center">${transaction.transaction_type}</td>
-											<td style="text-align:center">${transaction.critical}</td>
-											<td style="text-align:center">
+                                    		<td>${transaction.id}</td>
+											<td>${transaction.payer_id}</td>
+											<td>${transaction.payee_id}</td>
+											<td>${transaction.amount}</td>
+											<td>${transaction.transaction_type}</td>
+											<td>${transaction.critical}</td>
+											<td>
 												<form action = "/BankingApp/employee/PendingRequestManagement" method = "post">
 		                                    
 		                                    		<select id="requestType" name="requestType" required>
-				       									<option value="">Select Type</option>
-				          								<option value="approve">Approve Request</option>
-				          								<option value="reject">Reject Request</option>
+				       									<option value="">Please Select</option>
+				          								<option value="approve">Approve</option>
+				          								<option value="reject">Reject</option>
 				       								</select>
 		                                    		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 		                                   		</form>
 											</td>
                                 		</tr>
-                        				</c:when>
-                        				            
-                        				</c:choose>
                             		</c:forEach>
                         		</c:otherwise>
                         	</c:choose>			      
 					    </tbody>
 					  </table>
-
-				  
-			  </form>
 			</div>
 		</div>
 	</div>
