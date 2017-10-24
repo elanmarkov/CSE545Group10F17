@@ -7,7 +7,7 @@ public class Transaction {
 	private int id;
 	private int payer_id;
 	private int payee_id;
-	private BigDecimal amount;
+	private double amount;
 	private String hashvalue;
 	private String transaction_type;
 	private String description;
@@ -35,10 +35,10 @@ public class Transaction {
 	public void setPayee_id(int payee_id) {
 		this.payee_id = payee_id;
 	}
-	public BigDecimal getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public String getHashvalue() {

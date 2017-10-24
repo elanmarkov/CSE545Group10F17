@@ -44,6 +44,10 @@
 	 <bean id = "otpDaoImpl" class="com.group10.dao.otp.OtpDaoImpl">
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
+	 
+	 <bean id = "externalTransactionDaoImpl" class="com.group10.dao.transaction.ExternalTransactionDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
 	
 	 
 </beans>

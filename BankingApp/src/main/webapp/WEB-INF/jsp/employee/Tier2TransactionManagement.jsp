@@ -1,13 +1,14 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>Tier 2 Transaction Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -25,8 +26,8 @@
 			visibility: hidden;
 		}
 
-		
-		
+
+
 	</style>
 
 
@@ -37,7 +38,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 
@@ -61,7 +62,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -72,8 +73,8 @@
 	<div class="row">
 		<div class="col-lg-14">
 			<div class="jumbotron">
-			<h3><strong>Transaction List</strong></h3>
-			
+			<h3><strong>Transaction List${requestDecision}</strong></h3>
+
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -81,11 +82,11 @@
 							<th>Sender</th>
 							<th>Receiver</th>
 							<th>Amount</th>
-							<th>Type</th>
+							<th>Description</th>
 							<th>Action</th>
 					      </tr>
 					    </thead>
-					    
+
 					      <tbody>
 					      	<c:choose>
 					    	<c:when test="${empty transaction_list}">
@@ -97,10 +98,10 @@
 					      	<c:forEach items="${transaction_list}" var="transaction">
         					<tr>
 	                    		<td>${transaction.id}</td>
-								<td>${transaction.payer_id}</td>
-								<td>${transaction.payee_id}</td>
+								<td>${transaction.fromAccountID}</td>
+								<td>${transaction.toAccountID}</td>
 								<td>${transaction.amount}</td>
-								<td>${transaction.transaction_type}</td>
+								<td>${transaction.description}</td>
 								<td>
 	                        		<form action = "/BankingApp/tier2/transactionReview" method = "post">
 	                        			<div class="form-group">
@@ -109,7 +110,7 @@
 		       									<option value="">Please Select</option>
 		          								<option value="approve">Approve</option>
 		          								<option value="reject">Reject</option>
-		       								</select> 
+		       								</select>
                                     		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 										</div>
                                		</form>
@@ -117,7 +118,7 @@
 	                		</tr>
 	                		</c:forEach>
  							</c:otherwise>
-                    		</c:choose>	                        				
+                    		</c:choose>
                         </tbody>
 					  </table>
 			</div>
@@ -128,9 +129,9 @@
 		<div class="col-lg-14">
 			<div class="jumbotron">
 			<h3><strong>Add New Transaction</strong></h3>
-			
+
 			<form action="/BankingApp/tier2/transactionNew" method="post">
-					
+
 					<div class="form-group">
 						<label>Sender Account</label>
 						<input type="number" class="form-control" name="senderAccountNumber" placeholder="Sender Account Number" required>

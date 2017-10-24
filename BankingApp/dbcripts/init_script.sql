@@ -68,24 +68,26 @@ CREATE TABLE credit_cards (
 -- TRANSACTIONS
 CREATE TABLE completed_transactions (
     id int NOT NULL,
-    initiator_id int NOT NULL,
     amount double NOT NULL,
+    initiatorID int NOT NULL,
     stamp Timestamp NOT NULL,
-    to_account_id int NOT NULL,
+    completedStamp Timestamp NOT NULL,
+    toAccountID int NOT NULL,
     description varchar(255) NOT NULL,
-    from_account_id int NOT NULL,
-    reviewer_id int NOT NULL,
+    fromAccountID int NOT NULL,
+    reviewerIDint NOT NULL,
+    status varchar(255) NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE pending_transactions (
     id int NOT NULL,
-    initiator_id int NOT NULL;
+    initiatorID int NOT NULL;
     amount double NOT NULL,
     stamp Timestamp NOT NULL,
-    to_account_id int NOT NULL,
+    toAccountID int NOT NULL,
     description varchar(255) NOT NULL,
-    from_account_id int NOT NULL,
+    fromAccountID int NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -188,13 +190,13 @@ CREATE TABLE merchant_payment(
     status varchar(10) NOT NULL,
     merchant_id int NOT NULL,
     PRIMARY KEY (id)
-); 
+);
 
 CREATE TABLE OTP(
 	email varchar(40) NOT NULL,
 	otp varchar(10) NOT NULL,
 	stamp Timestamp NOT NULL,
-	attempts int NOT NULL	
+	attempts int NOT NULL
 );
 
 CREATE TABLE user_authentication(
