@@ -21,7 +21,6 @@ import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
-import com.group10.dbmodels.ExternalUser;
 import com.group10.dbmodels.InternalUser;
 
 @Controller
@@ -37,6 +36,7 @@ public class Admin {
 		userID = (Integer) request.getSession().getAttribute("userID");
 		username = (String) request.getSession().getAttribute("username");		
 	}
+	
 	@ExceptionHandler(HandlerClass.class)
     public String handleResourceNotFoundException() {
         return "redirect:/exception";
@@ -53,12 +53,28 @@ public class Admin {
 		return new ModelAndView("/employee/AdminDashboard");
 	}
 	
+	@RequestMapping("/employee/AdminPendingRequest")
+	public ModelAndView AdminPendingRequest(){
+		return new ModelAndView("/employee/AdminPendingRequest");
+	}
+	@RequestMapping("/employee/SystemLogs")
+	public ModelAndView SystemLogs(){
+		return new ModelAndView("/employee/SystemLogs");
+	}
+	@RequestMapping("/employee/AdminSearchUser")
+	public ModelAndView AdminSearchUser(){
+		return new ModelAndView("/employee/AdminSearchUser");
+	}
+	@RequestMapping("/employee/AdminUserDetails")
+	public ModelAndView AdminUserDetails(){
+		return new ModelAndView("/employee/AdminUserDetails");
+	}
 	
 	@RequestMapping("/employee/internalreg")
 	public ModelAndView InternalRegister(@ModelAttribute("user") InternalUser newUser, RedirectAttributes redir){
 		try{
 				ModelAndView model = new ModelAndView();
-			
+		
 		String name = newUser.getName();
 		String email = newUser.getEmail();
 		String designation = newUser.getDesignation();
@@ -111,7 +127,7 @@ public class Admin {
 			dblogs.setUserid(userID);
 			logsDao.saveLogs(dblogs, "internal");
         	redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-            model.setViewName("redirect:/employee/dashboard");
+            model.setViewName("/employee/dashboard");
 
 		}
 		else{
@@ -121,10 +137,11 @@ public class Admin {
 			dblogs.setDetails("Error occured due to existing email/phone/username");
 			dblogs.setUserid(userID);
 			logsDao.saveLogs(dblogs, "internal");
-            model.setViewName("redirect:/employee/RegistrationInternalEmployee");
+            model.setViewName("/employee/RegistrationInternalEmployee");
 
 		}
 		ctx.close();
+		
 		return model;
 		
 		}catch(Exception e){
@@ -132,30 +149,62 @@ public class Admin {
 		}
 	}
 
-	
+
 	@RequestMapping(value = "/employee/adminreq", method =RequestMethod.POST)
+	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") int requestId, @RequestParam("requestDecision") String reqDecision,
+			@RequestParam("userId") int userId,RedirectAttributes redir){
+			
+		try{
+			ModelAndView model = new ModelAndView();
+			
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			model.addObject("pending_list",fdao.getAdminPendingRequests());
+			/*  write the dao code for admin approval
+	         * 
+	        */ 
+			if(reqDecision.equals("approve"))
+				fdao.approveAdminRequest(requestId);
+			else
+				fdao.deletePendingRequest(requestId);
+			redir.addFlashAttribute("error_msg","Request"+reqDecision);
+			model.setViewName("/employee/AdminPendingRequests");
+			ldao.saveLogs("internal request"+reqDecision, "for"+userId, userID, "internal");
+			ctx.close();
+			return model;
+
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+	}
+	
+	
+	@RequestMapping(value = "/employee/adminModify", method =RequestMethod.POST)
 	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") String requestId, @RequestParam("requestDecision") String reqDecision,
 			@RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
 			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
 			 @RequestParam("userId") int userId,RedirectAttributes redir){
 		try{
 			ModelAndView model = new ModelAndView();
+			
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-			model.addObject(fdao.getAdminPendingRequests());
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-			/*  write the dao code for admin approval
+
+			/*  write the dao code for admin modify
 	         * 
 	        */ 
-			if(fdao.approveAdminRequest(address, city, state, zipcode, country, phone, userId)){	
+			if(fdao.adminModify(address, city, state, zipcode, country, phone, userId)){	
 				redir.addFlashAttribute("error_msg","Request Approved");
-				model.setViewName("redirect:/employee/AdminPendingRequests");
+				model.setViewName("/employee/AdminPendingRequests");
 				ldao.saveLogs("internal request approved", "for"+userId, userID, "internal");
 			}
 			else{
 				redir.addFlashAttribute("error_msg","Request Not Approved");
 				ldao.saveLogs("internal request approved", "for"+userId, userID, "internal");
-				model.setViewName("redirect:/employee/AdminPendingRequests");
+				model.setViewName("/employee/AdminPendingRequests");
 			}
 			ctx.close();
 			return model;
@@ -167,21 +216,18 @@ public class Admin {
 
 	
 
-	@RequestMapping(value = "/employee/searchLogs", method =RequestMethod.POST)
-	public void searchLogs(HttpServletRequest request, @RequestParam("requestID") String requestId, @RequestParam("requestDecision") String reqDecision, RedirectAttributes redir){
+	@RequestMapping(value = "/employee/SystemLogs", method =RequestMethod.POST)
+	public ModelAndView searchLogs(HttpServletRequest request, @RequestParam("requestID") String requestId, @RequestParam("requestDecision") String reqDecision, RedirectAttributes redir){
 		try{
         
 			ModelAndView model =new ModelAndView();
-			
-			/*
-         * write the dao code for admin approval
-         
-		if(){	
-			redir.addFlashAttribute("error_msg","Request Approved");
-			model.setViewName("");
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+					
+			model.addObject("logs",fdao.getLogs());
+			model.setViewName("/employee/SystemLogs");
+			ctx.close();
 			return model;
-		}
-*/
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
@@ -189,17 +235,32 @@ public class Admin {
 	}
 
 	@RequestMapping(value = "/admin/searchInternalUser", method =RequestMethod.POST)
-	public void searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeID, RedirectAttributes redir){
+	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeName") String employeeName, RedirectAttributes redir){
 		try{
+			
+			ModelAndView model =new ModelAndView();
+
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+				
         /*
          * write the dao code for admin approval
-         
-		if(){	
-			redir.addFlashAttribute("error_msg","Request Approved");
-			model.setViewName("");
-			return model;
-		}
-*/
+         */
+			if(fdao.existInternalUser(employeeName))
+			{	
+				ldao.saveLogs("searched for internal user", ""+employeeName, userID, "internal");
+				model.addObject("employeeObj",fdao.getInternalUser(employeeName));
+				redir.addFlashAttribute("error_msg","Employee Found");
+				model.setViewName("/admin/AdminSearchUser");
+			}
+			else{
+				redir.addFlashAttribute("error_msg","Employee Not Found");
+				model.setViewName("/admin/AdminSearchUser");
+			}
+			ctx.close();
+			return model;	
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
@@ -213,37 +274,31 @@ public class Admin {
 		try{
 			ModelAndView model = new ModelAndView();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			
-        /*
-         * write the dao code for admin approval
-         
-		if(){	
-			model.setViewName("redirect:/employee/AdminUserDetails");
-			model.addObject();
-			return model;
-		}
-*/		ctx.close();
-		return model;
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
+			ldao.saveLogs("Accessed details of employee", ""+employeeID, userID, "internal");
+			model.addObject("employeeObj",fdao.getInternalUser(employeeID));
+			model.addObject("employeePII", fdao.getUserPII(employeeID));
+			model.setViewName("/employee/AdminUserDetails");
+			ctx.close();
+			return model;
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-
 	}
 	
 	@RequestMapping(value = "/admin/deleteInternalUser", method =RequestMethod.POST)
 	public ModelAndView deleteInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeID, RedirectAttributes redir){
 		try{
-			ModelAndView model =new ModelAndView();
-  	      /*
-         * write the dao code for admin approval
-         
-		if(){	
-			redir.addFlashAttribute("error_msg","User deleted");
-			model.setViewName("redirect:/employee/AdminSearchUser");
-			
-		}
-*/
+			ModelAndView model = new ModelAndView();
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+			fdao.deleteInternalUser(employeeID);
+			ldao.saveLogs("deleted internal user", ""+employeeID, userID, "internal");
+			model.setViewName("/employee/AdminUserDetails");
+			ctx.close();
 			return model;
 
 		}catch(Exception e){

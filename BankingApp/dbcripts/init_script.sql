@@ -139,9 +139,9 @@ CREATE TABLE completed_external_requests (
 -- PII
 CREATE TABLE pii_info (
     id int NOT NULL,
-    external_users_id int NOT NULL,
-    date_of_birth varchar(10) NOT NULL,
-    ssn_number varchar(20) NOT NULL,
+    userid int NOT NULL,
+    dob varchar(10) NOT NULL,
+    ssn varchar(20) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -205,7 +205,8 @@ INSERT INTO user_login (role, username, password, user_id) VALUES ("adim", "admi
 
  INTERNAL REQUESTS (CHANGE USER ACCOUNT INFO)
  CREATE TABLE pending_internal_requests (
-   id int NOT NULL,
+   requestId int NOT NULL,
+   userid int NOT NULL,
    address varchar(255),
    city varchar(255),
    state varchar(255),

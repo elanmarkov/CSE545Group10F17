@@ -44,3 +44,4 @@ com\group10\dbmodels\CreditCard.class
 com\group10\dao\logs\LogsDao.class
 com\group10\dao\employee\UserRegistrationDaoImpl.class
 com\group10\controllers\LoginController.class
+com\group10\dbmodels\PII.class
