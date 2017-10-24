@@ -45,16 +45,18 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 	}
 	
 	public PendingTransaction createPendingTransaction(int initiatorID, double amount, int toAccountID, int fromAccountID, String description) {
+		
 		PendingTransaction trans = new PendingTransaction(initiatorID, amount, toAccountID, fromAccountID, description);
+		
 		String updateSQL = "INSERT INTO pending_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID) values (?,?,NOW(),?,?,?)";
 		this.getJdbcTemplate().update(updateSQL, new Object[]{ trans.getAmount(), trans.getInitiatorID(), trans.getToAccountID(), 
 				trans.getDescription(), trans.getFromAccountID()});
 		return trans;
 	}
 	
-	public List<PendingTransaction> getPendingCriticalTransactions() {
+	public List<PendingTransaction> getPendingNonCriticalTransactions() {
 		
-		String sql = "SELECT * FROM pending_transactions WHERE amount > 5000 LIMIT 10";
+		String sql = "SELECT * FROM pending_transactions WHERE amount < 5000 LIMIT 10";
 		return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<PendingTransaction>(PendingTransaction.class));
 		
 	}
@@ -66,42 +68,50 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 		
 	}
 	
-	public void approveTransaction(String transactionID, int reviewerID) {
+	public void approveTransaction(String transactionID, int reviewerID, String role) {
 
 		// Get the pending transaction that has now been reviewed
 		String sql = "SELECT * FROM pending_transactions WHERE id="+transactionID; 
 		PendingTransaction pendTrans = (PendingTransaction)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingTransaction.class));
 		
-		// DELETE PENDING TRANSACTION
-		String deleteSQL = "DELETE FROM pending_transactions WHERE id ="+transactionID;
-		this.getJdbcTemplate().update(deleteSQL);
-		
-		//TODO: IF NOT ENOUGH FUNDS, DECLINE TRANSACTION AND CHANGE DESCRIPTION TO "INSUFFICIENT FUNDS".
-		// IF SUFFICIANT, ACTUALY MOVE FUNDS BETWEEN ACCOUNTS
-		
-		// Add completed transaction to database
-		CompletedTransaction compTrans = new CompletedTransaction(pendTrans, reviewerID, "Approved"); // Make a completedTransaction object
-		String updateSQL = "INSERT INTO completed_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID,reviewerID,status) values (?,?,NOW(),?,?,?,?,?)";
-		this.getJdbcTemplate().update(updateSQL, new Object[]{compTrans.getAmount(), compTrans.getInitiatorID(), compTrans.getToAccountID(), 
-				compTrans.getDescription(), compTrans.getFromAccountID(), compTrans.getReviewerID(), compTrans.getStatus()});
+		if ((pendTrans.getAmount() > 5000) && (role.compareTo("tier2") != 0)) {
+			//TODO: ERROR. UNAUTHORIZED ATTEMPT TO APPROVE CRITICAL TRANSACTION
+		} else {
+			// DELETE PENDING TRANSACTION
+			String deleteSQL = "DELETE FROM pending_transactions WHERE id ="+transactionID;
+			this.getJdbcTemplate().update(deleteSQL);
+			
+			//TODO: IF NOT ENOUGH FUNDS, DECLINE TRANSACTION AND CHANGE DESCRIPTION TO "INSUFFICIENT FUNDS".
+			// IF SUFFICIANT, ACTUALY MOVE FUNDS BETWEEN ACCOUNTS
+			
+			// Add completed transaction to database
+			CompletedTransaction compTrans = new CompletedTransaction(pendTrans, reviewerID, "Approved"); // Make a completedTransaction object
+			String updateSQL = "INSERT INTO completed_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID,reviewerID,status) values (?,?,NOW(),?,?,?,?,?)";
+			this.getJdbcTemplate().update(updateSQL, new Object[]{compTrans.getAmount(), compTrans.getInitiatorID(), compTrans.getToAccountID(), 
+					compTrans.getDescription(), compTrans.getFromAccountID(), compTrans.getReviewerID(), compTrans.getStatus()});
+		}
 		
 	}
 	
-	public void declineTransaction(String transactionID, int reviewerID) {
+	public void declineTransaction(String transactionID, int reviewerID, String role) {
 		
 		// Get the pending transaction that has now been reviewed
 		String sql = "SELECT * FROM pending_transactions WHERE id="+transactionID; 
 		PendingTransaction pendTrans = (PendingTransaction)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingTransaction.class));
 		
-		// DELETE PENDING TRANSACTION
-		String deleteSQL = "DELETE FROM pending_transactions WHERE id ="+transactionID;
-		this.getJdbcTemplate().update(deleteSQL);
-		
-		// Add completed transaction to database
-		CompletedTransaction compTrans = new CompletedTransaction(pendTrans, reviewerID, "Rejected"); // Make a completedTransaction object
-		String updateSQL = "INSERT INTO completed_transactions (amount,initiatorID,stamp,completedStamp,toAccountID,description,fromAccountID,reviewerID,status) values (?,?,?,NOW(),?,?,?,?,?)";
-		this.getJdbcTemplate().update(updateSQL, new Object[]{compTrans.getAmount(), compTrans.getInitiatorID(), compTrans.getStamp(), compTrans.getToAccountID(), 
-				compTrans.getDescription(), compTrans.getFromAccountID(), compTrans.getReviewerID(), compTrans.getStatus()});
+		if ((pendTrans.getAmount() > 5000) && (role.compareTo("tier2") != 0)) {
+			//TODO: ERROR. UNAUTHORIZED ATTEMPT TO APPROVE CRITICAL TRANSACTION
+		} else {
+			// DELETE PENDING TRANSACTION
+			String deleteSQL = "DELETE FROM pending_transactions WHERE id ="+transactionID;
+			this.getJdbcTemplate().update(deleteSQL);
+			
+			// Add completed transaction to database
+			CompletedTransaction compTrans = new CompletedTransaction(pendTrans, reviewerID, "Rejected"); // Make a completedTransaction object
+			String updateSQL = "INSERT INTO completed_transactions (amount,initiatorID,stamp,completedStamp,toAccountID,description,fromAccountID,reviewerID,status) values (?,?,?,NOW(),?,?,?,?,?)";
+			this.getJdbcTemplate().update(updateSQL, new Object[]{compTrans.getAmount(), compTrans.getInitiatorID(), compTrans.getStamp(), compTrans.getToAccountID(), 
+					compTrans.getDescription(), compTrans.getFromAccountID(), compTrans.getReviewerID(), compTrans.getStatus()});
+		}
 		
 	}
 	

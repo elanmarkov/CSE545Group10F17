@@ -12,43 +12,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.group10.controllers.security.HandlerClass;
-import com.group10.dao.employee.EmpFunctionsDaoImpl;
-import com.group10.dao.transaction.*;
+import com.group10.dao.transaction.ExternalTransactionDaoImpl;
 import com.group10.dbmodels.PendingTransaction;
 
 @Controller
-public class Tier2PendingTransactions {
+public class Tier1PendingTransactions {
 	
-	@RequestMapping("/employee/Tier2TransactionManagement")
+	@RequestMapping("/employee/Tier1TransactionManagement")
 	public  ModelAndView loadPendingReqPage(){
-		ModelAndView model = new ModelAndView("/employee/Tier2TransactionManagement");
+		ModelAndView model = new ModelAndView("/employee/Tier1TransactionManagement");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
-		List<PendingTransaction> trans = extDao.getAllPendingTransactions();
+		List<PendingTransaction> trans = extDao.getPendingNonCriticalTransactions();
 		model.addObject("transaction_list", trans);
 		return model;
 	}
 	
-	@RequestMapping(value = "/tier2/transactionReview", method = RequestMethod.POST) 
+	@RequestMapping(value = "/tier1/transactionReview", method = RequestMethod.POST) 
 	public ModelAndView reviewedTransaction(HttpServletRequest request, @RequestParam("transactionID") String transId, @RequestParam("requestDecision") String requestDecision, RedirectAttributes redir) {
 		
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 			
 			if (requestDecision.equals("approve")) {
-				//TODO: PASS REVIEWER ID FROM SESSION and role
-				extDao.approveTransaction(transId, 1, "tier2");
+				//TODO: PASS REVIEWER ID FROM SESSION
+				extDao.approveTransaction(transId, 1, "tier1");
 			} else if (requestDecision.equals("reject")) {
 				//TODO: PASS REVIEWER ID FROM SESSION
-				extDao.declineTransaction(transId, 1, "tier2");
+				extDao.declineTransaction(transId, 1, "tier1");
 			}
 			
-			ModelAndView model = new ModelAndView("redirect:/employee/Tier2TransactionManagement");
+			ModelAndView model = new ModelAndView("redirect:/employee/Tier1TransactionManagement");
 			return model;
 	}
 	
-	@RequestMapping(value = "/tier2/transactionNew", method = RequestMethod.POST)
+	@RequestMapping(value = "/tier1/transactionNew", method = RequestMethod.POST)
 	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") int fromAccountID, @RequestParam("receiverAccountNumber") int toAccountID, @RequestParam("amountToAdd") double amount) {
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -59,11 +57,9 @@ public class Tier2PendingTransactions {
 			extDao.createPendingTransaction(1, amount, toAccountID, fromAccountID, "HARDCODED DESCRIPTION");
 		}
 		
-		ModelAndView model = new ModelAndView("redirect:/employee/Tier2TransactionManagement");
+		ModelAndView model = new ModelAndView("redirect:/employee/Tier1TransactionManagement");
 		return model;
 		
 	}
-	
-	
 	
 }
