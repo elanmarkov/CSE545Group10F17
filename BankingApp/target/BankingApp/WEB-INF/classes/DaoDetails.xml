@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+  xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/data/mongo
+    http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+    http://www.directwebremoting.org/schema/spring-dwr
+    http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
+   
+	<context:annotation-config/>
+	<context:component-scan base-package="com.group10.jdbc"/>
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	 	<property name="url" value="jdbc:mysql://localhost:3306/sakila"></property>
+	 	<property name="username" value="root"></property>
+	  	<property name="password" value="1234"></property> 
+	 </bean>
+	 
+	 <bean id = "jdbcSupport" class="com.group10.dao.JdbcSupport">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 
+	 <bean id = "logsDaoImpl" class="com.group10.dao.logs.LogsDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 
+	 <bean id = "customerDashboardDaoImpl" class="com.group10.dao.customerDashboard.CustomerDashboardDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	  <bean id = "userRegistrationDaoImpl" class="com.group10.dao.employee.UserRegistrationDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 
+	 <bean id = "empFunctionsDaoImpl" class="com.group10.dao.employee.EmpFunctionsDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 <bean id = "otpDaoImpl" class="com.group10.dao.otp.OtpDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	
+	 
+</beans>
