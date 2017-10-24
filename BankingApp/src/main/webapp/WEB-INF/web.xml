@@ -15,8 +15,7 @@
 	  <servlet-name>spring</servlet-name>
 	  <url-pattern>/</url-pattern>
   </servlet-mapping>
-  
-  <!-- Include the locations of spring-security.xml  and dispatcher.xml-->
+  <!-- 
    <context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -24,8 +23,7 @@
 			/WEB-INF/spring-security.xml
 		</param-value>
 	</context-param>
-  
-  <!--  Spring security web infrastructure declaration -->
+   
   <filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -35,7 +33,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
   
-  <!-- Spring session management declare -->
   <listener>
 		<listener-class>
 			org.springframework.web.context.ContextLoaderListener
@@ -47,5 +44,5 @@
       org.springframework.security.web.session.HttpSessionEventPublisher
     </listener-class>
   </listener>
-  
+   -->
 </web-app>

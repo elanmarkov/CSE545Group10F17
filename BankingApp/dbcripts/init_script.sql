@@ -203,20 +203,17 @@ CREATE TABLE user_authentication(
 
 INSERT INTO user_login (role, username, password, user_id) VALUES ("adim", "admin_username", "1234", 1234)
 
--- INTERNAL REQUESTS (CHANGE USER ACCOUNT INFO)
--- CREATE TABLE pending_internal_requests (
---   id int NOT NULL,
---   address varchar(255),
---   city varchar(255),
-
---   state varchar(255),
---   zipcode varchar(255) ,
---   country varchar(255),
---   phone varchar(255),
---   email varchar(255), (not taken in dao)
---   description varchar(255) NOT NULL,
---   CONSTRAINT id PRIMARY KEY (id)
--- );
+ INTERNAL REQUESTS (CHANGE USER ACCOUNT INFO)
+ CREATE TABLE pending_internal_requests (
+   id int NOT NULL,
+   address varchar(255),
+   city varchar(255),
+   state varchar(255),
+   zipcode varchar(255) ,
+   country varchar(255),
+   phone varchar(255),
+   PRIMARY KEY (id)
+ );
 --
 -- CREATE TABLE completed_internal_requests (
 --   id int NOT NULL,

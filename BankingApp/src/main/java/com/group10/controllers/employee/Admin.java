@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +24,7 @@ import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.ExternalUser;
 import com.group10.dbmodels.InternalUser;
 
-@Component
+@Controller
 public class Admin {
 	
 	String role;
@@ -36,12 +37,22 @@ public class Admin {
 		userID = (Integer) request.getSession().getAttribute("userID");
 		username = (String) request.getSession().getAttribute("username");		
 	}
+	@ExceptionHandler(HandlerClass.class)
+    public String handleResourceNotFoundException() {
+        return "redirect:/exception";
+    }
 	
 
 	@RequestMapping("/employee/RegistrationInternalEmployee")
 	public  ModelAndView InternalRegisterform(){
 		return new ModelAndView("/employee/RegistrationInternalEmployee");
 	}
+	
+	@RequestMapping("/employee/AdminDashboard")
+	public ModelAndView adminDashboardPage(){
+		return new ModelAndView("/employee/AdminDashboard");
+	}
+	
 	
 	@RequestMapping("/employee/internalreg")
 	public ModelAndView InternalRegister(@ModelAttribute("user") InternalUser newUser, RedirectAttributes redir){
@@ -140,7 +151,6 @@ public class Admin {
 				redir.addFlashAttribute("error_msg","Request Approved");
 				model.setViewName("redirect:/employee/AdminPendingRequests");
 				ldao.saveLogs("internal request approved", "for"+userId, userID, "internal");
-				return model;
 			}
 			else{
 				redir.addFlashAttribute("error_msg","Request Not Approved");
@@ -225,7 +235,7 @@ public class Admin {
 	public ModelAndView deleteInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeID, RedirectAttributes redir){
 		try{
 			ModelAndView model =new ModelAndView();
-        /*
+  	      /*
          * write the dao code for admin approval
          
 		if(){	
@@ -233,7 +243,7 @@ public class Admin {
 			model.setViewName("redirect:/employee/AdminSearchUser");
 			
 		}
-*/	
+*/
 			return model;
 
 		}catch(Exception e){

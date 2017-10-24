@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dbmodels.UserDetails;
 
 
@@ -30,68 +32,47 @@ public class LoginController {
 		username = (String) request.getSession().getAttribute("username");		
 	}
 	
-	@RequestMapping("/Login")
+	@RequestMapping("/login")
 	public  ModelAndView Login(){
-		return new ModelAndView("Login");
+		return new ModelAndView("/login/Login");
 	}
 	
-	@RequestMapping(value = "/Login", method = RequestMethod.POST)
-	public ModelAndView loginForm(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("roleSelection") String role, HttpServletRequest request) throws IOException {
+	@RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
+	public ModelAndView loginForm(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("roleSelection") String role,
+			HttpServletRequest request, RedirectAttributes redir) throws IOException {
 		try
 		{	
 			ModelAndView model = new ModelAndView();
 			UserDetails user = new UserDetails();
-			user.setUsername("user");
-			user.setPassword("pass");
-			user.setRole("customer");
-			boolean validateUser = false;
-			boolean validatePass = false;
-			boolean validateRole = false;
 			
-			if(username.compareTo(user.getUsername()) == 0)
-			{
-				validateUser = true;
-			}
-			if(password.compareTo(user.getPassword()) == 0)
-			{
-				validatePass = true;
-			}
-			if(role.compareTo(user.getRole()) == 0)
-			{
-				validateRole = true;
-			}
-			
-			if(validateUser && validatePass && validateRole)
-			{
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			if(edao.validateUserLogin(username, password, role)){
 				if(role.compareTo("customer") == 0)
 				{
-					model.setViewName("CustomerDashboard");
+					model.setViewName("redirect:/employee/CustomerDashboard");
 				}
-				else if(role.compareTo("merchant") == 0)
+				else if(role.equals("merchant"))
 				{
-					model.setViewName("merchant_Dashboard");
+					model.setViewName("redirect:/employee/merchant_Dashboard");
 				}
-				else if(role.compareTo("employee") == 0)
+				else if(role.equals("employee"))
 				{
-					model.setViewName("EmployeeDashboard");
+					model.setViewName("redirect:/employee/EmployeeDashboard");
 				}
-				else if(role.compareTo("manager") == 0)
+				else if(role.equals("manager"))
 				{
-					model.setViewName("Internal_users_dashboard");
+					model.setViewName("redirect:/employee/Internal_users_dashboard");
 				}
-				else if(role.compareTo("admin") == 0)
+				else if(role.equals("admin"))
 				{
-					model.setViewName("Admin_User_accounts_management");
-				}
-				else
-				{
-					model.setViewName("Login");
-					//return "redirect:/exception"; //or whatever error we want to throw
+					model.setViewName("redirect:/employee/AdminDashboard");
 				}
 			}
 			else
 			{
-				model.setViewName("Login");
+				redir.addFlashAttribute("error_msg", "user does not exist. Try again");
+				model.setViewName("/login/Login");
 			}
 			return model;
 		}

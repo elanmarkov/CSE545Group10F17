@@ -2,7 +2,6 @@ package com.group10.dbmodels;
 
 public class PendingInternalRequests {
 	private int userId;
-	private String name;
 	private String address;
 	private String state;
 	private String city;
@@ -15,12 +14,7 @@ public class PendingInternalRequests {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	public String getAddress() {
 		return address;
 	}

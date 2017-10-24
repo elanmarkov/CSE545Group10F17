@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.ExternalUser;
 
+
+@Controller
 public class Tier1 {
 
 
@@ -60,7 +64,7 @@ public class Tier1 {
 		String dob = newUser.getDob();
 		String ssn = newUser.getSsn();
 		String username = newUser.getUsername();
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		
 		//Validation of form fields
 		Validator validator = new Validator();

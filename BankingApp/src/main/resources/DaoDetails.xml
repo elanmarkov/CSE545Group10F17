@@ -38,4 +38,12 @@
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
 	 
+	 <bean id = "empFunctionsDaoImpl" class="com.group10.dao.employee.EmpFunctionsDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 <bean id = "otpDaoImpl" class="com.group10.dao.otp.OtpDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	
+	 
 </beans>
