@@ -30,7 +30,7 @@ CREATE TABLE external_users (
 CREATE TABLE checking_accounts (
     id int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    accountNumber int NOT NULL,
+    accountNumber varchar(255) NOT NULL,
     balance double NOT NULL,
     PRIMARY KEY (id)
 );
@@ -38,7 +38,7 @@ CREATE TABLE checking_accounts (
 CREATE TABLE savings_accounts (
     id int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    AccountNumber int NOT NULL,
+    accountNumber varchar(255) NOT NULL,
     balance double NOT NULL,
     PRIMARY KEY (id)
 );
@@ -46,15 +46,15 @@ CREATE TABLE savings_accounts (
 CREATE TABLE credit_accounts (
     id int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    accountNumber bigint NOT NULL, -- Credit card account numbers will be larger ints (full credit card number)
-    balance double NOT NULL,
+    accountNumber varchar(255) NOT NULL, -- Credit card account numbers will be larger ints (full credit card number)
+    currentAmountDue double NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE credit_cards (
   -- NOTE: CREDIT  ACCOUNT NUMBER IS SAME AS CREDIT CARD NUMBER ASSOCIATED WITH THAT ACCOUNT
     id int NOT NULL AUTO_INCREMENT,
-    creditCardNumber bigint NOT NULL, -- Credit card account numbers will be larger ints (full credit card number)
+    creditCardNumber varchar(255) NOT NULL, -- Credit card account numbers will be larger ints (full credit card number)
     userId int NOT NULL,
     cvv int NOT NULL,
     creditLimit double NOT NULL,
@@ -73,10 +73,10 @@ CREATE TABLE completed_transactions (
     initiatorID int NOT NULL,
     stamp Timestamp NOT NULL,
     completedStamp Timestamp NOT NULL,
-    toAccountID int, -- Null means withdrawl
+    toAccountID varchar(255), -- Null means withdrawl
     description varchar(255) NOT NULL, -- This will state if it is a withdrawl or deposit for easier reading
-    fromAccountID int, -- Null means deposit
-    reviewerIDint NOT NULL,
+    fromAccountID varchar(255), -- Null means deposit
+    reviewerID int NOT NULL,
     status varchar(255) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -86,9 +86,9 @@ CREATE TABLE pending_transactions (
     initiatorID int NOT NULL;
     amount double NOT NULL,
     stamp Timestamp NOT NULL,
-    toAccountID int, -- Null means withdrawl
+    toAccountID varchar(255), -- Null means withdrawl
     description varchar(255) NOT NULL, -- This will state if it is a withdrawl or deposit for easier reading
-    fromAccountID int, -- Null means deposit
+    fromAccountID varchar(255), -- Null means deposit
     PRIMARY KEY (id)
 );
 
@@ -97,8 +97,8 @@ CREATE TABLE pending_external_requests (
     id int NOT NULL AUTO_INCREMENT,
     amount double NOT NULL,
     stamp Timestamp NOT NULL,
-    toAccountID int NOT NULL,
-    fromAccountID int NOT NULL,
+    toAccountID varchar(255) NOT NULL,
+    fromAccountID varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
     receiverID int NOT NULL,
     initiatorID int NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE completed_external_requests (
   amount double NOT NULL,
   stamp Timestamp NOT NULL,
   completedStamp Timestamp NOT NULL,
-  toAccountID int NOT NULL,
-  fromAccountID int NOT NULL,
+  toAccountID varchar(255) NOT NULL,
+  fromAccountID varchar(255) NOT NULL,
   description varchar(255) NOT NULL,
   receiverId int NOT NULL,
   initiatorID int NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE OTP(
 -- LOGS
 CREATE TABLE internal_log(
   id int NOT NULL AUTO_INCREMENT,
-  userid int NOT NULL,
+  userId int NOT NULL,
   activity varchar(255) NOT NULL,
   details varchar(255) NOT NULL,
   stamp Timestamp NOT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE internal_log(
 
 CREATE TABLE external_log(
   id int NOT NULL AUTO_INCREMENT,
-  user_id int NOT NULL,
+  userId int NOT NULL,
   activity varchar(255) NOT NULL,
   details varchar(255) NOT NULL,
   stamp Timestamp NOT NULL,
