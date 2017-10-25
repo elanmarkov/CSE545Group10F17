@@ -18,9 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.transaction.TransactionDaoImpl;
 import com.group10.dao.transaction.TransferDAO;
-import com.group10.dao.otp.OtpDaoImpl;
 import com.group10.dbmodels.Transaction;
-import com.group10.dao.otp.OneTimePassword;
+
 @Controller
 public class InternalFunds {
 
@@ -38,11 +37,11 @@ public String handleResourceNotFoundException()
 	{
         return "redirect:/raiseexception";
     }
-@RequestMapping("/customers/Funds transfer_between accounts_Customer")
+@RequestMapping("customers/FundsTransfer_between_accounts_Customer")
 public ModelAndView internalFundTransfer(HttpServletRequest request) throws IOException {
 		try{
 			setGlobals(request);
-			ModelAndView model = new ModelAndView("/customers/Funds transfer_between accounts_Customer");
+			ModelAndView model = new ModelAndView("customers/Funds_transfer_between accounts_Customer");
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("resources/DaoDetails.xml");
 			TransferDAO transferDAO = ctx.getBean("transferDAO", TransferDAO.class);
 			int payerId = userID;
@@ -53,7 +52,7 @@ public ModelAndView internalFundTransfer(HttpServletRequest request) throws IOEx
 				transferDAO.getPayerAccounts(currentElements, userAcc);
 			}
 
-			model.addObject("userAcc", userAcc);
+			model.addObject("userAccounts", userAcc);
 			model.addObject("displayPanel", "internalFundTransfer");
 			request.getSession().setAttribute("userAcc", userAcc);
 			ctx.close();
@@ -65,7 +64,7 @@ public ModelAndView internalFundTransfer(HttpServletRequest request) throws IOEx
 		}
 		
 	}
-@RequestMapping(value = "/customers/Funds transfer_between accounts_Customer", method = RequestMethod.POST)
+	@RequestMapping(value = "Customer/Transfer", method = RequestMethod.POST)
 public ModelAndView InternalSubmit(HttpServletRequest request) throws ParseException {
 	try{
 		@SuppressWarnings("unchecked")
@@ -83,61 +82,36 @@ public ModelAndView InternalSubmit(HttpServletRequest request) throws ParseExcep
 			ctx.close();
 			return model;
 		}
-		String payerAccount_str = request.getParameter("itpselectPayerAccount");
-		if(!payerAccount_str.matches("\\d+:(CHECKING|SAVINGS)")){
+		
+		String originAccount = request.getParameter("itpselectPayerAccount");
+		if(!originAccount.matches("\\d+:(CHECKING|SAVINGS)")){
 			model.addObject("success", false);
 			model.addObject("error_msg", " Invalid Credentials!");
 			ctx.close();
 			return model;
 		}
-		String payeeAccount_str = request.getParameter("itpselectPayeeAccount");
-		if(!payeeAccount_str.matches("\\d+:(CHECKING|SAVINGS)")){
-			model.addObject("success", false);
-			model.addObject("error_msg", " Invalid Credentials!");
-			ctx.close();
-			return model;
-		}
-		BigDecimal amount = new BigDecimal(amount_str);
-		int payerAccountNumber = Integer.parseInt(request.getParameter("itpselectPayerAccount").split(":")[0]);
-		String payerAccountType = request.getParameter("itpselectPayerAccount").split(":")[1];
-		int payeeAccountNumber = Integer.parseInt(request.getParameter("itpselectPayeeAccount").split(":")[0]);
-		String payeeAccountType = request.getParameter("itpselectPayeeAccount").split(":")[1];
-		String description = request.getParameter("itpTextArea");
-		if (!(userAcc.contains(payerAccountNumber + ":" + payerAccountType)
-				&& userAcc.contains(payeeAccountNumber + ":" + payeeAccountType))) 
-		{
-			model.addObject("success", false);
-			model.addObject("error_msg", " Invalid Request!");
-			ctx.close();
-			return model;
-		}
-		if ((payerAccountNumber + ":" + payerAccountType)
-				.equalsIgnoreCase(payeeAccountNumber + ":" + payeeAccountType)) 
-		{
-			model.addObject("success", false);
-			model.addObject("error_msg", " Payer and Payee account are same!");
-			ctx.close();
-			return model;
 
-		}
-		boolean amountValid = transferDAO.validateAmount(payerAccountNumber, amount);
+		Double amount = new Double(amount_str);
+		int originAccountNumber = Integer.parseInt(request.getParameter("itpselectPayerAccount").split(":")[0]);
+		String originAccountType = request.getParameter("itpselectPayerAccount").split(":")[1];		
+		boolean amountValid = transferDAO.validateAmount(originAccountNumber, amount);
 		if (!amountValid) 
 		{
 
-			System.out.println("Inadequate balance!");
+			System.out.println("Inadequate Funds!");
 			model.addObject("success", false);
-			model.addObject("error_msg", "Insufficient balance!");
+			model.addObject("error_msg", "Insufficient Funds!");
 			ctx.close();
 			return model;
 		}
+		String description = null;
 		TransactionDaoImpl extTransactionDAO = ctx.getBean("TransactionDao", TransactionDaoImpl.class);
-		Transaction extTransferTrans = extTransactionDAO.createExternalTransaction(payerAccountNumber, amount,
-				payeeAccountNumber, description, "internalFundTfr");
+		Transaction extTransferTrans = extTransactionDAO.createExternalTransaction(originAccountNumber, amount,
+				originAccountNumber, description, "internalFundTfr");
 		extTransactionDAO.save(extTransferTrans);
-		transferDAO.updateHold(payerAccountNumber, amount);
+		transferDAO.updateHold(originAccountNumber, amount);
 		model.addObject("success", true);
-		model.addObject("payee_info", payeeAccountNumber + "-" + payeeAccountType);
-		model.addObject("payer_info", payerAccountNumber + "-" + payerAccountType);
+		model.addObject("payer_info", originAccountNumber + "-" + originAccountType);
 		model.addObject("Amount", amount);
 		ctx.close();
 		return model;
@@ -145,44 +119,6 @@ public ModelAndView InternalSubmit(HttpServletRequest request) throws ParseExcep
 		throw new HandlerClass(); 
 	}
 	}
-@RequestMapping(value = "Login/OtpVerify", method = RequestMethod.POST)
-public ModelAndView verifyTransactionOTP(HttpServletRequest request, @RequestParam("otpdata") String otp) throws ParseException {
-	try{
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("resources/DaoDetails.xml");
-		setGlobals(request);
-		TransactionDaoImpl extTransactionDAO = ctx.getBean("TransactionDao", TransactionDaoImpl.class);
-		TransferDAO transferDAO = ctx.getBean("transferDAO", TransferDAO.class);
-		OtpDaoImpl otpdao = ctx.getBean("OtpDaoImpl",OtpDaoImpl.class);
-		Transaction extTransferTrans = (Transaction)request.getSession().getAttribute("transaction");
-		String email = username;
-		String message = otpdao.verifyOTP(otp, email);
-		if(message.equals("OTP Validated")) 
-		{
-			String inputMode = (String)request.getSession().getAttribute("inputMode");
-			ModelAndView model = new ModelAndView("customerPages/transferConfirmation");
-			otpdao.sendEmailToUser(email, inputMode, extTransferTrans.getAmount());
-			extTransactionDAO.save(extTransferTrans);
-			transferDAO.updateHold(extTransferTrans.getPayer_id(), extTransferTrans.getAmount());
-			model.addObject("success", true);
-			model.addObject("payee_info", inputMode);
-			String payerAccountType = (String)request.getSession().getAttribute("eptpselectPayerAccount");
-			model.addObject("payer_info", extTransferTrans.getPayer_id() + "-" + payerAccountType);
-			model.addObject("Amount", extTransferTrans.getAmount());
-			ctx.close();
-			return model;
-		}
-		else {
-			ModelAndView model = new ModelAndView("Login/OtpVerify");
-			model.addObject("error_msg", message);
-			ctx.close();
-			return model;
-		}
-	}
-	catch(Exception e)
-	{
-		throw new HandlerClass(); 
-	}
-}}
 
-	
+}
 
