@@ -3,7 +3,9 @@ package com.group10.controllers;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.hibernate.validator.internal.util.logging.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,15 +24,10 @@ import com.group10.dbmodels.UserDetails;
 @Controller
 public class LoginController {
 
-	String role;
-	int userID;
-	String username;
-	
-	
-	public void setGlobals(HttpServletRequest request){
-		role = (String) request.getSession().getAttribute("role");
-		userID = 1;
-		username = (String) request.getSession().getAttribute("username");		
+	public void setSession(HttpServletRequest request, String role, int userID, String username){
+		request.getSession().setAttribute("role", role);
+		request.getSession().setAttribute("userID", userID);
+		request.getSession().setAttribute("username", username);		
 	}
 	
 	@ExceptionHandler(HandlerClass.class)
@@ -49,27 +46,31 @@ public class LoginController {
 			HttpServletRequest request, RedirectAttributes redir) {
 		try
 		{	
+			
 			ModelAndView model = new ModelAndView();
 			UserDetails user = new UserDetails();
-			
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-			 if(edao.validateUserLogin(username, password, role)){
+			username= username.split("@")[0];
+			
+			setSession(request, role, edao.getUserIdByName(username), username);			
+			
+			if(edao.validateUserLogin(username, password, role)){
 				if(role.compareTo("customer") == 0)
 				{
-					model.setViewName("/employee/CustomerDashboard");
+					model.setViewName("/customers/CustomerDashboard");
 				}
 				else if(role.equals("merchant"))
 				{
-					model.setViewName("/employee/merchant_Dashboard");
+					model.setViewName("/customers/merchant_Dashboard");
 				}
 				else if(role.equals("employee"))
 				{
-					model.setViewName("/employee/EmployeeDashboard");
+					model.setViewName("/employee/Tier1Dashboard");
 				}
 				else if(role.equals("manager"))
 				{
-					model.setViewName("/customer/Internal_users_dashboard");
+					model.setViewName("/employee/Tier2Dashboard");
 				}
 				else if(role.equals("admin"))
 				{
@@ -85,6 +86,8 @@ public class LoginController {
 		}
 		catch(Exception e){
 			//TODO: Redirect
+			System.out.println(e);
+			//logger.error("errroe",e);
 			throw new HandlerClass();
 		}
 	}

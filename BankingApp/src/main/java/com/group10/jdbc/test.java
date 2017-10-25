@@ -4,6 +4,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.group10.dao.JdbcSupport;
+import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dao.logs.LogsDaoImpl;
 
 public class test {
@@ -11,9 +12,9 @@ public class test {
 			
 		ApplicationContext  ctx = new ClassPathXmlApplicationContext("DaoDetails.xml"); 
 	    //JdbcSupport sdao = ctx.getBean("jdbcSupport" , JdbcSupport.class);
-	    LogsDaoImpl sdao = ctx.getBean("logsDaoImpl" , LogsDaoImpl.class);
+	    EmpFunctionsDaoImpl sdao = ctx.getBean("empFunctionsDaoImpl" , EmpFunctionsDaoImpl.class);
 		
-	    System.out.println(sdao.number());
+	    System.out.println(sdao.validateUserLogin("harsha", "1234", "admin"));
 			
 		}
 }

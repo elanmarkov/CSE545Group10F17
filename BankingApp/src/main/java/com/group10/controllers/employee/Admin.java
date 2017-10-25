@@ -42,7 +42,6 @@ public class Admin {
         return "redirect:/exception";
     }
 	
-
 	@RequestMapping("/employee/RegistrationInternalEmployee")
 	public  ModelAndView InternalRegisterform(){
 		return new ModelAndView("/employee/RegistrationInternalEmployee");
@@ -86,7 +85,7 @@ public class Admin {
 		String number = newUser.getPhone();
 		String dob = newUser.getDob();
 		String ssn = newUser.getSsn();
-		String username = newUser.getUsername();
+		String username = email.split("@")[0];
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		
 		
@@ -104,6 +103,7 @@ public class Admin {
 		
 		//check if the username and phone number are unique
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
+		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		if(udao.isUnique(username, number, email, "internal_users") == false)
 		{	isValidated = false;
 			redir.addFlashAttribute("error_message","email/number/username already exists. Select new ones");
@@ -118,8 +118,8 @@ public class Admin {
 			dob = encoder.encode(dob);
 			ssn = encoder.encode(ssn);
 			udao.setInternalUser(name, designation, address, city, state, country, pincode, number, email, dob, ssn, username); 
-			udao.setUserDetails(username, password, designation);
-			
+			udao.setLoginDetails(username, password, designation, email);
+		
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			DbLogs dblogs = new DbLogs();
 			dblogs.setActivity("Internal User creation");
@@ -127,7 +127,7 @@ public class Admin {
 			dblogs.setUserid(userID);
 			logsDao.saveLogs(dblogs, "internal");
         	redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-            model.setViewName("/employee/dashboard");
+            model.setViewName("/employee/AdminDashboard");
 
 		}
 		else{

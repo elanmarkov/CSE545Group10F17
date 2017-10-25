@@ -77,6 +77,11 @@
 					  </div>
 
 					  <div class="form-group">
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
+					  </div>
+
+					  <div class="form-group">
 					    <label for="pincode">Zip Code</label>
 					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
 					  </div>

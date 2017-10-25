@@ -39,7 +39,7 @@ public class ForgotPassword {
     }
 	
 	
-	@RequestMapping("forgotpassowrd")
+	@RequestMapping("/forgotpassowrd")
 		public ModelAndView ForgotPass(){
 			return new ModelAndView("/login/ForgotPassword");
 		}
@@ -83,14 +83,14 @@ public class ForgotPassword {
 		}
 	}
 	
-	@RequestMapping(value = "forgotpassword/changepassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/forgotpassword/changepassword", method = RequestMethod.POST)
 	public ModelAndView changePassword(RedirectAttributes redir, HttpServletRequest request, @RequestParam("newpassword") String newPassword,@RequestParam("confirmpassword") String confirmPassword) {
 		ModelAndView model = new ModelAndView();
 		String username = (String)request.getSession().getAttribute("forgotpassemail");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
         UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
         String type;
-        if(role.equals("ROLE_ADMIN")||role.equals("ROLE_TIER2")||role.equals("ROLE_TIER1"))
+        if(role.equals("ADMIN")||role.equals("TIER2")||role.equals("TIER1"))
 	    	type = "internal";
 	    else type = "external";
         Validator validator = new Validator();
@@ -98,7 +98,7 @@ public class ForgotPassword {
         {
         	BCryptPasswordEncoder Encoder = new BCryptPasswordEncoder();
             udao.updatePassword(Encoder.encode(newPassword), username);
-	        model.setViewName("redirect:/login/login");
+	        model.setViewName("/login/login");
 
             LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class); 	    
     	    DbLogs dblog = new DbLogs();    
@@ -110,7 +110,7 @@ public class ForgotPassword {
             return model;
         }
         else{
-            model.setViewName("redirect:/forgotpassword/changepassword");
+            model.setViewName("/forgotpassword/changepassword");
         	LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
      	     DbLogs dblog = new DbLogs();
      	     dblog.setActivity("Forgot password : " + username);

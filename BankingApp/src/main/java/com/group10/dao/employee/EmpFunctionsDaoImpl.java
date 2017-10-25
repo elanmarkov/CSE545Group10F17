@@ -19,8 +19,8 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 	}
 	
 	public boolean adminModify(String address,String city,String state, String zipcode, String country, String phone, int userId){
-		String sql = "Update internal_users set address="+address+",state="+state+",city="+city+",zipcode="+zipcode+",country="+country+",phone="+phone+" where userId="+userId;
-		String sql2 = "delete * from pending_internal_requests where userid="+userId;
+		String sql = "Update internal_users set address='"+address+"',state='"+state+"',city='"+city+"',zipcode='"+zipcode+"',country='"+country+"',phone='"+phone+"' where userId='"+userId+"'";
+		String sql2 = "delete * from pending_internal_requests where userid='"+userId+"'";
 		this.getJdbcTemplate().update(sql2);
 		return this.getJdbcTemplate().update(sql)==1?true:false;
 	}
@@ -44,10 +44,10 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 
 	public boolean validateUserLogin(String username, String password, String role) {
 		// TODO Auto-generated method stub
-	//	String sql = "select count(*) from user_login where username="+username+",password="+password+",role="+role;
-	//	int res = this.getJdbcTemplate().queryForObject(sql,Integer.class);
-		//return res==1?true:false;
-		return true;
+		String sql = "select count(*) from user_login where username='"+username+"' and password='"+password+"'and role='"+role+"'";
+		int res = this.getJdbcTemplate().queryForObject(sql,Integer.class);
+		return res==1?true:false;
+		//return true;
 	}
 
 	public List<DbLogs> getLogs() {
@@ -57,42 +57,48 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 
 	public InternalUser getInternalUser(String name) {
 		// TODO Auto-generated method stub
-		String sql = "select * from internal_users where name="+name;
+		String sql = "select * from internal_users where name='"+name+"'";
 		return this.getJdbcTemplate().queryForObject(sql, InternalUser.class);
 	
 	}
 
 	public boolean existInternalUser(String employeeName) {
 		// TODO Auto-generated method stub
-		String sql = "select count(*) from internal_users where name="+employeeName;
+		String sql = "select count(*) from internal_users where name='"+employeeName+"'";
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;	
 	}
 
 	public void deleteInternalUser(String employeeId) {
 		// TODO Auto-generated method stub
-		String sql = "delete * from internal_users where id="+employeeId;
+		String sql = "delete * from internal_users where id='"+employeeId+"'";
 		this.getJdbcTemplate().update(sql);		
 	}
 
 	public PII getUserPII(String userID) {
 		// TODO Auto-generated method stub
-		String sql = "select * from pii_info where userid= "+userID;
+		String sql = "select * from pii_info where userid='"+userID+"'";
 		return (PII)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PII.class));
 	}
 
 	public void approveAdminRequest(int requestId) {
-		String sql = "select * from pending_internal_requests where requestId="+requestId;
+		String sql = "select * from pending_internal_requests where requestId='"+requestId+"'";
 		PendingInternalRequests req = (PendingInternalRequests)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingInternalRequests.class));
-		String sql2 = "Update internal_users set address="+req.getAddress()+",state="+req.getState()+",city="+req.getCity()+",zipcode="+req.getZipcode()+",country="+req.getCountry()+",phone="+req.getPhone()+" where userId="+req.getUserId();
+		String sql2 = "Update internal_users set address='"+req.getAddress()+"',state='"+req.getState()+"',city='"+req.getCity()+"',zipcode='"+req.getZipcode()+"',country='"+req.getCountry()+"',phone='"+req.getPhone()+"' where userId='"+req.getUserId()+"'";
 		this.getJdbcTemplate().update(sql2);
 		deletePendingRequest(requestId);
 	}
 
 	public void deletePendingRequest(int requestId) {
 		// TODO Auto-generated method stub
-		String sql = "delete * from pending_internal_requests where requestId="+requestId;
+		String sql = "delete * from pending_internal_requests where requestId='"+requestId+"'";
 		this.getJdbcTemplate().update(sql);
 		
+	}
+
+	public int getUserIdByName(String username) {
+		// TODO Auto-generated method stub
+		String sql = "select userid from user_login where username='"+username+"'";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 	
 	
