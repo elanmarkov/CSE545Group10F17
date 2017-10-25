@@ -34,7 +34,7 @@ public class CustomerDashboardController {
 	    List<Transaction> transactionsChekings = sdao.transactions(userId,"checkings");
 	    List<Transaction> transactionsCredit = sdao.transactions(userId,"credit");	   
 	    
-	    ModelAndView model = new ModelAndView("dashboard");
+	    ModelAndView model = new ModelAndView("/Customers/CustomerDashboard");
 	    model.addObject("savingsAccount", savingsAccount);
 	    model.addObject("checkingAccount", checkingAccount);
 	    model.addObject("creditCard", creditAccount);

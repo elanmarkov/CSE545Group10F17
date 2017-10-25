@@ -1,3 +1,7 @@
+/*
+ * Author: Kevin Everly
+ */
+
 package com.group10.dao.transaction;
 
 import java.math.BigDecimal;
@@ -15,7 +19,7 @@ import com.group10.dbmodels.CompletedTransaction;
 
 public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 
-
+	// Author: Harsha
 	public Transaction createExternalTransaction(int payer_id, double amount, int payeeId,
 			String description, String transaction_type) {
 		// TODO Auto-generated method stub
@@ -44,7 +48,10 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 			return extTransaction;
 	}
 	
-	public PendingTransaction createPendingTransaction(int initiatorID, double amount, int toAccountID, int fromAccountID, String description) {
+	/*
+	 * Author: Kevin Everly
+	 */
+	public PendingTransaction createPendingTransaction(int initiatorID, double amount, Integer toAccountID, Integer fromAccountID, String description) {
 		
 		PendingTransaction trans = new PendingTransaction(initiatorID, amount, toAccountID, fromAccountID, description);
 		
@@ -74,9 +81,9 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 		String sql = "SELECT * FROM pending_transactions WHERE id="+transactionID; 
 		PendingTransaction pendTrans = (PendingTransaction)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingTransaction.class));
 		
-		if ((pendTrans.getAmount() > 5000) && (role.compareTo("tier2") != 0)) {
+		if ((pendTrans.getAmount() > 5000) && !(role.equals("tier2"))) {
 			//TODO: ERROR. UNAUTHORIZED ATTEMPT TO APPROVE CRITICAL TRANSACTION
-		} else {
+		} else if(role.equals("tier1") || role.equals("tier2")){
 			// DELETE PENDING TRANSACTION
 			String deleteSQL = "DELETE FROM pending_transactions WHERE id ="+transactionID;
 			this.getJdbcTemplate().update(deleteSQL);
@@ -90,7 +97,6 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 			this.getJdbcTemplate().update(updateSQL, new Object[]{compTrans.getAmount(), compTrans.getInitiatorID(), compTrans.getToAccountID(), 
 					compTrans.getDescription(), compTrans.getFromAccountID(), compTrans.getReviewerID(), compTrans.getStatus()});
 		}
-		
 	}
 	
 	public void declineTransaction(String transactionID, int reviewerID, String role) {

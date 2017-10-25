@@ -72,9 +72,9 @@ CREATE TABLE completed_transactions (
     initiatorID int NOT NULL,
     stamp Timestamp NOT NULL,
     completedStamp Timestamp NOT NULL,
-    toAccountID int NOT NULL,
+    toAccountID int, -- Null means withdrawl
     description varchar(255) NOT NULL,
-    fromAccountID int NOT NULL,
+    fromAccountID int, -- Null means deposit
     reviewerIDint NOT NULL,
     status varchar(255) NOT NULL,
     PRIMARY KEY (id)
@@ -85,9 +85,9 @@ CREATE TABLE pending_transactions (
     initiatorID int NOT NULL;
     amount double NOT NULL,
     stamp Timestamp NOT NULL,
-    toAccountID int NOT NULL,
+    toAccountID int, -- Null means withdrawl
     description varchar(255) NOT NULL,
-    fromAccountID int NOT NULL,
+    fromAccountID int, -- Null means deposit
     PRIMARY KEY (id)
 );
 
@@ -121,9 +121,11 @@ CREATE TABLE pending_external_requests (
     id int NOT NULL,
     amount double NOT NULL,
     stamp Timestamp NOT NULL,
-    to_account_id int NOT NULL,
-    from_account_id int NOT NULL,
+    toAccountID int NOT NULL,
+    fromAccountID int NOT NULL,
     description varchar(255) NOT NULL,
+    receiverID int NOT NULL,
+    initiatorID int NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -131,9 +133,12 @@ CREATE TABLE completed_external_requests (
   id int NOT NULL,
   amount double NOT NULL,
   stamp Timestamp NOT NULL,
-  to_account_id int NOT NULL,
-  from_account_id int NOT NULL,
+  completedStamp Timestamp NOT NULL,
+  toAccountID int NOT NULL,
+  fromAccountID int NOT NULL,
   description varchar(255) NOT NULL,
+  receiverId int NOT NULL,
+  initiatorID int NOT NULL,
   PRIMARY KEY (id)
 );
 

@@ -1,3 +1,6 @@
+/*
+ * Author: Kevin Everly
+ */
 package com.group10.dbmodels;
 
 import java.security.Timestamp;
@@ -8,12 +11,15 @@ public class CompletedTransaction {
 	private int initiatorID;
 	private Timestamp stamp;
 	private Timestamp completedStamp; // The time that the transaction was approved/rejected
-	private int toAccountID;
+	private Integer toAccountID;
 	private String description;
-	private int fromAccountID;
+	private Integer fromAccountID;
 	private int reviewerID; // The employee that approved/rejected
 	private String status; //Rejected or Approved
 	
+	public CompletedTransaction() {
+		// Empty constructor used for Beans
+	}
 	public CompletedTransaction(PendingTransaction pendTrans, int reviewerID, String status) {
 		this.amount = pendTrans.getAmount();
 		this.toAccountID = pendTrans.getToAccountID();
@@ -52,10 +58,10 @@ public class CompletedTransaction {
 	public void setCompletedStamp(Timestamp compStamp) {
 		this.completedStamp = compStamp;
 	}
-	public int getToAccountID() {
+	public Integer getToAccountID() {
 		return toAccountID;
 	}
-	public void setToAccountID(int toAccountID) {
+	public void setToAccountID(Integer toAccountID) {
 		this.toAccountID = toAccountID;
 	}
 	public String getDescription() {
@@ -64,10 +70,10 @@ public class CompletedTransaction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getFromAccountID() {
+	public Integer getFromAccountID() {
 		return fromAccountID;
 	}
-	public void setFromAccountID(int fromAccountID) {
+	public void setFromAccountID(Integer fromAccountID) {
 		this.fromAccountID = fromAccountID;
 	}
 	public int getReviewerID() {
