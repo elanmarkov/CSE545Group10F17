@@ -2,14 +2,17 @@
 CREATE TABLE internal_users (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(40) NOT NULL,
-  role varchar(15) NOT NULL,
+  email varchar(30) NOT NULL,
+  designation varchar(15) NOT NULL,
   address varchar(50) NOT NULL,
   city varchar(20) NOT NULL,
   state varchar(10) NOT NULL,
+  pincode varchar(10) NOT NULL,
   country varchar(30) NOT NULL,
   zipcode varchar(10) NOT NULL,
   phone varchar(30) NOT NULL,
-  email varchar(30) NOT NULL,
+  dob varchar(30) NOT NULL,
+  ssn varchar(30) NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -20,10 +23,13 @@ CREATE TABLE external_users (
   address varchar(50) NOT NULL,
   state varchar(10) NOT NULL,
   city varchar(20) NOT NULL,
-  zipcode varchar(10) NOT NULL,
+  pincode varchar(10) NOT NULL,
   country varchar(30) NOT NULL,
   phone varchar(30) NOT NULL,
   email varchar(30) NOT NULL,
+  dob varchar(30) NOT NULL,
+  ssn varchar(30) NOT NULL,
+  username varchar(30) NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -31,8 +37,8 @@ CREATE TABLE checking_accounts (
     id int NOT NULL,
     external_users_id int NOT NULL,
     account_no varchar(20) NOT NULL,
-    checking_card_no varchar(30) NOT NULL:
-    balance double NOT NULL,
+    checking_card_no varchar(30) NOT NULL,
+    balance bigint NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -40,7 +46,7 @@ CREATE TABLE savings_accounts (
     id int NOT NULL,
     external_users_id int NOT NULL,
     account_no varchar(20) NOT NULL,
-    balance double NOT NULL,
+    balance bigint NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -55,14 +61,16 @@ CREATE TABLE credit_accounts (
 CREATE TABLE credit_cards (
     id int NOT NULL,
     credit_card_number varchar(20) NOT NULL,
+    account_nuber int NOT NULL,
+    interest int NOT NULL,
     external_users_id int NOT NULL,
     cvv int NOT NULL,
-    credit_limit double NOT NULL,
-    current_amount_due double NOT NULL,
-    cyle_date varchar(10) NOT NULL,
-    due_date varchar(10) NOT NULL,
-    last_bill_amount double NOT NULL,
-    apr double NOT NULL,
+    credit_limit int NOT NULL,
+    current_amount_due bigint NOT NULL,
+    cyle_date date NOT NULL,
+    due_date date NOT NULL,
+    last_bill_amount bigint NOT NULL,
+    apr float NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -81,7 +89,7 @@ CREATE TABLE completed_transactions (
 
 CREATE TABLE pending_transactions (
     id int NOT NULL,
-    initiator_id int NOT NULL;
+    initiator_id int NOT NULL,
     amount double NOT NULL,
     stamp Timestamp NOT NULL,
     to_account_id int NOT NULL,
@@ -95,12 +103,12 @@ CREATE TABLE transaction (
     id INT NOT NULL AUTO_INCREMENT,
     payer_id int NOT NULL,
     payee_id int NOT NULL,
-    amount double NOT NULL,
+    amount decimal NOT NULL,
     hashvalue VARCHAR(255) NOT NULL,
     transaction_type VARCHAR(20) NOT NULL,
     description VARCHAR(255),
     status varchar(20) NOT NULL,
-    reviewer_id int NOT NULL,
+    approver varchar(20) NOT NULL,
     critical BOOLEAN NOT NULL,
     timestamp_created TIMESTAMP NOT NULL,
     timestamp_updated TIMESTAMP NOT NULL,
@@ -109,13 +117,14 @@ CREATE TABLE transaction (
     FOREIGN KEY(payee_id) REFERENCES account(id)  ON UPDATE CASCADE
 ) ;
 
-CREATE TABLE account(
+CREATE TABLE account (
     id int NOT NULL,
-    name varchar(20);
-);
+    name varchar(20) NOT NULL,
+    PRIMARY KEY(id)
+) ;
 
 
---REQUSTS
+-- REQUESTS
 CREATE TABLE pending_external_requests (
     id int NOT NULL,
     amount double NOT NULL,
@@ -134,6 +143,18 @@ CREATE TABLE completed_external_requests (
   from_account_id int NOT NULL,
   description varchar(255) NOT NULL,
   PRIMARY KEY (id)
+);
+
+CREATE TABLE pending_internal_requests (
+    id int NOT NULL,
+    userId int NOT NULL,
+    address varchar(20) NOT NULL,
+    state varchar(20) NOT NULL,
+    city varchar(20) NOT NULL,
+    zipcode varchar(20) NOT NULL,
+	country varchar(20) NOT NULL,
+    phone varchar(20) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 
@@ -198,18 +219,15 @@ CREATE TABLE merchant_payment(
 CREATE TABLE OTP(
 	email varchar(40) NOT NULL,
 	otp varchar(10) NOT NULL,
-	stamp Timestamp NOT NULL,
+	timestamp Timestamp NOT NULL,
 	attempts int NOT NULL	
 );
 
-CREATE TABLE user_authentication(
-
-);
 
 
 INSERT INTO user_login (role, username, password, user_id) VALUES ("adim", "admin_username", "1234", 1234)
 
- INTERNAL REQUESTS (CHANGE USER ACCOUNT INFO)
+INTERNAL REQUESTS (CHANGE USER ACCOUNT INFO)
  CREATE TABLE pending_internal_requests (
    requestId int NOT NULL,
    userid int NOT NULL,
