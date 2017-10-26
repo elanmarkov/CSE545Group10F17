@@ -61,6 +61,62 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 		return trans;
 	}
 	
+	public PendingTransaction createPendingTransactionFromTransfer(int initiatorID, double amount, String transferMode, String payeeInfo, String fromAccountID ) {
+		
+		List<String> toAccountIDs = new ArrayList<String>();
+		if (transferMode.equals("payeeEmail")) {
+			try {
+				String sql = "SELECT id FROM users WHERE email = '" + payeeInfo + "'";
+				Integer toUserId = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+				
+				sql = "SELECT accountNumber FROM checking_accounts\n" + 
+						"WHERE userId = " + toUserId + "\n" +
+						"UNION SELECT accountNumber FROM savings_accounts\n" + 
+						"WHERE userId = " + toUserId;
+				 toAccountIDs = this.getJdbcTemplate().queryForList(sql, String.class);
+				 
+			} catch (Exception e) {
+				System.out.println("Email does not exist");
+				return null;
+			}
+			
+		} else if (transferMode.equals("payeePhone")) {
+			try {
+				String sql = "SELECT * FROM users WHERE phone = " + payeeInfo;
+				Integer toUserId = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+				
+				sql = "SELECT accountNumber FROM checking_accounts\n" + 
+						"WHERE userId = " + toUserId + "\n" +
+						"UNION SELECT accountNumber FROM savings_accounts\n" + 
+						"WHERE userId = " + toUserId;
+				 toAccountIDs = this.getJdbcTemplate().queryForList(sql, String.class);
+				 
+			} catch (Exception e) {
+				System.out.println("Phone does not exist");
+				return null;
+			}
+		} else if (transferMode.equals("payeeAccountNumber")) {
+			String sql = "SELECT count(*) FROM checking_accounts, savings_accounts \n" + 
+					"WHERE checking_accounts.userId ="+payeeInfo+" OR savings_accounts.userId ="+payeeInfo;
+			Integer count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+			if (count > 0) {
+				toAccountIDs.add(payeeInfo);
+			} else {
+				System.out.println("ACCOUNT DOES NOT EXIST");
+				return null;
+			}
+		}
+		
+		//Yeah. We are hardcoding getting the first account. Do something about it. 
+		PendingTransaction trans = new PendingTransaction(initiatorID, amount, toAccountIDs.get(0), fromAccountID, "Money Transfer");
+		
+		String updateSQL = "INSERT INTO pending_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID) values (?,?,NOW(),?,?,?)";
+		this.getJdbcTemplate().update(updateSQL, new Object[]{ trans.getAmount(), trans.getInitiatorID(), trans.getToAccountID(), 
+				trans.getDescription(), trans.getFromAccountID()});
+		return trans;
+		
+	}
+	
 	public List<PendingTransaction> getPendingNonCriticalTransactions() {
 		
 		String sql = "SELECT * FROM pending_transactions WHERE amount < 5000 LIMIT 10";

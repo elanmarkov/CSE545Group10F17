@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +47,7 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
+			<li><a href="/BankingApp/customer/dashboard">Home</a></li>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
 				<ul class="dropdown-menu">
@@ -91,8 +92,8 @@
 						<label>Please select the account you would like to transfer to</label>
 							<select class="form-control" name="transferTo">
 							  <option value="">--please select the account transfer to--</option>
-							  <option value="savings">Savings Account</option>
-							  <option value="checking">Checking Account</option>
+							  <option value="${savings.accountNumber}">Savings ${savings.accountNumber}</option>
+							  <option value="${checking.accountNumber}">Checking ${checking.accountNumber}</option>
 							</select>
 					</div>
 
@@ -100,8 +101,8 @@
 						<label>Please select the account you would like to transfer from</label>
 							<select class="form-control" name="transferFrom">
 							  <option value="">--please select the account transfer from--</option>
-							  <option value="savings">Saving Account</option>
-							  <option value="checking">Checking Account</option>
+							  <option value="${savings.accountNumber}">Saving Account ${savings.accountNumber}</option>
+							  <option value="${checking.accountNumber}">Checking Account ${checking.accountNumber}</option>
 							</select>
 					</div>
 

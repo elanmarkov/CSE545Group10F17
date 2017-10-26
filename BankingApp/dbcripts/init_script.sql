@@ -1,5 +1,5 @@
 -- USERS
-CREATE TABLE internal_users (
+CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(40) NOT NULL,
   role varchar(15) NOT NULL,
@@ -13,18 +13,6 @@ CREATE TABLE internal_users (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE external_users (
-  id int NOT NULL AUTO_INCREMENT,
-  name varchar(40) NOT NULL,
-  address varchar(50) NOT NULL,
-  state varchar(10) NOT NULL,
-  city varchar(20) NOT NULL,
-  zipcode varchar(10) NOT NULL,
-  country varchar(30) NOT NULL,
-  phone varchar(30) NOT NULL,
-  email varchar(30) NOT NULL,
-  PRIMARY KEY (id)
-);
 
 -- ACCOUNTS
 CREATE TABLE checking_accounts (
@@ -100,7 +88,7 @@ CREATE TABLE pending_external_requests (
     toAccountID varchar(255) NOT NULL,
     fromAccountID varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
-    receiverID int NOT NULL,
+    payerID int NOT NULL,
     initiatorID int NOT NULL,
     PRIMARY KEY (id)
 );
@@ -113,7 +101,7 @@ CREATE TABLE completed_external_requests (
   toAccountID varchar(255) NOT NULL,
   fromAccountID varchar(255) NOT NULL,
   description varchar(255) NOT NULL,
-  receiverId int NOT NULL,
+  payerID int NOT NULL,
   initiatorID int NOT NULL,
   PRIMARY KEY (id)
 );

@@ -9,9 +9,20 @@ public class PendingExternalRequest {
 	private String toAccountID;
 	private String fromAccountID;
 	private String description;
-	private int receiverID;
+	private int payerID;
 	private int initiatorID;
 	
+	public PendingExternalRequest () {
+		// NEEDED FOR BEANS
+	}
+	public PendingExternalRequest(double amount, String toAccountID, String fromAccountID, String description, int payerID, int initiatorID) {
+		this.amount = amount;
+		this.toAccountID = toAccountID;
+		this.fromAccountID = fromAccountID;
+		this.description = description;
+		this.payerID = payerID;
+		this.initiatorID = initiatorID;
+	}
 	public int getId() {
 		return id;
 	}
@@ -48,11 +59,11 @@ public class PendingExternalRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getReceiverID() {
-		return receiverID;
+	public int getPayerID() {
+		return payerID;
 	}
-	public void setReceiverID(int receiverID) {
-		this.receiverID = receiverID;
+	public void setPayerID(int payerID) {
+		this.payerID = payerID;
 	}
 	public int getInitiatorID() {
 		return initiatorID;

@@ -11,7 +11,7 @@ public class CompletedExternalRequest {
 	private String toAccountID;
 	private String fromAccountID;
 	private String description;
-	private int receiverID;
+	private int payerID;
 	private int initiatorID;
 	private String status;
 	
@@ -24,7 +24,7 @@ public class CompletedExternalRequest {
 		this.toAccountID = req.getToAccountID();
 		this.fromAccountID = req.getFromAccountID();
 		this.description = req.getDescription();
-		this.receiverID = req.getReceiverID();
+		this.payerID = req.getPayerID();
 		this.initiatorID = req.getInitiatorID();
 		this.status = status;
 	}
@@ -70,11 +70,11 @@ public class CompletedExternalRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getReceiverID() {
-		return receiverID;
+	public int getPayerID() {
+		return payerID;
 	}
-	public void setReceiverID(int receiverID) {
-		this.receiverID = receiverID;
+	public void setPayerID(int payerID) {
+		this.payerID = payerID;
 	}
 	public int getInitiatorID() {
 		return initiatorID;

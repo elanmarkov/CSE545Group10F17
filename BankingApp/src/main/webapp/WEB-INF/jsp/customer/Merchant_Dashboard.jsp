@@ -1,8 +1,9 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<!DOCTYPE html>
 	<html lang="en">
 	<head>
 		<title>Customer Dashboard</title>
-		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">	
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<style type="text/css">
 		.logo{
 
@@ -29,7 +30,7 @@
 		<div class="jumbotron logo">
 			<div class="container">
 				<h2 id="title">GROUP10 BANK</h2>
-			</div>	
+			</div>
 		</div>
 
 		<nav class="navbar navbar-default">
@@ -148,7 +149,7 @@
 							<td>${transaction.timestamp_updated}</td>
 						</tr>
 					</c:forEach>
-				
+
 				</tbody>
 			</table>
 			<a href="/BankingApp/showSavingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
@@ -177,7 +178,7 @@
 					<tr>
 						<th scope="row">${loop.index + 1}</th>
 						<td>${transaction.description}</td>
-						<td>${transaction.transactionType}</td>  
+						<td>${transaction.transactionType}</td>
 						<td>${transaction.payee_id}</td>
 						<td>${transaction.amount}</td>
 						<td>${transaction.status}</td>
