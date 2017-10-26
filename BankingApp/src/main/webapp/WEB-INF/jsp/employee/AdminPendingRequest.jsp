@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +67,7 @@
 			<div class="jumbotron">
 			<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 			<h3><strong>Pending Request Management</strong></h3>
-			  <form action="/BankingApp/employee/adminreq" method="post">
+<!--   <form action="/BankingApp/employee/adminreq" method="post"> -->	
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -87,11 +88,12 @@
                         			<c:forEach items="${pending_list}" var="request">
                         					<tr>
                                     		<td>${request.id}</td>
-                                    		<td>${request.internalUser.id}</td>
-											<td>${request.internalUser.id.requestType}</td>
+                                    		<td>${request.userId}</td>
 											<td>
 												<form action = "/BankingApp/employee/adminPendingRequest" method = "post">
 		                                    		<input type="hidden" name="requestID" value="${request.id}">
+ 		                                    		<input type="hidden" name="userId" value="${request.userId}">
+
 		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
 				          								<option value="approve">Approve</option>
@@ -106,7 +108,7 @@
                         	</c:choose>			      
 					    </tbody>
 					  </table>
-			  </form>
+			 <!--  </form>  -->
 			</div>
 			</div>
 		</div>

@@ -1,5 +1,7 @@
 package com.group10.controllers.customer;
 import com.group10.dbmodels.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.group10.dbmodels.*;
@@ -21,26 +23,27 @@ public class CustomerDashboardController {
 	
 	@RequestMapping("/customer/dashboard")
 	public ModelAndView display(){
-		SavingsAccount savingsAccount = new SavingsAccount();
-		CheckingAccount checkingAccount = new CheckingAccount();
-		CreditCard creditAccount = new CreditCard();
-		int userId = 123456;
+
  		ApplicationContext  ctx = new ClassPathXmlApplicationContext("DaoDetails.xml"); 
 	    CustomerDashboardDaoImpl sdao = ctx.getBean("customerDashboardDaoImpl" , CustomerDashboardDaoImpl.class);
-	    savingsAccount = sdao.savingsAccountDetails(userId);
-	    checkingAccount = sdao.checkingAccountDetails(userId);
-	    creditAccount = sdao.ccAccountDetails(userId);
-	    List<Transaction> transactionsSavings = sdao.transactions(userId,"savings");
-	    List<Transaction> transactionsChekings = sdao.transactions(userId,"checkings");
-	    List<Transaction> transactionsCredit = sdao.transactions(userId,"credit");	   
 	    
-	    ModelAndView model = new ModelAndView("dashboard");
-	    model.addObject("savingsAccount", savingsAccount);
-	    model.addObject("checkingAccount", checkingAccount);
-	    model.addObject("creditCard", creditAccount);
-	    model.addObject("transactionsSavings", transactionsSavings);
-	    model.addObject("transactionsChekings", transactionsChekings);
-	    model.addObject("transactionsCredit", transactionsCredit);
+	    int userId = 1;
+	    SavingsAccount savings = sdao.savingsAccountDetails(userId);
+	    CheckingAccount checking = sdao.checkingAccountDetails(userId);
+	    //CreditAccount credit = sdao.creditAccountDetails(userId);
+	    
+	    List<PendingTransaction> pendingSavings = sdao.pendingTransactions(savings.getAccountNumber());
+	    List<CompletedTransaction> completedSavings = sdao.completedTransactions(savings.getAccountNumber());
+	    List<PendingTransaction> pendingChecking = sdao.pendingTransactions(checking.getAccountNumber());
+	    List<CompletedTransaction> completedChecking = sdao.completedTransactions(checking.getAccountNumber());
+	    //List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());	   
+	    
+	    ModelAndView model = new ModelAndView("/customer/CustomerDashboard");
+	    model.addObject("pendingSavings", pendingSavings);
+	    model.addObject("completedSavings", completedSavings);
+	    model.addObject("pendingChecking", pendingChecking);
+	    model.addObject("completedChecking", completedChecking);
+	    
 		return model;		
 
 	}

@@ -17,16 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group10.controllers.security.HandlerClass;
+import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.ExternalUser;
-import com.group10.dbmodels.InternalUser;
+import com.group10.dbmodels.User;
 
 
 @Controller
-public class Tier1 {
+public class Tier2 {
 
 
 	String role;
@@ -45,28 +46,29 @@ public class Tier1 {
     }
 			
 	@RequestMapping("/employee/RegistrationExternalEmployee")
-	public  ModelAndView ExternalRegisterform(){
+	public ModelAndView extReg(){
 		return new ModelAndView("/employee/RegistrationExternalEmployee");
 	}
-	
 
-	@RequestMapping(value = "/employee/externalreg", method =RequestMethod.POST)
-	public ModelAndView ExternalRegister (@ModelAttribute("user1") InternalUser newUser, RedirectAttributes redir){
+	@RequestMapping("/employee/externalreg")
+	public ModelAndView InternalRegister(@ModelAttribute("user") User newUser, RedirectAttributes redir){
 		try{
-		 ModelAndView model = new ModelAndView();
+				ModelAndView model = new ModelAndView();
+		
 		String name = newUser.getName();
-		String role = newUser.getDesignation();
 		String email = newUser.getEmail();
+		String role = newUser.getRole();
 		String address = newUser.getAddress();
 		String city = newUser.getCity();
 		String state = newUser.getState();
 		String country = newUser.getCountry();
-		String pincode = newUser.getPincode();
+		String pincode = newUser.getZipcode();
 		String number = newUser.getPhone();
 		String dob = newUser.getDob();
 		String ssn = newUser.getSsn();
-		String username = newUser.getUsername();
+		String username = email.split("@")[0];
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		
 		
 		//Validation of form fields
 		Validator validator = new Validator();
@@ -76,13 +78,14 @@ public class Tier1 {
 		{
 			if(validator.validateName(word) == false) {
 				isValidated = false;
-	            redir.addFlashAttribute("error_message",word+" Not Valid");
+	           redir.addFlashAttribute("error_message",word+" Not Valid");
 			}
 		}
 		
 		//check if the username and phone number are unique
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
-		if(udao.isUnique(username, number, email, "external_users") == false)
+		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		if(udao.isUnique(username, number, email, "users")==false)
 		{	isValidated = false;
 			redir.addFlashAttribute("error_message","email/number/username already exists. Select new ones");
 		}
@@ -93,38 +96,29 @@ public class Tier1 {
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
 			String password = encoder.encode(rawPassword); 
-			dob = encoder.encode(dob);
-			ssn = encoder.encode(ssn);
-			udao.setExternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, username); 
-			udao.setLoginDetails(username, password,role,email);
-			
+			udao.setInternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, username); 
+			udao.setLoginDetails(username, password, role, email);
+		
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
-			DbLogs dblogs = new DbLogs();
-			dblogs.setActivity("External User creation");
-			dblogs.setDetails("Successful");
-			dblogs.setUserid(userID);
-			logsDao.saveLogs(dblogs, "external");
-        	redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-        	model.setViewName("employee/Tier1Dashboard");
+			logsDao.saveLogs("Internal User creation","Successful",userID, "internal");
+        	//redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
+            model.setViewName("/employee/AdminDashboard");
+
 		}
 		else{
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
-			DbLogs dblogs = new DbLogs();
-			dblogs.setActivity("External User creation");
-			dblogs.setDetails("Error occured due to existing email/phone/username");
-			dblogs.setUserid(userID);
-			logsDao.saveLogs(dblogs, "external");
-			model.setViewName("/employee/RegistrationExternalEmployee");
-
+			logsDao.saveLogs("Internal User creation","Failed",userID, "internal");
+            model.setViewName("/employee/RegistrationInternalEmployee");
 		}
 		ctx.close();
+		
 		return model;
-	}catch(Exception e){
-		throw new HandlerClass();
+		
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+		
 	}
-	}
-	
-	
 	
 }
 

@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,11 +77,13 @@
 					        <th>Activity</th>
 					        <th>Details</th>
 					        <th>Timestamp</th>
+   					        <th>Type</th>
+
 					      </tr>
 					    </thead>
 					    <tbody>
 						<c:choose>
-						<c:when test="${empty logs}">
+						<c:when test="${empty loglist}">
                 			<tr>
                             	<td colspan="4">No Logs found</td>
                         	</tr>
@@ -87,10 +91,11 @@
                 		<c:otherwise>
                 			<c:forEach items="${loglist}" var="log">
 								<tr>
-									<td>${log.userid}</td>
+									<td>${log.userId}</td>
 									<td>${log.activity}</td>
 									<td>${log.details}</td>
-									<td>${log.timestamp}</td>
+									<td>${log.stamp}</td>
+									<td>${log.logtype}</td>
 								</tr>
 							</c:forEach>
                 		</c:otherwise>

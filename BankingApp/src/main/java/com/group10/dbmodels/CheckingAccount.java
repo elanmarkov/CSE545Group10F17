@@ -1,29 +1,28 @@
 package com.group10.dbmodels;
 
-import java.math.BigInteger;
 
 public class CheckingAccount {
 	
-	private int user_id;
-	private int account_no;
-	private BigInteger balance;
+	private int userId;
+	private String accountNumber;
+	private double balance;
 	
-	public int getUser_id() {
-		return user_id;
+	public int getUserID() {
+		return userId;
 	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-	public int getAccount_no() {
-		return account_no;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
-	public void setAccount_no(int account_no) {
-		this.account_no = account_no;
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
-	public BigInteger getBalance() {
+	public double getBalance() {
 		return balance;
 	}
-	public void setBalance(BigInteger balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 	

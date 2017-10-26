@@ -101,22 +101,14 @@ public class ForgotPassword {
 	        model.setViewName("/login/login");
 
             LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class); 	    
-    	    DbLogs dblog = new DbLogs();    
-    	    dblog.setActivity("Forgot password : " + username);
-    	    dblog.setDetails("passsword changed successfully");
-            dblog.setUserid(userID);
-            ldao.saveLogs(dblog, type);      	
+            ldao.saveLogs("Forgot password : " + username, "passsword changed successfully",userID, "internal");      	
             ctx.close();
             return model;
         }
         else{
             model.setViewName("/forgotpassword/changepassword");
         	LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-     	     DbLogs dblog = new DbLogs();
-     	     dblog.setActivity("Forgot password : " + username);
-     	     dblog.setDetails("passsword change falied");
-             dblog.setUserid(userID);
-             ldao.saveLogs(dblog, type);    
+            ldao.saveLogs("Forgot password : " + username,"passsword change falied", userID, "internal");    
              redir.addFlashAttribute("exception_message","password validation failed, try again");
              ctx.close();
              return model;

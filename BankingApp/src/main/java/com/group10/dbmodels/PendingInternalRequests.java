@@ -1,12 +1,13 @@
 package com.group10.dbmodels;
 
 public class PendingInternalRequests {
+	private int id;
 	private int userId;
 	private String address;
 	private String state;
 	private String city;
-	private String zipcode;
 	private String country;
+	private String zipcode;
 	private String phone;
 	public int getUserId() {
 		return userId;
@@ -50,6 +51,12 @@ public class PendingInternalRequests {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

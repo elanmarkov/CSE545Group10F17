@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,9 +83,9 @@
 					    
 					      <tbody>
         					<tr>
-	                    		<td>${user.id}</td>
+                    			<td>${user.id}</td>
                     			<td>${user.name}</td>
-                    			<td>${user.designation}</td>
+                    			<td>${user.role}</td>
                     			<td>${user.email}</td>
                     			<td>${user.phone}</td>
                     			<td>${user.address}</td>
@@ -111,8 +113,8 @@
 					    
 					      <tbody>
         					<tr>
-	                    		<td>${user.ssn}</td>
-                    			<td>${user.dateOfBirth}</td>
+	                    		<td>${pii.ssn}</td>
+                    			<td>${pii.dob}</td>
 								
 	                		</tr>
                         				
@@ -137,8 +139,9 @@
           <h4 class="modal-title"><strong>Account Info</strong></h4>
         </div>
         <div class="modal-body">
-          <form action="/BankingApp/employee/internalreg" method="POST">
-				  		
+          <form action="/BankingApp/employee/adminModify" method="POST">
+				  	 
+
 					  <div class="form-group">
 					    <label for="address">Address</label>
 					    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
@@ -154,17 +157,28 @@
 					    <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
 					  </div>
 
+					   <div class="form-group">
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="country" required>
+					  </div>
+
 					  <div class="form-group">
-					    <label for="pincode">Zip Code</label>
-					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					    <label for="zipcode">Zip Code</label>
+					    <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zip Code" required>
 					  </div>
 					  
 					  <div class="form-group">
 					    <label for="phone">Phone Number</label>
 					    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
 					  </div>
+
+					   <div class="form-group">
+					    <input type="hidden" name="id" value ="${user.id}">
+					 	</div>
 					  
 						<div id = "errorBox" class="form-group"></div>
+
+					 
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
 

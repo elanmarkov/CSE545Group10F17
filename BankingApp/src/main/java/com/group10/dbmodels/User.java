@@ -1,19 +1,18 @@
 package com.group10.dbmodels;
 
-public class ExternalUser {
+public class User {
+	private int id;
 	private String name;
-	private String email;
+    private String role;
 	private String address;
 	private String city;
 	private String state;
 	private String country;
-
-	private String pincode;
+	private String zipcode;
 	private String phone;
 	private String dob;
 	private String ssn;
-	private String username;
-
+	private String email;
 
 	public String getEmail() {
 		return email;
@@ -48,11 +47,11 @@ public class ExternalUser {
 		this.state = state;
 	}
 	
-	public String getPincode() {
-		return pincode;
+	public String getZipcode() {
+		return zipcode;
 	}
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 	public String getPhone() {
 		return phone;
@@ -72,17 +71,28 @@ public class ExternalUser {
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	
 	public String getCountry() {
 		return country;
+		// TODO Auto-generated method stub
+		
 	}
 	public void setCountry(String country) {
-		this.country = country;
+		this.country =  country;
+		// TODO Auto-generated method stub
+		
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

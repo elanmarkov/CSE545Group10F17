@@ -35,6 +35,32 @@
 	</div>	
 </div>
 
+
+
+<nav class="navbar navbar-default">
+	<div class="container">
+		<ul class="nav navbar-nav">
+			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+        	<!-- <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
+	          </ul>
+        	</li>
+
+        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
+		</ul> -->
+
+
+		<ul class="nav navbar-nav navbar-right">
+			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+		
+		</ul>
+	</div>
+</nav>
+
 <br>
 
 <div class="container">
@@ -45,6 +71,12 @@
  				 </div>
 			<div class="jumbotron">
 			  <form action="/BankingApp/employee/externalreg" method="post">
+
+			  		
+					<div class="form-group">
+					    <input type="hidden" class="form-control" id="id" name ="id" value="0">
+					  </div>
+
 
 			  		<div class="form-group">
 				    <label for="firstName">Name</label>
@@ -63,9 +95,8 @@
 						<label for="select">Role</label>
 						        <select class="form-control" name="designation" id="designation" required>
 						          <option value="">Please Select</option>
-						          <option value="regular">Regular</option>
-						          <option value="manager">Manager</option>
-						          <option value="admin">Admin</option>
+						          <option value="customer">Customer</option>
+						          <option value="merchant">Merchant</option>
 						        </select>
 					</div>
 				  
@@ -92,8 +123,8 @@
 
 
 				  <div class="form-group">
-				    <label for="pincode">Zip Code</label>
-				    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+				    <label for="zipcode">Zip Code</label>
+				    <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zip Code" required>
 				  </div>
 				  
 				  <div class="form-group">
@@ -102,8 +133,8 @@
 				  </div>
 
 				  <div class="form-group">
-				    <label for="dateOfBirth">Date of Birth</label>
-				    <input type="text" class="form-control" id="dateOfBirth" name="DoB" placeholder="mm/dd/yyyy" required>
+				    <label for="dob">Date of Birth</label>
+				    <input type="text" class="form-control" id="dob" name="dob" placeholder="mm/dd/yyyy" required>
 				  </div>
 
 				 <div class="form-group">
@@ -111,11 +142,7 @@
 				    <input type="text" class="form-control" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
 				  </div>
 
-				  <div class="form-group">
-				    <label for="username">Username</label>
-				    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-				  </div>
-				  
+				 
 					<div id = "errorBox" class="form-group"></div>
 				  <button type="submit" id="submit" class="btn btn-default"onclick="Validate()">Submit</button>
 
