@@ -10,14 +10,14 @@ public class PendingTransaction {
 	private int initiatorID;
 	private double amount;
 	private Timestamp stamp;
-	private Integer toAccountID;
+	private String toAccountID;
 	private String description;
-	private Integer fromAccountID;
+	private String fromAccountID;
 	
 	public PendingTransaction() {
 		// Empty constructor used for Beans
 	}
-	public PendingTransaction(int initiatorID, double amount, Integer toAccountID, Integer fromAccountID, String description) {
+	public PendingTransaction(int initiatorID, double amount, String toAccountID, String fromAccountID, String description) {
 		this.initiatorID = initiatorID;
 		this.amount = amount;
 		this.stamp = new Timestamp(System.currentTimeMillis());
@@ -57,10 +57,10 @@ public class PendingTransaction {
 	public void setStamp(Timestamp stamp) {
 		this.stamp = stamp;
 	}
-	public Integer getToAccountID() {
+	public String getToAccountID() {
 		return toAccountID;
 	}
-	public void setToAccountID(Integer toAccountID) {
+	public void setToAccountID(String toAccountID) {
 		this.toAccountID = toAccountID;
 	}
 	public String getDescription() {
@@ -69,10 +69,10 @@ public class PendingTransaction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Integer getFromAccountID() {
+	public String getFromAccountID() {
 		return fromAccountID;
 	}
-	public void setFromAccountID(Integer fromAccountID) {
+	public void setFromAccountID(String fromAccountID) {
 		this.fromAccountID = fromAccountID;
 	}
 	

@@ -3,7 +3,7 @@
  */
 package com.group10.dbmodels;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class CompletedTransaction {
 	private int id;
@@ -11,9 +11,9 @@ public class CompletedTransaction {
 	private int initiatorID;
 	private Timestamp stamp;
 	private Timestamp completedStamp; // The time that the transaction was approved/rejected
-	private Integer toAccountID;
+	private String toAccountID;
 	private String description;
-	private Integer fromAccountID;
+	private String fromAccountID;
 	private int reviewerID; // The employee that approved/rejected
 	private String status; //Rejected or Approved
 	
@@ -58,10 +58,10 @@ public class CompletedTransaction {
 	public void setCompletedStamp(Timestamp compStamp) {
 		this.completedStamp = compStamp;
 	}
-	public Integer getToAccountID() {
+	public String getToAccountID() {
 		return toAccountID;
 	}
-	public void setToAccountID(Integer toAccountID) {
+	public void setToAccountID(String toAccountID) {
 		this.toAccountID = toAccountID;
 	}
 	public String getDescription() {
@@ -70,10 +70,10 @@ public class CompletedTransaction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Integer getFromAccountID() {
+	public String getFromAccountID() {
 		return fromAccountID;
 	}
-	public void setFromAccountID(Integer fromAccountID) {
+	public void setFromAccountID(String fromAccountID) {
 		this.fromAccountID = fromAccountID;
 	}
 	public int getReviewerID() {

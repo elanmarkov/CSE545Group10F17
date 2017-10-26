@@ -1,8 +1,7 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Withdraw</title>
+	<title>Funds Transfer between accounts </title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 
@@ -44,7 +43,6 @@
 
 
 
-
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
@@ -60,8 +58,8 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Between accounts</a></li>
-					<li><a href="#">Send to others</a></li>
+					<li><a href="/BankingApp/customer/transferBetweenAccounts">Between accounts</a></li>
+					<li><a href="/BankingApp/customer/transferToOthers">Send to others</a></li>
 				</ul>
 			</li>
 
@@ -77,44 +75,50 @@
 	</div>
 </nav>
 
+
+
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-				<form action="/BankingApp/withdrawMoney" method="post">
+
+				<div>
+					<h4><strong>Funds Transfer - Within Accounts</strong></h4>
+				</div>
+
+				<form action="/BankingApp/transferfundsBetweenAccounts" method="post">
 					<div class="form-group">
-						<label>Please select the account you would like to withdraw</label>
-							<select class="form-control" name="withdrawAccount">
-							  <option value="">--please select your account--</option>
-								<c:if test="${not empty savings}" >
-										<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
-										<input type="hidden" value=${savings.accountNumber} name="accountNumber" />
-                </c:if>
-								<c:if test="${not empty checking}" >
-							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
-									<input type="hidden" value=${checking.accountNumber} name="accountNumber" />
-								</c:if>
+						<label>Please select the account you would like to transfer to</label>
+							<select class="form-control" name="transferTo">
+							  <option value="">--please select the account transfer to--</option>
+							  <option value="savings">Savings Account</option>
+							  <option value="checking">Checking Account</option>
 							</select>
 					</div>
+
 					<div class="form-group">
-						<label>Please specify the amount you would like to withdraw</label>
-						<input type="number" class="form-control" name="amount" placeholder="$">
+						<label>Please select the account you would like to transfer from</label>
+							<select class="form-control" name="transferFrom">
+							  <option value="">--please select the account transfer from--</option>
+							  <option value="savings">Saving Account</option>
+							  <option value="checking">Checking Account</option>
+							</select>
+					</div>
+
+
+					<div class="form-group">
+						<label>Please specify the amount you would like to transfer</label>
+						<input type="number" class="form-control" placeholder="$" name="transferAmount">
 					</div>
 
 					<div class="form-group">
-					 <button type="submit" class="btn btn-primary" value="Submit">Withdraw</button>
+					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
 					</div>
-				</form>
-		</div>
-
-
-	</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>

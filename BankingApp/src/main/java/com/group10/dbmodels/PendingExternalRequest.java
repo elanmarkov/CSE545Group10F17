@@ -6,8 +6,8 @@ public class PendingExternalRequest {
 	private int id;
 	private double amount;
 	private Timestamp stamp;
-	private int toAccountID;
-	private int fromAccountID;
+	private String toAccountID;
+	private String fromAccountID;
 	private String description;
 	private int receiverID;
 	private int initiatorID;
@@ -30,16 +30,16 @@ public class PendingExternalRequest {
 	public void setStamp(Timestamp stamp) {
 		this.stamp = stamp;
 	}
-	public int getToAccountID() {
+	public String getToAccountID() {
 		return toAccountID;
 	}
-	public void setToAccountID(int toAccountID) {
+	public void setToAccountID(String toAccountID) {
 		this.toAccountID = toAccountID;
 	}
-	public int getFromAccountID() {
+	public String getFromAccountID() {
 		return fromAccountID;
 	}
-	public void setFromAccountID(int fromAccountID) {
+	public void setFromAccountID(String fromAccountID) {
 		this.fromAccountID = fromAccountID;
 	}
 	public String getDescription() {

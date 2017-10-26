@@ -4,10 +4,10 @@
 	<title>Funds Transfer - Send to Others</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -25,8 +25,8 @@
 			visibility: hidden;
 		}
 
-		
-		
+
+
 	</style>
 
 
@@ -37,7 +37,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 
@@ -48,20 +48,20 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Deposit</a></li>
-					<li><a href="#">Withdraw</a></li>
+					<li><a href="/BankingApp/customer/deposit">Deposit</a></li>
+					<li><a href="/BankingApp/customer/withdraw">Withdraw</a></li>
 				</ul>
 			</li>
 
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Between accounts</a></li>
-					<li><a href="#">Send to others</a></li>
+					<li><a href="/BankingApp/customer/transferBetweenAccounts">Between accounts</a></li>
+					<li><a href="/BankingApp/customer/transferToOthers">Send to others</a></li>
 				</ul>
 			</li>
 
-			<li><a href="#">Pending Request</a></li>
+			<li><a href="/BankingApp/customer/pendingRequests">Pending Request</a></li>
 			<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
 		</ul>
 

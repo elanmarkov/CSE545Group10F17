@@ -3,6 +3,7 @@ package com.group10.controllers;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dbmodels.UserDetails;
 
@@ -21,16 +23,17 @@ import com.group10.dbmodels.UserDetails;
 @Controller
 public class LoginController {
 
-	String role;
-	int userID;
-	String username;
-	
-	
-	public void setGlobals(HttpServletRequest request){
-		role = (String) request.getSession().getAttribute("role");
-		userID = 1;
-		username = (String) request.getSession().getAttribute("username");		
+	public void setSession(HttpServletRequest request, String role, int userID, String username){
+		request.getSession().setAttribute("role", role);
+		request.getSession().setAttribute("userID", userID);
+		request.getSession().setAttribute("username", username);		
 	}
+	
+	@ExceptionHandler(HandlerClass.class)
+    public String handleResourceNotFoundException() {
+        return "redirect:/exception";
+    }
+	
 	
 	@RequestMapping("/login")
 	public  ModelAndView Login(){
@@ -39,30 +42,34 @@ public class LoginController {
 	
 	@RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
 	public ModelAndView loginForm(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("roleSelection") String role,
-			HttpServletRequest request, RedirectAttributes redir) throws IOException {
+			HttpServletRequest request, RedirectAttributes redir) {
 		try
 		{	
+			
 			ModelAndView model = new ModelAndView();
 			UserDetails user = new UserDetails();
-			
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			username= username.split("@")[0];
+			
+			setSession(request, role, edao.getUserIdByName(username), username);			
+			
 			if(edao.validateUserLogin(username, password, role)){
 				if(role.compareTo("customer") == 0)
 				{
-					model.setViewName("redirect:/employee/CustomerDashboard");
+					model.setViewName("redirect:/customer/dashboard");
 				}
 				else if(role.equals("merchant"))
 				{
-					model.setViewName("redirect:/employee/merchant_Dashboard");
+					model.setViewName("redirect:/customers/merchant_Dashboard");
 				}
 				else if(role.equals("employee"))
 				{
-					model.setViewName("redirect:/employee/EmployeeDashboard");
+					model.setViewName("redirect:/employee/Tier1Dashboard");
 				}
 				else if(role.equals("manager"))
 				{
-					model.setViewName("redirect:/employee/Internal_users_dashboard");
+					model.setViewName("redirect:/employee/Tier2Dashboard");
 				}
 				else if(role.equals("admin"))
 				{
@@ -77,9 +84,10 @@ public class LoginController {
 			return model;
 		}
 		catch(Exception e){
-			System.out.println(e);
 			//TODO: Redirect
-			return null;
+			System.out.println(e);
+			//logger.error("errroe",e);
+			throw new HandlerClass();
 		}
 	}
 }

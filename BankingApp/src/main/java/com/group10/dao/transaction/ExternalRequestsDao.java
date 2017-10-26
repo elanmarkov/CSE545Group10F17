@@ -36,10 +36,12 @@ public class ExternalRequestsDao  extends JdbcDaoSupport{
 				compReq.getInitiatorID(), compReq.getStatus()});
 		
 		// If approved, create a pending transaction
-		PendingTransaction trans = new PendingTransaction(compReq);
-		updateSQL = "INSERT INTO pending_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID) values (?,?,NOW(),?,?,?)";
-		this.getJdbcTemplate().update(updateSQL, new Object[]{ trans.getAmount(), trans.getInitiatorID(), trans.getToAccountID(), 
-				trans.getDescription(), trans.getFromAccountID()});
+		if (status.equals("approve")) {
+			PendingTransaction trans = new PendingTransaction(compReq);
+			updateSQL = "INSERT INTO pending_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID) values (?,?,NOW(),?,?,?)";
+			this.getJdbcTemplate().update(updateSQL, new Object[]{ trans.getAmount(), trans.getInitiatorID(), trans.getToAccountID(), 
+					trans.getDescription(), trans.getFromAccountID()});
+		}
 		
 	}
 }

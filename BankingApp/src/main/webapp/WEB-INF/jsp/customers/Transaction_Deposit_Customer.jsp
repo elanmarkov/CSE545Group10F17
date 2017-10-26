@@ -46,7 +46,7 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
+			<li><a href="/BankingApp/customer/dashboard">Home</a></li>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
 				<ul class="dropdown-menu">
@@ -58,8 +58,8 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Between accounts</a></li>
-					<li><a href="#">Send to others</a></li>
+					<li><a href="/BankingApp/customer/transferBetweenAccounts">Between accounts</a></li>
+					<li><a href="/BankingApp/customer/transferToOthers">Send to others</a></li>
 				</ul>
 			</li>
 
@@ -91,7 +91,6 @@
                 </c:if>
 								<c:if test="${not empty checking}" >
 							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
-									<input type="hidden" value=${checking.accountNumber} name="accountNumber" />
 								</c:if>
 							</select>
 					</div>

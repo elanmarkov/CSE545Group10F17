@@ -51,7 +51,7 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 	/*
 	 * Author: Kevin Everly
 	 */
-	public PendingTransaction createPendingTransaction(int initiatorID, double amount, Integer toAccountID, Integer fromAccountID, String description) {
+	public PendingTransaction createPendingTransaction(int initiatorID, double amount, String toAccountID, String fromAccountID, String description) {
 		
 		PendingTransaction trans = new PendingTransaction(initiatorID, amount, toAccountID, fromAccountID, description);
 		

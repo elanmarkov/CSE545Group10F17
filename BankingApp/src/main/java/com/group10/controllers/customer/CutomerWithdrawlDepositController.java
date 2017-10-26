@@ -29,7 +29,7 @@ public class CutomerWithdrawlDepositController {
 		CheckingAccount checking = accountsDao.getCheckingAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
 		SavingsAccount savings = accountsDao.getSavingsAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
 		
-		ModelAndView model = new ModelAndView("/Customers/Transaction_Deposit_Customer");
+		ModelAndView model = new ModelAndView("/customer/Transaction_Deposit_Customer");
 		model.addObject("checking", checking);
 		model.addObject("savings", savings);
 		return model;
@@ -37,7 +37,7 @@ public class CutomerWithdrawlDepositController {
 	
 	@RequestMapping("/depositMoney")
 	public ModelAndView despositMoney(HttpServletRequest request, @RequestParam("depositAccount") String accountType, 
-			@RequestParam("amount") double amount, @RequestParam("accountNumber") int accountNumber, RedirectAttributes redir) {
+			@RequestParam("amount") double amount, @RequestParam("accountNumber") String accountNumber, RedirectAttributes redir) {
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
@@ -60,7 +60,7 @@ public class CutomerWithdrawlDepositController {
 		CheckingAccount checking = accountsDao.getCheckingAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
 		SavingsAccount savings = accountsDao.getSavingsAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
 		
-		ModelAndView model = new ModelAndView("/Customers/Transaction_Withdraw_Customer");
+		ModelAndView model = new ModelAndView("/customer/Transaction_Withdraw_Customer");
 		model.addObject("checking", checking);
 		model.addObject("savings", savings);
 		return model;
@@ -68,7 +68,7 @@ public class CutomerWithdrawlDepositController {
 	
 	@RequestMapping("/withdrawMoney")
 	public ModelAndView withdrawMoney(HttpServletRequest request, @RequestParam("withdrawAccount") String accountType, 
-			@RequestParam("amount") double amount, @RequestParam("accountNumber") int accountNumber, RedirectAttributes redir) {
+			@RequestParam("amount") double amount, @RequestParam("accountNumber") String accountNumber, RedirectAttributes redir) {
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);

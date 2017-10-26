@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Pending Request Management</title>
+	<title>Withdraw</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 
@@ -18,13 +18,16 @@
 			text-align: center;
 		}
 
-		#loginBox{
-			margin: 5% 5% 10% 8%;
+		#tabContent{
+			margin: 5% 5% 10% 10%;
 		}
 
 		.hidden{
 			visibility: hidden;
 		}
+
+
+
 	</style>
 
 
@@ -37,6 +40,8 @@
 	  <h2 id="title">GROUP10 BANK</h2>
 	</div>
 </div>
+
+
 
 
 
@@ -55,8 +60,8 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/BankingApp/customer/transferBetweenAccounts">Between accounts</a></li>
-					<li><a href="/BankingApp/customer/transferToOthers">Send to others</a></li>
+					<li><a href="#">Between accounts</a></li>
+					<li><a href="#">Send to others</a></li>
 				</ul>
 			</li>
 
@@ -72,61 +77,43 @@
 	</div>
 </nav>
 
-
-
-
-
-<div class="container-fluid" id="loginBox">
+<div class="container">
 	<div class="row">
-		<div class="col-lg-16">
+		<div class="col-lg-6">
 			<div class="jumbotron">
-			<h3><strong>Pending Request Management</strong></h3>
-				  <table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th>Request ID</th>
-					        <th>From Account</th>
-					        <th>To Account</th>
-					        <th>Amount</th>
-					        <th>Action</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-            				<c:choose>
-					    	<c:when test="${empty transactionList}">
-                        			<tr>
-                                    	<td colspan="7">No Pending Request</td>
-                                	</tr>
-                            </c:when>
-                            <c:otherwise>
-                        			<c:forEach items="${transactionList}" var="transaction">
-                        					<tr>
-                                    		<td>${transaction.id}</td>
-											<td>${transaction.fromAccountID}</td>
-											<td>${transaction.toAccountID}</td>
-											<td>${transaction.amount}</td>
-											<td>
-												<form action = "/BankingApp/employee/PendingRequestManagement" method = "post">
+				<form action="/BankingApp/withdrawMoney" method="post">
+					<div class="form-group">
+						<label>Please select the account you would like to withdraw</label>
+							<select class="form-control" name="withdrawAccount">
+							  <option value="">--please select your account--</option>
+								<c:if test="${not empty savings}" >
+										<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
+										<input type="hidden" value=${savings.accountNumber} name="accountNumber" /> <!-- Do this again for chcking/credit-->
+                </c:if>
+								<c:if test="${not empty checking}" >
+							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
+								</c:if>
+							</select>
+					</div>
+					<div class="form-group">
+						<label>Please specify the amount you would like to withdraw</label>
+						<input type="number" class="form-control" name="amount" placeholder="$">
+					</div>
 
-		                          <select id="requestType" name="requestType" required>
-				       									  <option value="">Please Select</option>
-				          								<option value="approve">Approve</option>
-				          								<option value="reject">Reject</option>
-				       								</select>
-                      		<button type="submit" class="btn btn-xs btn-default">Submit</button>
-													<input type="hidden" name="requestID" value="${transaction.id}">
-                     		</form>
-											</td>
-                      		</tr>
-                  		</c:forEach>
-              		</c:otherwise>
-              	</c:choose>
-					    </tbody>
-					  </table>
+					<div class="form-group">
+					 <button type="submit" class="btn btn-primary" value="Submit">Withdraw</button>
+					</div>
+				</form>
+		</div>
+
+
+	</div>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>

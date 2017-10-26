@@ -22,6 +22,7 @@ import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.ExternalUser;
+import com.group10.dbmodels.InternalUser;
 
 
 @Controller
@@ -50,10 +51,11 @@ public class Tier1 {
 	
 
 	@RequestMapping(value = "/employee/externalreg", method =RequestMethod.POST)
-	public ModelAndView ExternalRegister (@ModelAttribute("user1") ExternalUser newUser, RedirectAttributes redir){
+	public ModelAndView ExternalRegister (@ModelAttribute("user1") InternalUser newUser, RedirectAttributes redir){
 		try{
 		 ModelAndView model = new ModelAndView();
 		String name = newUser.getName();
+		String role = newUser.getDesignation();
 		String email = newUser.getEmail();
 		String address = newUser.getAddress();
 		String city = newUser.getCity();
@@ -93,8 +95,8 @@ public class Tier1 {
 			String password = encoder.encode(rawPassword); 
 			dob = encoder.encode(dob);
 			ssn = encoder.encode(ssn);
-			udao.setExternalUser(name, address, city, state, country, pincode, number, email, dob, ssn, username); 
-			udao.setUserDetails(username, password,"ext");
+			udao.setExternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, username); 
+			udao.setLoginDetails(username, password,role,email);
 			
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			DbLogs dblogs = new DbLogs();
@@ -103,7 +105,7 @@ public class Tier1 {
 			dblogs.setUserid(userID);
 			logsDao.saveLogs(dblogs, "external");
         	redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-        	model.setViewName("redirect:/employee/Tier1Dashboard");
+        	model.setViewName("employee/Tier1Dashboard");
 		}
 		else{
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
@@ -112,18 +114,14 @@ public class Tier1 {
 			dblogs.setDetails("Error occured due to existing email/phone/username");
 			dblogs.setUserid(userID);
 			logsDao.saveLogs(dblogs, "external");
+			model.setViewName("/employee/RegistrationExternalEmployee");
+
 		}
-		model.setViewName("redirect:/employee/RegistrationExternalEmployee");
 		ctx.close();
 		return model;
 	}catch(Exception e){
 		throw new HandlerClass();
 	}
 	}
-	
-	
-	
 }
-
-
 

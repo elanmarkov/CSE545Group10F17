@@ -4,19 +4,19 @@ package com.group10.dbmodels;
 public class CheckingAccount {
 	
 	private int userId;
-	private int accountNumber;
+	private String accountNumber;
 	private double balance;
 	
 	public int getUserID() {
 		return userId;
 	}
-	public void setUserId(int userID) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public int getAccountNumber() {
+	public String getAccountNumber() {
 		return accountNumber;
 	}
-	public void setAccountNumber(int accountNumber) {
+	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 	public double getBalance() {

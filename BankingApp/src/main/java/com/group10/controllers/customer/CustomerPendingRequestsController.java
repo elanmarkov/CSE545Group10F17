@@ -23,7 +23,7 @@ public class CustomerPendingRequestsController {
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
 		List<PendingExternalRequest> extRequests = extDao.getPendingRequests(1); // TODO: USE USERID FROM SESSION
-		ModelAndView model = new ModelAndView("/Customers/PendingRequestManagement");
+		ModelAndView model = new ModelAndView("/customer/PendingRequestManagement");
 		model.addObject("transactionList", extRequests);
 		return model;
 	}

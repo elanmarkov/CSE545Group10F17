@@ -4,19 +4,19 @@ import java.math.BigInteger;
 
 public class SavingsAccount {
 	private int userId;
-	private int accountNumber;
+	private String accountNumber;
 	private double balance;
 	
 	public int getUserId() {
 		return userId;
 	}
-	public void setUserID(int userID) {
+	public void setUserID(int userId) {
 		this.userId = userId;
 	}
-	public int getAccountNumber() {
+	public String getAccountNumber() {
 		return accountNumber;
 	}
-	public void setAccountNumber(int accountNumber) {
+	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 	public double getBalance() {

@@ -4,7 +4,7 @@
 	<title>Login</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
 		margin-bottom: 0px;
@@ -26,10 +26,10 @@
 		}
 	</style>
 
-	<script language="JavaScript" type="text/javascript"> 
+	<script language="JavaScript" type="text/javascript">
     function checkEmail(){
     console.log("called");
-    var userEmail = $('#userEmail').val();  
+    var userEmail = $('#userEmail').val();
     console.log(userEmail);
     var filter = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             if(!filter.test(userEmail))
@@ -47,7 +47,7 @@
 		  recaptcha.oninvalid = function(e) {
 		    alert("Please complete the captcha");
 		  }
-		}	
+		}
 	</script>
 
 
@@ -58,14 +58,14 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">WELCOME TO GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 <div class="container" id="loginBox">
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-			  <form name="myForm" action="/BankingApp/loginSubmit method="post">
+			  <form name="myForm" action="/BankingApp/loginSubmit" method="post">
 				  <div class="form-group">
 				    <label for="username">Username</label>
 				    <input type="text" class="form-control" id="userName" name="username" placeholder="Username" required>

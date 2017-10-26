@@ -47,7 +47,7 @@ public class Tier1PendingTransactions {
 	}
 	
 	@RequestMapping(value = "/tier1/transactionNew", method = RequestMethod.POST)
-	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") int fromAccountID, @RequestParam("receiverAccountNumber") int toAccountID, @RequestParam("amountToAdd") double amount) {
+	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") String fromAccountID, @RequestParam("receiverAccountNumber") String toAccountID, @RequestParam("amountToAdd") double amount) {
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
