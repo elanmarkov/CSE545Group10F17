@@ -1,12 +1,13 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>Tier 2 Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -33,7 +34,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 <nav class="navbar navbar-default">
@@ -55,7 +56,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -64,7 +65,7 @@
 	<div class="row">
 		<div class="col-lg-16">
 			<div class="jumbotron">
-			<h3><strong>Pending Request Management</strong></h3>
+			<h3><strong>Pending Request Management ${amount}</strong></h3>
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -78,7 +79,7 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-                        	<c:choose>			      
+                        	<c:choose>
 
 					    	<c:when test="${empty pending_list}">
                         			<tr>
@@ -106,10 +107,10 @@
 		                                   		</form>
 											</td>
                                 		</tr>
-                        				            
+
                             		</c:forEach>
                         		</c:otherwise>
-                        	</c:choose>			      
+                        	</c:choose>
 					    </tbody>
 					  </table>
 			</div>

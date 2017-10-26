@@ -7,7 +7,6 @@ import java.util.Random;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.group10.dbmodels.User;
-import com.group10.dbmodels.UserDetails;
 
 public class UserRegistrationDaoImpl extends JdbcDaoSupport  
 {

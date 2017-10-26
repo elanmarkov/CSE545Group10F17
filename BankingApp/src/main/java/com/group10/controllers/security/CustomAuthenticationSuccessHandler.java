@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
-
+/*
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-
+*/
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		HttpSession session = arg0.getSession();
-		boolean captchaVerified = verify(arg0.getParameter("g-recaptcha-response"));
+	//	boolean captchaVerified = verify(arg0.getParameter("g-recaptcha-response"));
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
         String role_raw = arg2.getAuthorities().toString();
         String role = role_raw.substring(1, role_raw.length() -1 );
@@ -55,7 +55,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     	else if(role.equalsIgnoreCase("merchant")) arg1.sendRedirect("/customer/Merchantdashboard");
     	ctx.close();  
 	}
-
+/*
 //Verify captcha received during the login session
 public boolean verify(String captcha) throws IOException{
 
@@ -105,4 +105,5 @@ public boolean verify(String captcha) throws IOException{
 				return false;
 			}
 	}
+*/
 }

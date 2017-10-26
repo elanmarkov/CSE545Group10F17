@@ -1,13 +1,14 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Deposit</title>
+	<title>Withdraw</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -25,8 +26,8 @@
 			visibility: hidden;
 		}
 
-		
-		
+
+
 	</style>
 
 
@@ -37,32 +38,34 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
+
+
 
 
 
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
+			<li><a href="/BankingApp/customer/dashboard">Home</a></li>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Deposit</a></li>
-					<li><a href="#">Withdraw</a></li>
+					<li><a href="/BankingApp/customer/deposit">Deposit</a></li>
+					<li><a href="/BankingApp/customer/withdraw">Withdraw</a></li>
 				</ul>
 			</li>
 
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Between accounts</a></li>
-					<li><a href="#">Send to others</a></li>
+					<li><a href="/BankingApp/customer/transferBetweenAccounts">Between accounts</a></li>
+					<li><a href="/BankingApp/customer/transferToOthers">Send to others</a></li>
 				</ul>
 			</li>
 
-			<li><a href="#">Pending Request</a></li>
+			<li><a href="/BankingApp/customer/pendingRequests">Pending Request</a></li>
 			<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
 		</ul>
 
@@ -74,32 +77,36 @@
 	</div>
 </nav>
 
-
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-				<form action="/BankingApp/depositMoney" method="post">
+				<form action="/BankingApp/withdrawMoney" method="post">
 					<div class="form-group">
-						<label>Please select the account you would like to deposit</label>
-							<select class="form-control" name="depositAccount">
+						<label>Please select the account you would like to withdraw</label>
+							<select class="form-control" name="withdrawAccount">
 							  <option value="">--please select your account--</option>
-							  <option value="savings">Savings Account</option>
-							  <option value="checking">Checking Account</option>
+								<c:if test="${not empty savings}" >
+										<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
+										<input type="hidden" value=${savings.accountNumber} name="accountNumber" /> <!-- Do this again for chcking/credit-->
+                </c:if>
+								<c:if test="${not empty checking}" >
+							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
+								</c:if>
 							</select>
 					</div>
 					<div class="form-group">
-						<label>Please specify the amount you would like to deposit</label>
+						<label>Please specify the amount you would like to withdraw</label>
 						<input type="number" class="form-control" name="amount" placeholder="$">
 					</div>
 
 					<div class="form-group">
-					 <button type="submit" class="btn btn-primary">Deposit</button>
+					 <button type="submit" class="btn btn-primary" value="Submit">Withdraw</button>
 					</div>
 				</form>
 		</div>
 
-		
+
 	</div>
 				</form>
 			</div>

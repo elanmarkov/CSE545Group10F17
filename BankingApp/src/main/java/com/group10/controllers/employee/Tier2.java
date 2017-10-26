@@ -1,5 +1,6 @@
 package com.group10.controllers.employee;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,8 +24,9 @@ import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
-import com.group10.dbmodels.ExternalUser;
 import com.group10.dbmodels.User;
+import com.group10.dbmodels.PII;
+import com.group10.dbmodels.PendingInternalRequests;
 
 
 @Controller
@@ -44,7 +47,9 @@ public class Tier2 {
     public String handleResourceNotFoundException() {
         return "redirect:/exception";
     }
-			
+	
+	
+	
 	@RequestMapping("/employee/RegistrationExternalEmployee")
 	public ModelAndView extReg(){
 		return new ModelAndView("/employee/RegistrationExternalEmployee");
@@ -116,9 +121,161 @@ public class Tier2 {
 		
 		}catch(Exception e){
 			throw new HandlerClass();
-		}
-		
+		}		
 	}
+	
+	
+
+	@RequestMapping("/employee/Tier2Dashboard")
+	public ModelAndView tier2DashboardPage(){
+		return new ModelAndView("/employee/Tier2Dashboard");
+	}
+	
+	@RequestMapping("/employee/Tier2PendingRequest")
+	public ModelAndView tier2PendingRequest(){
+
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		ModelAndView model = new ModelAndView();
+		List<PendingInternalRequests> pending_list = edao.getAdminPendingRequests();
+		model.addObject("pending_list", pending_list);
+		model.setViewName("/employee/Tier2PendingRequest");
+		ctx.close();
+		return model;
+	}
+		
+	@RequestMapping("/employee/Tier2SearchUser")
+	public ModelAndView Tier2SearchUser(){
+		return new ModelAndView("/employee/Tier2SearchUser");
+	}
+	
+	@RequestMapping("/employee/Tier2UserDetails")
+	public ModelAndView Tier2UserDetails(){
+		return new ModelAndView("/employee/Tier2UserDetails");
+	}
+	
+
+	@RequestMapping(value = "/tier2/searchInternalUser", method =RequestMethod.POST)
+	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID/*, RedirectAttributes redir*/){
+//		try{
+			
+			ModelAndView model =new ModelAndView();
+
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			if(fdao.existUser(employeeID))
+			{	
+				ldao.saveLogs("searched for internal user", ""+employeeID, userID, "internal");
+				User employeeObj = fdao.getInternalUser(employeeID);
+				model.addObject("employeeObj",employeeObj);
+				//redir.addFlashAttribute("error_msg","Employee Found");
+			}
+			else{
+				//redir.addFlashAttribute("error_msg","Employee Not Found");
+			}
+			model.setViewName("/tier2/Tier2SearchUser");
+			ctx.close();
+			return model;	
+/*
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+*/
+	}
+	
+	@RequestMapping(value = "/tier2/searchExternalUser", method =RequestMethod.POST)
+	public ModelAndView searchExternalUser(HttpServletRequest request, @RequestParam("employeeID") int customerID/*, RedirectAttributes redir*/){
+//		try{
+			
+			ModelAndView model =new ModelAndView();
+
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			if(fdao.existUser(customerID))
+			{	
+				ldao.saveLogs("searched for external user", ""+customerID, userID, "external");
+				User customerObj = fdao.getExternalUser(customerID);
+				model.addObject("customerObj",customerObj);
+				//redir.addFlashAttribute("error_msg","Employee Found");
+			}
+			else{
+				//redir.addFlashAttribute("error_msg","Employee Not Found");
+			}
+			model.setViewName("/employee/Tier2SearchUser");
+			ctx.close();
+			return model;	
+/*
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+*/
+	}
+	
+	@RequestMapping(value = "/tier2/showInternalAccount", method =RequestMethod.POST)
+	public ModelAndView showInternalAccount(HttpServletRequest request, @RequestParam("employeeID") int employeeID, RedirectAttributes redir){
+		
+		try{
+			ModelAndView model = new ModelAndView();
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			ldao.saveLogs("Accessed details of employee", ""+employeeID, userID, "internal");
+			User user = fdao.getInternalUser(employeeID);
+			model.addObject("user",user);
+
+			model.setViewName("/employee/Tier2UserDetails");
+			ctx.close();
+			return model;
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+	}
+
+	@RequestMapping(value = "/tier2/showExternalAccount", method =RequestMethod.POST)
+	public ModelAndView showExternalAccount(HttpServletRequest request, @RequestParam("customerID") int customerID, RedirectAttributes redir){
+		
+		try{
+			ModelAndView model = new ModelAndView();
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			ldao.saveLogs("Accessed details of custtomer", ""+customerID, userID, "external");
+			User user = fdao.getExternalUser(customerID);
+			model.addObject("user",user);
+
+			model.setViewName("/employee/Tier2UserDetails");
+			ctx.close();
+			return model;
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+	}
+	
+	@RequestMapping(value = "/tier2/deleteExternalUser", method =RequestMethod.POST)
+	public ModelAndView deleteInternalUser(HttpServletRequest request, @RequestParam("customerID") int customerID, RedirectAttributes redir){
+		try{
+			ModelAndView model = new ModelAndView();
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+			fdao.deleteExternalUser(customerID);
+			ldao.saveLogs("deleted external user", ""+customerID, userID, "external");
+			model.setViewName("/employee/Tier2UserDetails");
+			ctx.close();
+			return model;
+
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+
+	}
+	
 	
 }
 

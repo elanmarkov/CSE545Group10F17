@@ -17,7 +17,7 @@ import com.group10.dbmodels.PendingTransaction;
 public class ExternalRequestsDao  extends JdbcDaoSupport{
 
 	public List<PendingExternalRequest> getPendingRequests(int userID) {
-		String sql = "SELECT * FROM pending_external_requests WHERE receiverID = " + userID;
+		String sql = "SELECT * FROM pending_external_requests WHERE payerID = " + userID;
 		return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<PendingExternalRequest>(PendingExternalRequest.class));
 	}
 	
@@ -30,9 +30,9 @@ public class ExternalRequestsDao  extends JdbcDaoSupport{
 		
 		// Add completed transaction to database
 		CompletedExternalRequest compReq = new CompletedExternalRequest(extReq, status); // Make a completedTransaction object
-		String updateSQL = "INSERT INTO completed_external_requests (amount,stamp,completedStamp,toAccountID,fromAccountID,description,receiverID,initiatorID,status) values (?,?,NOW(),?,?,?,?,?,?)";
+		String updateSQL = "INSERT INTO completed_external_requests (amount,stamp,completedStamp,toAccountID,fromAccountID,description,payerID,initiatorID,status) values (?,?,NOW(),?,?,?,?,?,?)";
 		this.getJdbcTemplate().update(updateSQL, new Object[]{compReq.getAmount(), compReq.getStamp(),
-				compReq.getToAccountID(), compReq.getFromAccountID(), compReq.getDescription(), compReq.getReceiverID(), 
+				compReq.getToAccountID(), compReq.getFromAccountID(), compReq.getDescription(), compReq.getPayerID(), 
 				compReq.getInitiatorID(), compReq.getStatus()});
 		
 		// If approved, create a pending transaction
@@ -43,5 +43,18 @@ public class ExternalRequestsDao  extends JdbcDaoSupport{
 					trans.getDescription(), trans.getFromAccountID()});
 		}
 		
+	}
+	
+	public void createPendingRequest(String fromAccountID, String toAccountID, double amount, int initiatorID) {
+		String sql = "SELECT userId FROM checking_accounts WHERE accountNumber="+fromAccountID+"\n"+ 
+					"UNION SELECT userId FROM savings_accounts WHERE accountNumber="+fromAccountID;
+		
+		int payerID = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+		
+		PendingExternalRequest req = new PendingExternalRequest(amount, toAccountID, fromAccountID, "Description", payerID, initiatorID);
+		
+		String updateSQL = "INSERT INTO pending_external_requests (amount, stamp, toAccountID, fromAccountID, description, payerID, initiatorID) values (?,NOW(),?,?,?,?,?)";
+		this.getJdbcTemplate().update(updateSQL, new Object[] {req.getAmount(), req.getToAccountID(), req.getFromAccountID(), req.getDescription(),
+				req.getPayerID(), req.getInitiatorID()});
 	}
 }

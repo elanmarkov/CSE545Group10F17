@@ -9,7 +9,6 @@ import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.User;
 import com.group10.dbmodels.PII;
 import com.group10.dbmodels.PendingInternalRequests;
-import com.group10.dbmodels.UserDetails;
 
 public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 	
@@ -93,6 +92,28 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		// TODO Auto-generated method stub
 		String sql = "select userId from user_login where username='"+username+"'";
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
+	}
+
+	public User getInternalUser(int employeeID) {
+		// TODO Auto-generated method stub
+		String sql = "select * from users where id="+employeeID+" and role in ('manager','regular','admin')";
+		return (User)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
+	}
+	
+	public User getExternalUser(int customerId) {
+		// TODO Auto-generated method stub
+		String sql = "select * from users where id="+customerId+" and role in ('customer','merchant')";
+		return (User)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
+	}
+
+	public void deleteExternalUser(int customerId) {
+		String sql = "delete from users where id="+customerId+" and role in ('customer','merchant')";
+		this.getJdbcTemplate().update(sql);	
+	}
+	
+	public void deleteInternalUser(int employeeID) {
+		String sql = "delete from users where id="+employeeID+" and role in ('admin','manager','regular')";
+		this.getJdbcTemplate().update(sql);	
 	}
 	
 	

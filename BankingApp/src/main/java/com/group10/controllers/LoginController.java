@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.validator.internal.util.logging.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.employee.EmpFunctionsDaoImpl;
-import com.group10.dbmodels.UserDetails;
 
 
 @Controller
@@ -48,7 +46,6 @@ public class LoginController {
 		{	
 			
 			ModelAndView model = new ModelAndView();
-			UserDetails user = new UserDetails();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			username= username.split("@")[0];
