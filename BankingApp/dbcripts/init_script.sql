@@ -181,3 +181,10 @@ CREATE TABLE completed_internal_requests (
   status varchar(20) NOT NULL, -- Approved or denied
   CONSTRAINT id PRIMARY KEY (id)
 );
+
+CREATE TABLE accNumToTableRel (
+  id int NOT NULL AUTO_INCREMENT,
+  accountNumber varchar(255) NOT NULL,
+  table varchar(255) NOT NULL,
+  userId int NOT NULL
+);

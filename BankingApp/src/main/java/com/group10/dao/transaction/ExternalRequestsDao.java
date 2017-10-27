@@ -51,10 +51,23 @@ public class ExternalRequestsDao  extends JdbcDaoSupport{
 		
 		int payerID = this.getJdbcTemplate().queryForObject(sql, Integer.class);
 		
-		PendingExternalRequest req = new PendingExternalRequest(amount, toAccountID, fromAccountID, "Description", payerID, initiatorID);
+		PendingExternalRequest req = new PendingExternalRequest(amount, toAccountID, fromAccountID, "Money Request", payerID, initiatorID);
 		
 		String updateSQL = "INSERT INTO pending_external_requests (amount, stamp, toAccountID, fromAccountID, description, payerID, initiatorID) values (?,NOW(),?,?,?,?,?)";
 		this.getJdbcTemplate().update(updateSQL, new Object[] {req.getAmount(), req.getToAccountID(), req.getFromAccountID(), req.getDescription(),
 				req.getPayerID(), req.getInitiatorID()});
+	}
+	
+	public boolean checkAccountNumberValidity(String accountNumber, int userId) {
+		
+		String sql  = "SELECT count(*) FROM accNumToTableRel WHERE (userId = 1 AND accountNumber = 450)";
+		
+		Integer count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+		
+		if (count > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

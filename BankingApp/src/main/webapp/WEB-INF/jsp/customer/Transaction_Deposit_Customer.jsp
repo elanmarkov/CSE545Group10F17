@@ -85,13 +85,28 @@
 						<label>Please select the account you would like to deposit</label>
 							<select class="form-control" name="depositAccount">
 							  <option value="">--please select your account--</option>
-								<c:if test="${not empty savings}" >
+
+
+								<!-- TESTING -->
+								<c:choose>
+									<c:when test="${not empty savings}">
+										<option value="${savings.accountNumber}">Saving Account ${savings.accountNumber}</option>
+									</c:when>
+								</c:choose>
+
+							<c:choose>
+								<c:when test="${not empty checking}">
+									<option value="${checking.accountNumber}">Checking Account ${checking.accountNumber}</option>
+								</c:when>
+							 </c:choose>
+								<!-- END TESTING -->
+								<%-- <c:if test="${not empty savings}" >
 										<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
 										<input type="hidden" value=${savings.accountNumber} name="accountNumber" />
                 </c:if>
 								<c:if test="${not empty checking}" >
 							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
-								</c:if>
+								</c:if> --%>
 							</select>
 					</div>
 					<div class="form-group">

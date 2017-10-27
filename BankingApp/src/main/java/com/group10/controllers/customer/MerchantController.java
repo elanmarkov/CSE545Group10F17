@@ -35,9 +35,13 @@ public class MerchantController {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
-		extDao.createPendingRequest(transferFrom, transferTo, amount, 1); //TODO: USE USER_ID FROM SESSION
-		
-		ModelAndView model = new ModelAndView("redirect:/customer/dashboard");
-		return model;
+		// TODO: CHANGE TO USER ID FROM SESSION
+		if (extDao.checkAccountNumberValidity(transferTo, 1) && extDao.checkAccountNumberValidity(transferFrom, 1)) {
+			extDao.createPendingRequest(transferFrom, transferTo, amount, 1); //TODO: USE USER_ID FROM SESSION
+			return new ModelAndView("redirect:/customer/dashboard");
+		} else {
+			return new ModelAndView("redirect:/customer/dashboard");
+			//redir.addFlashAttribute("error_message",accountNumber+" Not Valid");
+		}
 	}
 }

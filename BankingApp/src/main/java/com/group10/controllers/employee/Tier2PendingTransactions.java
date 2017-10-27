@@ -61,23 +61,23 @@ public class Tier2PendingTransactions {
 	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") String fromAccountID,
 			@RequestParam("receiverAccountNumber") String toAccountID, @RequestParam("amountToAdd") double amount, RedirectAttributes redir) {
 		try {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
-		
-		//Tier 2 can't create critical transactions
-		if (amount < 5000) {
-			extDao.createPendingTransaction(1, amount, toAccountID, fromAccountID, "HARDCODED DESCRIPTION");
-			redir.addFlashAttribute("error_message: Not authorized to create critical transactions");
-		}
-		
-		ModelAndView model = new ModelAndView("redirect:/employee/Tier2TransactionManagement");
-		return model;
+			int userId = 1;
+			
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
+			
+			if (extDao.checkAccountNumberValidity(fromAccountID, userId) && extDao.checkAccountNumberValidity(toAccountID, userId)) {
+				//Tier 2 can't create critical transactions
+				if (amount < 5000) {
+					extDao.createPendingTransaction(1, amount, toAccountID, fromAccountID, "HARDCODED DESCRIPTION");
+					redir.addFlashAttribute("error_message: Not authorized to create critical transactions");
+				}
+			}
+			ModelAndView model = new ModelAndView("redirect:/employee/Tier2TransactionManagement");
+			return model;
+			
 		} catch (Exception e) {
 			throw new HandlerClass();
-		}
-		
+		}	
 	}
-	
-	
-	
 }

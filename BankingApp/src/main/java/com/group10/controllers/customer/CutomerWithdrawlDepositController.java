@@ -42,14 +42,15 @@ public class CutomerWithdrawlDepositController {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
-		//TODO MAKE DYNAMIC
-		if (accountType.equals("savings")) {
-			extDao.createPendingTransaction(1, amount, accountNumber, null, "Deposit to savings");
-		} else if (accountType.equals("checking")){
-			extDao.createPendingTransaction(1, amount, accountNumber, null, "Deposit to checking");
+		// TODO: CHANGE TO USER ID FROM SESSION
+		if (extDao.checkAccountNumberValidity(accountNumber, 1)) {
+			extDao.createPendingTransaction(1, amount, accountNumber, null, "DESCRIPTION");
+			return new ModelAndView("redirect:/customer/deposit");
+		} else {
+			return new ModelAndView("redirect:/customer/deposit");
+			//redir.addFlashAttribute("error_message",accountNumber+" Not Valid");
 		}
-		
-		return new ModelAndView("redirect:/customer/deposit");
+
 	}
 	
 	@RequestMapping("/customer/withdraw")
@@ -73,13 +74,13 @@ public class CutomerWithdrawlDepositController {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
-		//TODO MAKE DYNAMIC
-		if (accountType.equals("savings")) {
-			extDao.createPendingTransaction(1, amount, null, accountNumber, "Withdraw from savings");
-		} else if (accountType.equals("checking")){
-			extDao.createPendingTransaction(1, amount, null, accountNumber, "Withdraw from checking");
-		}
-		
-		return new ModelAndView("redirect:/customer/withdraw");
+		// TODO: CHANGE TO USER ID FROM SESSION
+		if (extDao.checkAccountNumberValidity(accountNumber, 1)) {
+			extDao.createPendingTransaction(1, amount, accountNumber, null, "DESCRIPTION");
+			return new ModelAndView("redirect:/customer/deposit");
+		} else {
+			return new ModelAndView("redirect:/customer/deposit");
+			//redir.addFlashAttribute("error_message",accountNumber+" Not Valid");
+		}		
 	}
 }

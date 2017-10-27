@@ -31,35 +31,41 @@ public class Tier1PendingTransactions {
 	@RequestMapping(value = "/tier1/transactionReview", method = RequestMethod.POST) 
 	public ModelAndView reviewedTransaction(HttpServletRequest request, @RequestParam("transactionID") String transId, @RequestParam("requestDecision") String requestDecision, RedirectAttributes redir) {
 		
-			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
-			
-			if (requestDecision.equals("approve")) {
-				//TODO: PASS REVIEWER ID FROM SESSION
-				extDao.approveTransaction(transId, 1, "tier1");
-			} else if (requestDecision.equals("reject")) {
-				//TODO: PASS REVIEWER ID FROM SESSION
-				extDao.declineTransaction(transId, 1, "tier1");
-			}
-			
-			ModelAndView model = new ModelAndView("redirect:/employee/Tier1TransactionManagement");
-			return model;
-	}
-	
-	@RequestMapping(value = "/tier1/transactionNew", method = RequestMethod.POST)
-	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") String fromAccountID, @RequestParam("receiverAccountNumber") String toAccountID, @RequestParam("amountToAdd") double amount) {
+		int reviewerId = 1;
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
-		//Tier 2 can't create critical transactions
-		if (amount < 5000) {
-			extDao.createPendingTransaction(1, amount, toAccountID, fromAccountID, "HARDCODED DESCRIPTION");
+		if (extDao.checkPendingTransactionIDValidity(transId, reviewerId)) {
+			if (requestDecision.equals("approve")) {
+				//TODO: PASS REVIEWER ID FROM SESSION
+				extDao.approveTransaction(transId, reviewerId, "tier1");
+			} else if (requestDecision.equals("reject")) {
+				//TODO: PASS REVIEWER ID FROM SESSION
+				extDao.declineTransaction(transId, reviewerId, "tier1");
+			}
+		} 
+		
+		ModelAndView model = new ModelAndView("redirect:/employee/Tier1TransactionManagement");
+		return model;
+	}
+	
+	@RequestMapping(value = "/tier1/transactionNew", method = RequestMethod.POST)
+	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") String fromAccountNumber, @RequestParam("receiverAccountNumber") String toAccountNumber, @RequestParam("amountToAdd") double amount) {
+		
+		int userId = 1;
+		
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
+		
+		if (extDao.checkAccountNumberValidity(toAccountNumber, userId) &&extDao.checkAccountNumberValidity(fromAccountNumber, userId)) {
+			//Tier 2 can't create critical transactions
+			if (amount < 5000) {
+				extDao.createPendingTransaction(1, amount, toAccountNumber, fromAccountNumber, "HARDCODED DESCRIPTION");
+			}
 		}
 		
 		ModelAndView model = new ModelAndView("redirect:/employee/Tier1TransactionManagement");
 		return model;
-		
 	}
-	
 }
