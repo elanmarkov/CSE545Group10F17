@@ -114,7 +114,7 @@
 			<div class="jumbotron">		
 				<h3><strong>Search Customer</strong></h3>
 
-				<form class="form-margin" action = "/BankingApp/tier2/SearchExternalUser" method = "post">
+				<form class="form-margin" action = "/BankingApp/tier2/searchExternalUser" method = "post">
 					<div>
 	            		<input class="form-control" type="text" name="customerID" placeholder="Customer ID">
 	            	</div>

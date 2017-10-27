@@ -66,38 +66,32 @@
 		<div class="col-lg-16">
 			<div class="jumbotron">
 			<h3><strong>Pending Request Management ${amount}</strong></h3>
-				  <table class="table table-hover">
+				 <table class="table table-hover">
 					    <thead>
 					      <tr>
-					        <th>Transaction ID</th>
-					        <th>Payer ID</th>
-					        <th>Payee ID</th>
-					        <th>Transaction Amount</th>
-					        <th>Transaction Type</th>
-					        <th>Critical Transaction</th>
+					        <th>Request ID</th>
+					        <th>Internal User ID</th>
+					        <th>Request Type</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-                        	<c:choose>
-
+        				<c:choose>
 					    	<c:when test="${empty pending_list}">
                         			<tr>
-                                    	<td colspan="7">No Pending Transaction</td>
+                                    	<td colspan="7">No Pending Request</td>
                                 	</tr>
                             </c:when>
                             <c:otherwise>
-                        			<c:forEach items="${pending_list}" var="transaction">
+                        			<c:forEach items="${pending_list}" var="request">
                         					<tr>
-                                    		<td>${transaction.id}</td>
-											<td>${transaction.payer_id}</td>
-											<td>${transaction.payee_id}</td>
-											<td>${transaction.amount}</td>
-											<td>${transaction.transaction_type}</td>
-											<td>${transaction.critical}</td>
+                                    		<td>${request.id}</td>
+                                    		<td>${request.userId}</td>
 											<td>
-												<form action = "/BankingApp/employee/tier2req" method = "post">
-		                                    	<input type="hidden" name="requestID" value="${request.id}">
+												<form action = "/BankingApp/tier2/pendingRequest" method = "post">
+		                                    		<input type="hidden" name="requestID" value="${request.id}">
+ 		                                    		<input type="hidden" name="userId" value="${request.userId}">
+
 		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
 				          								<option value="approve">Approve</option>
@@ -107,10 +101,9 @@
 		                                   		</form>
 											</td>
                                 		</tr>
-
                             		</c:forEach>
                         		</c:otherwise>
-                        	</c:choose>
+                        	</c:choose>			      
 					    </tbody>
 					  </table>
 			</div>

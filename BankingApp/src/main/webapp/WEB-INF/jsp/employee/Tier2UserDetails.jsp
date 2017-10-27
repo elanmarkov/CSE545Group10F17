@@ -82,7 +82,7 @@
         					<tr>
 	                    		<td>${user.id}</td>
                     			<td>${user.name}</td>
-                    			<td>${user.designation}</td>
+                    			<td>${user.role}</td>
                     			<td>${user.email}</td>
                     			<td>${user.phone}</td>
                     			<td>${user.address}</td>
@@ -90,40 +90,11 @@
                         </tbody>
 					  </table>
 				<a href="#modifyaccount" class="btn btn-default"  data-toggle="modal">Modify Account</a>
-				<a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a>
+				
 
 			</div>
 		</div>
 	</div>
-
-	<div class="row">
-		<div class="col-lg-14">
-			<div class="jumbotron">
-			<h3><strong>PII Information</strong></h3>			
-				<table class="table table-hover">
-					    <thead>
-					      <tr>
-					           <th>SSN</th>
-                               <th>Date of Birth</th>
-					      </tr>
-					    </thead>
-					    
-					      <tbody>
-        					<tr>
-	                    		<td>${user.ssn}</td>
-                    			<td>${user.dateOfBirth}</td>
-								
-	                		</tr>
-                        				
-	                </tbody>
-				  </table>
-			
-			
-
-			</div>
-		</div>
-	</div>
-
 </div>
 
 <div class="modal fade" id="modifyaccount" role="dialog">
@@ -136,8 +107,13 @@
           <h4 class="modal-title"><strong>Account Info</strong></h4>
         </div>
         <div class="modal-body">
-          <form action="/BankingApp/employee/internalreg" method="POST">
+          <form action="/BankingApp/tier2/modifyAccount" method="POST">
 				  		
+
+					<div class="form-group">
+					    <input type="hidden" class="form-control" name="id" value=${user.id}>
+					  </div>
+
 					  <div class="form-group">
 					    <label for="address">Address</label>
 					    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
@@ -153,10 +129,17 @@
 					    <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
 					  </div>
 
-					  <div class="form-group">
-					    <label for="pincode">Zip Code</label>
-					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					
+					   <div class="form-group">
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="country" required>
 					  </div>
+
+					  <div class="form-group">
+					    <label for="zipcode">Zip Code</label>
+					    <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zip Code" required>
+					  </div>
+					  
 					  
 					  <div class="form-group">
 					    <label for="phone">Phone Number</label>

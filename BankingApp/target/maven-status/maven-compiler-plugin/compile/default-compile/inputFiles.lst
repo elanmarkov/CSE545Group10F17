@@ -37,7 +37,8 @@ E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\transac
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\CreditAccount.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\security\CustomAuthenticationSuccessHandler.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\LoginAuthentication.java
-E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\PendingExternalRequest.java
+E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\PendingAccountChangeRequests.java
+E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\PendingExternalRequests.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\employee\Tier2.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\customer\CutomerWithdrawlDepositController.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\LoginController.java

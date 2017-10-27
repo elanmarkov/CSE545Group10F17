@@ -26,6 +26,8 @@ import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.User;
 import com.group10.dbmodels.PII;
+import com.group10.dbmodels.PendingAccountChangeRequests;
+import com.group10.dbmodels.PendingExternalRequests;
 import com.group10.dbmodels.PendingInternalRequests;
 
 
@@ -137,13 +139,40 @@ public class Tier2 {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		ModelAndView model = new ModelAndView();
-		List<PendingInternalRequests> pending_list = edao.getAdminPendingRequests();
+		List<PendingAccountChangeRequests> pending_list = edao.getExternalPendingRequests();
 		model.addObject("pending_list", pending_list);
 		model.setViewName("/employee/Tier2PendingRequest");
 		ctx.close();
 		return model;
 	}
 		
+	@RequestMapping(value = "/tier2/pendingRequest", method =RequestMethod.POST)
+	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") int requestId, @RequestParam("requestDecision") String reqDecision,
+			@RequestParam("userId") int userId/*,RedirectAttributes redir*/){
+			
+	//	try{
+			ModelAndView model = new ModelAndView();
+			
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+			ldao.saveLogs("Account change request", reqDecision, userId, "external");
+
+			if(reqDecision.equals("approve"))
+				fdao.approveTier2Request(requestId);
+			else
+				fdao.deleteTier2Request(requestId);
+		//	redir.addFlashAttribute("error_msg","Request"+reqDecision);
+			model.setViewName("/employee/Tier2PendingRequest");
+			ctx.close();
+			return model;
+/*
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+*/	}
+	
+	
 	@RequestMapping("/employee/Tier2SearchUser")
 	public ModelAndView Tier2SearchUser(){
 		return new ModelAndView("/employee/Tier2SearchUser");
@@ -165,17 +194,17 @@ public class Tier2 {
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
-			if(fdao.existUser(employeeID))
+			if(fdao.existTier1User(employeeID))
 			{	
 				ldao.saveLogs("searched for internal user", ""+employeeID, userID, "internal");
-				User employeeObj = fdao.getInternalUser(employeeID);
+				User employeeObj = fdao.getTier1User(employeeID);
 				model.addObject("employeeObj",employeeObj);
 				//redir.addFlashAttribute("error_msg","Employee Found");
 			}
 			else{
 				//redir.addFlashAttribute("error_msg","Employee Not Found");
 			}
-			model.setViewName("/tier2/Tier2SearchUser");
+			model.setViewName("/employee/Tier2SearchUser");
 			ctx.close();
 			return model;	
 /*
@@ -186,7 +215,7 @@ public class Tier2 {
 	}
 	
 	@RequestMapping(value = "/tier2/searchExternalUser", method =RequestMethod.POST)
-	public ModelAndView searchExternalUser(HttpServletRequest request, @RequestParam("employeeID") int customerID/*, RedirectAttributes redir*/){
+	public ModelAndView searchExternalUser(HttpServletRequest request, @RequestParam("customerID") int customerID/*, RedirectAttributes redir*/){
 //		try{
 			
 			ModelAndView model =new ModelAndView();
@@ -195,7 +224,7 @@ public class Tier2 {
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
-			if(fdao.existUser(customerID))
+			if(fdao.existExternalUser(customerID))
 			{	
 				ldao.saveLogs("searched for external user", ""+customerID, userID, "external");
 				User customerObj = fdao.getExternalUser(customerID);
@@ -225,7 +254,7 @@ public class Tier2 {
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
 			ldao.saveLogs("Accessed details of employee", ""+employeeID, userID, "internal");
-			User user = fdao.getInternalUser(employeeID);
+			User user = fdao.getTier1User(employeeID);
 			model.addObject("user",user);
 
 			model.setViewName("/employee/Tier2UserDetails");
@@ -245,7 +274,7 @@ public class Tier2 {
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
-			ldao.saveLogs("Accessed details of custtomer", ""+customerID, userID, "external");
+			ldao.saveLogs("Accessed details of customer", ""+customerID, userID, "external");
 			User user = fdao.getExternalUser(customerID);
 			model.addObject("user",user);
 
@@ -273,9 +302,38 @@ public class Tier2 {
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-
 	}
 	
+
+	@RequestMapping(value = "/tier2/modifyAccount", method =RequestMethod.POST)
+	public ModelAndView internalModify(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
+			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
+			 @RequestParam("id") int userId,RedirectAttributes redir){
+		try{
+			ModelAndView model = new ModelAndView();
+			
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			/*  write the dao code for admin modify
+	         * 
+	        */ 
+			fdao.modify(address, city, state, zipcode, country, phone, userId);	
+			redir.addFlashAttribute("error_msg","Modified the address for "+userId);
+			User user = fdao.getUser(userId);
+			model.addObject("user",user);
+			model.setViewName("/employee/Tier2UserDetails");
+			ldao.saveLogs("Modified internal account", "address change", userID, "internal");
+		
+			ctx.close();
+			return model;
+
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+	}
+
 	
 }
 

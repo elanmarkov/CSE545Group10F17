@@ -43,6 +43,18 @@ CREATE TABLE pending_internal_requests (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE pending_ac_requests (
+    id int NOT NULL AUTO_INCREMENT,
+    userId int NOT NULL,
+    address varchar(20) NOT NULL,
+    state varchar(20) NOT NULL,
+    city varchar(20) NOT NULL,
+  	country varchar(20) NOT NULL,
+    zipcode varchar(20) NOT NULL,
+    phone varchar(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE user_login (
   username varchar(20) NOT NULL,
   password varchar(100) NOT NULL,

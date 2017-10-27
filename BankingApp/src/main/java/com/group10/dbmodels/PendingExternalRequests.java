@@ -2,7 +2,7 @@ package com.group10.dbmodels;
 
 import java.sql.Timestamp;
 
-public class PendingExternalRequest {
+public class PendingExternalRequests {
 	private int id;
 	private double amount;
 	private Timestamp stamp;
@@ -12,10 +12,10 @@ public class PendingExternalRequest {
 	private int payerID;
 	private int initiatorID;
 	
-	public PendingExternalRequest () {
+	public PendingExternalRequests () {
 		// NEEDED FOR BEANS
 	}
-	public PendingExternalRequest(double amount, String toAccountID, String fromAccountID, String description, int payerID, int initiatorID) {
+	public PendingExternalRequests(double amount, String toAccountID, String fromAccountID, String description, int payerID, int initiatorID) {
 		this.amount = amount;
 		this.toAccountID = toAccountID;
 		this.fromAccountID = fromAccountID;

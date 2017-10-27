@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.User;
 import com.group10.dbmodels.PII;
+import com.group10.dbmodels.PendingAccountChangeRequests;
+import com.group10.dbmodels.PendingExternalRequests;
 import com.group10.dbmodels.PendingInternalRequests;
 
 public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
@@ -17,7 +19,7 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<PendingInternalRequests>(PendingInternalRequests.class));
 	}
 	
-	public void adminModify(String address,String city,String state, String zipcode, String country, String phone, int userId){
+	public void modify(String address,String city,String state, String zipcode, String country, String phone, int userId){
 		String sql = "Update users set address='"+address+"',state='"+state+"',city='"+city+"',zipcode='"+zipcode+"',country='"+country+"',phone='"+phone+"' where id="+userId;
 		this.getJdbcTemplate().update(sql);
 	}
@@ -114,6 +116,48 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 	public void deleteInternalUser(int employeeID) {
 		String sql = "delete from users where id="+employeeID+" and role in ('admin','manager','regular')";
 		this.getJdbcTemplate().update(sql);	
+	}
+
+	public boolean existExternalUser(int customerID) {
+		// TODO Auto-generated method stub
+				String sql = "select count(*) from users where id="+customerID+ " and role in ('customer','merchant')";
+				return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;	
+	}
+	public boolean existInternalUser(int employeeID) {
+		// TODO Auto-generated method stub
+				String sql = "select count(*) from users where id="+employeeID+" and role in ('admin','manager','regular')";
+				return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;	
+	}
+
+	public boolean existTier1User(int employeeID) {
+		// TODO Auto-generated method stub
+		String sql = "select count(*) from users where id="+employeeID+" and role='regular";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;		
+		}
+
+	public User getTier1User(int employeeID) {
+		// TODO Auto-generated method stub
+		String sql = "select * from users where id="+employeeID+" and role ='regular'";
+		return (User)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
+
+	}
+
+	public List<PendingAccountChangeRequests> getExternalPendingRequests() {
+		String sql = "select * from pending_ac_requests";
+		return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<PendingAccountChangeRequests>(PendingAccountChangeRequests.class));	}
+
+	public void approveTier2Request(int requestId) {
+		String sql = "select * from pending_ac_requests where id="+requestId;
+		PendingAccountChangeRequests req = (PendingAccountChangeRequests)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingAccountChangeRequests.class));
+		String sql2 = "Update users set address='"+req.getAddress()+"',state='"+req.getState()+"',city='"+req.getCity()+"',zipcode='"+req.getZipcode()+"',country='"+req.getCountry()+"',phone='"+req.getPhone()+"' where id="+req.getUserId();
+		this.getJdbcTemplate().update(sql2);
+		deleteTier2Request(requestId);
+		
+	}
+
+	public void deleteTier2Request(int requestId) {
+		String sql = "delete from pending_ac_requests where id="+requestId;
+		this.getJdbcTemplate().update(sql);		
 	}
 	
 	

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.group10.dao.transaction.ExternalRequestsDao;
 import com.group10.dao.transaction.ExternalTransactionDaoImpl;
-import com.group10.dbmodels.PendingExternalRequest;
+import com.group10.dbmodels.PendingExternalRequests;
 
 @Controller
 public class CustomerPendingRequestsController {
@@ -22,7 +22,7 @@ public class CustomerPendingRequestsController {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
-		List<PendingExternalRequest> extRequests = extDao.getPendingRequests(1); // TODO: USE USERID FROM SESSION
+		List<PendingExternalRequests> extRequests = extDao.getPendingRequests(1); // TODO: USE USERID FROM SESSION
 		ModelAndView model = new ModelAndView("/customer/PendingRequestManagement");
 		model.addObject("transactionList", extRequests);
 		return model;
