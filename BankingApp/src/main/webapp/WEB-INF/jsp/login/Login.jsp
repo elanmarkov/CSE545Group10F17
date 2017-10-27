@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +67,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-			  <form name="myForm" action="/BankingApp/loginSubmit" method="post">
+			  <form name="myForm" action="<c:url value='j_spring_security_check' />" method="post">
 				  <div class="form-group">
 				    <label for="username">Username</label>
 				    <input type="text" class="form-control" id="userName" name="username" placeholder="Username" required>

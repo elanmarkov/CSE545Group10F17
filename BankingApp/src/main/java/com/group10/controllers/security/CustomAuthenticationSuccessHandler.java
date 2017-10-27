@@ -48,11 +48,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		session.setAttribute("role", role);
 		arg1.setStatus(HttpServletResponse.SC_OK);
 
-    	if(role.equalsIgnoreCase("admin")) arg1.sendRedirect("/employee/AdminDashboard");
-    	else if(role.equalsIgnoreCase("tier1")) arg1.sendRedirect("/employee/Tier1Dashboard");
-    	else if(role.equalsIgnoreCase("tier2")) arg1.sendRedirect("/employee/Tier2Dashboard");
-    	else if(role.equalsIgnoreCase("customer")) arg1.sendRedirect("/customer/CustomerDashboard");
-    	else if(role.equalsIgnoreCase("merchant")) arg1.sendRedirect("/customer/Merchantdashboard");
+    	if(role.equalsIgnoreCase("ROLE_ADMIN")) arg1.sendRedirect("/BankingApp/employee/AdminDashboard");
+    	else if(role.equalsIgnoreCase("ROLE_REGULAR")) arg1.sendRedirect("/BankingApp/employee/Tier1Dashboard");
+    	else if(role.equalsIgnoreCase("ROLE_MANAGER")) arg1.sendRedirect("/BankingApp/employee/Tier2Dashboard");
+    	else if(role.equalsIgnoreCase("ROLE_CUSTOMER")) arg1.sendRedirect("/BankingApp/customer/CustomerDashboard");
+    	else if(role.equalsIgnoreCase("ROLE_MERCHANT")) arg1.sendRedirect("/BankingApp/customer/Merchantdashboard");
     	ctx.close();  
 	}
 /*
