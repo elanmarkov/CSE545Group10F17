@@ -41,20 +41,10 @@
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="/BankingApp/employee/Tier2Dashboard">Home</a></li>
-        	<!-- <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
-	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
-	          </ul>
-        	</li>
-
-        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
-		</ul> -->
-
+        	
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 
 		</ul>

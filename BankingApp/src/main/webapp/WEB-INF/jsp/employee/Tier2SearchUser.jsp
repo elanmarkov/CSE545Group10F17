@@ -25,36 +25,26 @@
 	</head>
 	<body>
 
-
-	<div class="jumbotron logo">
-		<div class="container">
-		  <h2 id="title">GROUP10 BANK</h2>
-		</div>	
+<div class="jumbotron logo">
+	<div class="container">
+	  <h2 id="title">GROUP10 BANK</h2>
 	</div>
-
+</div>
 
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
-        	<li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Internal</a></li>
-	            <li><a href="#">External</a></li>
-	          </ul>
-        	</li>
-
-        	<li><a href="#">Pending Request</a></li>
-		</ul>
-
+			<li><a href="/BankingApp/employee/Tier2Dashboard">Home</a></li>
+        	
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+
 		</ul>
 	</div>
 </nav>
+
 
 
 <div class="container" id="loginBox">

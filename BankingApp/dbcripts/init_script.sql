@@ -3,7 +3,7 @@ CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT,
   name varchar(40) NOT NULL,
   role varchar(15) NOT NULL,
-  address varchar(50) NOT NULL,
+  address varchar(255) NOT NULL,
   city varchar(20) NOT NULL,
   state varchar(10) NOT NULL,
   country varchar(30) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE logs(
 CREATE TABLE pending_internal_requests (
     id int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    address varchar(20) NOT NULL,
+    address varchar(255) NOT NULL,
     state varchar(20) NOT NULL,
     city varchar(20) NOT NULL,
   	country varchar(20) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE pending_internal_requests (
 CREATE TABLE pending_ac_requests (
     id int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    address varchar(20) NOT NULL,
+    address varchar(255) NOT NULL,
     state varchar(20) NOT NULL,
     city varchar(20) NOT NULL,
   	country varchar(20) NOT NULL,

@@ -40,17 +40,17 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
-	public ModelAndView loginForm(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("roleSelection") String role,
+	public ModelAndView loginForm(@RequestParam("username") String email, @RequestParam("password") String password, @RequestParam("roleSelection") String role,
 			HttpServletRequest request, RedirectAttributes redir) {
-		try
-		{	
+	//	try{
+			
 			
 			ModelAndView model = new ModelAndView();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-			username= username.split("@")[0];
-			
-			setSession(request, role, edao.getUserIdByName(username), username);			
+			String username= email.split("@")[0];
+		    int userID = edao.getUserIdByName(email);
+			setSession(request, role, userID, username);			
 			
 			if(edao.validateUserLogin(username, password, role)){
 				if(role.compareTo("customer") == 0)
@@ -68,10 +68,13 @@ public class LoginController {
 				else if(role.equals("manager"))
 				{
 					model.setViewName("/employee/Tier2Dashboard");
+					//model.setViewName("/welcomepage");
+
 				}
 				else if(role.equals("admin"))
 				{
 					model.setViewName("/employee/AdminDashboard");
+					//model.setViewName("welcomepage");
 				}
 			}
 			else
@@ -80,12 +83,12 @@ public class LoginController {
 				model.setViewName("/login/Login");
 			}
 			return model;
-		}
+	/*	}
 		catch(Exception e){
 			//TODO: Redirect
 			System.out.println(e);
 			//logger.error("errroe",e);
 			throw new HandlerClass();
 		}
-	}
+	*/}
 }

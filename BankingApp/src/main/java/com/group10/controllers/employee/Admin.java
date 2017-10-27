@@ -298,6 +298,52 @@ public class Admin {
 		}
 
 	}
+
+	@RequestMapping("/employee/AdminProfile")
+	public ModelAndView AdminProfilePage(HttpServletRequest request){
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+		ModelAndView model = new ModelAndView();
+		
+		ldao.saveLogs("account accessed for user", ""+userID, userID, "Admin");
+		User user = fdao.getUser(userID);
+		model.addObject("user",user);
+		PII pii = fdao.getUserPII(userID);
+		model.addObject("pii", pii);
+		//redir.addFlashAttribute("error_msg","Employee Found");
+		model.setViewName("/employee/AdminProfile");
+		return model;
+	}
+	
+	@RequestMapping(value = "/employee/AdminModify", method =RequestMethod.POST)
+	public ModelAndView ModifyPersonal(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
+			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
+			 @RequestParam("id") int userId,RedirectAttributes redir){
+		try{
+			ModelAndView model = new ModelAndView();
+			
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			fdao.modify(address, city, state, zipcode, country, phone, userId);	
+			redir.addFlashAttribute("error_msg","Modified request for admin account for "+userId);
+
+			User user = fdao.getUser(userId);
+			model.addObject("user",user);
+			PII pii = fdao.getUserPII(userId);
+			model.addObject("pii",pii);
+			model.setViewName("/employee/AdminProfile");
+			ldao.saveLogs("Modified Adnmin account details", "for"+userId, userID, "internal");
+			
+			ctx.close();
+			return model;
+
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+	}
 	
 
 }

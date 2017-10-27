@@ -52,6 +52,8 @@ public class Tier2 {
 	
 	
 	
+	
+	
 	@RequestMapping("/employee/RegistrationExternalEmployee")
 	public ModelAndView extReg(){
 		return new ModelAndView("/employee/RegistrationExternalEmployee");
@@ -333,6 +335,56 @@ public class Tier2 {
 			throw new HandlerClass();
 		}
 	}
+	
+
+	@RequestMapping("/employee/Tier2Profile")
+	public ModelAndView Tier2ProfilePage(HttpServletRequest request){
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+		ModelAndView model = new ModelAndView();
+		setGlobals(request);
+		ldao.saveLogs("account accessed for user", ""+userID, userID, "tier2");
+		User user = fdao.getUser(userID);
+		model.addObject("user",user);
+		PII pii = fdao.getUserPII(userID);
+		model.addObject("pii", pii);
+		//redir.addFlashAttribute("error_msg","Employee Found");
+		model.setViewName("/employee/Tier2Profile");
+		return model;
+	}
+	
+	@RequestMapping(value = "/employee/tier2Modify", method =RequestMethod.POST)
+	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
+			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
+			 @RequestParam("id") int userId,RedirectAttributes redir){
+		//try{
+			ModelAndView model = new ModelAndView();
+			
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+
+			/*  write the dao code for admin modify
+	         * 
+	        */ 
+			fdao.generateInternalRequest(address, city, state, zipcode, country, phone, userID);	
+			redir.addFlashAttribute("error_msg","Generated request for account modification for "+userID);
+
+			User user = fdao.getUser(userID);
+			model.addObject("user",user);
+			PII pii = fdao.getUserPII(userID);
+			model.addObject("pii",pii);
+			model.setViewName("/employee/Tier2Profile");
+			ldao.saveLogs("Tier2 account", "for"+userID, userID, "internal");
+			
+			ctx.close();
+			return model;
+/*
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+	*/}
 
 	
 }

@@ -24,23 +24,7 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		this.getJdbcTemplate().update(sql);
 	}
 
-	public boolean createSavingsAccount(String userName) {
-		// TODO Auto-generated method stub
-		return true;
-		
-	}
-
-	public boolean createCheckingAccount(String userName) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean createCreditAccount(String userName) {
-		
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	public boolean validateUserLogin(String username, String password, String role) {
 		// TODO Auto-generated method stub
 		String sql = "select count(*) from user_login where username='"+username+"' and password='"+password+"'and role='"+role+"'";
@@ -90,9 +74,9 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		
 	}
 
-	public int getUserIdByName(String username) {
+	public int getUserIdByName(String email) {
 		// TODO Auto-generated method stub
-		String sql = "select userId from user_login where username='"+username+"'";
+		String sql = "select id from users where email='"+email+"'";
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
@@ -158,6 +142,15 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 	public void deleteTier2Request(int requestId) {
 		String sql = "delete from pending_ac_requests where id="+requestId;
 		this.getJdbcTemplate().update(sql);		
+	}
+
+	public void generateInternalRequest(String address, String city, String state, String zipcode, String country,
+			String phone, int userId) {
+		String sql = "insert into pending_internal_requests (userId,address,city,state,country,zipcode,phone) values ("+
+				userId + ",'"+address+"','"+city+"','"+state +"','"+country+"','"+zipcode+"','"+phone+"')";
+		this.getJdbcTemplate().update(sql);		
+
+		
 	}
 	
 	

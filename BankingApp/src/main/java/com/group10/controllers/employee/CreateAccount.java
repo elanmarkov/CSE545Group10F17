@@ -6,11 +6,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group10.controllers.security.HandlerClass;
+import com.group10.dao.customer.CustomerAccountsDao;
 import com.group10.dao.employee.EmpFunctionsDaoImpl;
 
 @Controller
@@ -22,34 +24,42 @@ public class CreateAccount {
         return "redirect:/exception";
     }
 
-	@RequestMapping("/employee/createAccounts")
-	public ModelAndView createAccounts(HttpServletRequest request,@RequestParam("userName") String userName,@RequestParam("credit") String credit
-			,@RequestParam("savings") String saving,@RequestParam("checking") String checking, RedirectAttributes redir){
+	
+	@RequestMapping("/employee/CreateUserAccounts")
+	public ModelAndView createAccount(){
+		return new ModelAndView("/employee/CreateUserAccounts");
+	}
+	
+	@RequestMapping(value = "/employee/createAccounts", method= RequestMethod.POST)
+	public ModelAndView createAccounts(HttpServletRequest request, @RequestParam("userId") int userId,@RequestParam("savings") String saving,@RequestParam("credit") String credit
+			, @RequestParam("checking") String checking, RedirectAttributes redir){
 		try{
 			ModelAndView model = new ModelAndView();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl", EmpFunctionsDaoImpl.class);		
+			CustomerAccountsDao cdao = ctx.getBean("customerAccountsDao", CustomerAccountsDao.class);		
 			if(saving.equals("yes")){
-				if(edao.createSavingsAccount(userName)){
+				if(cdao.createSavingsAccount(userId)){
 					redir.addFlashAttribute("error_msg","Created savings account successfully");
 				//	model.setViewName("");
 				}else
 					redir.addFlashAttribute("error_msg","unable to create savings account");
 			}
 			if(checking.equals("yes"))	{
-				if(edao.createCheckingAccount(userName))
+				if(cdao.createCheckingAccount(userId))
 					redir.addFlashAttribute("error_msg","Created checking account successfully");
 				else
 					redir.addFlashAttribute("error_msg","unable to create checking account");
 	
 			}
-			if(checking.equals("yes"))	{
-				if(edao.createCreditAccount(userName))
+			if(credit.equals("yes"))	{
+				if(cdao.createCreditAccount(userId))
 					redir.addFlashAttribute("error_msg","Created credit account successfully");
 				else
 					redir.addFlashAttribute("error_msg","unable to create credit account");
 	
 			}
+			model.setViewName("employee/CreateUserAccounts");
+			ctx.close();
 			return model;
 			
 		}catch(Exception e){

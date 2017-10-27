@@ -50,7 +50,7 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
@@ -64,7 +64,7 @@
 			<div class="jumbotron">		
 				<h3><strong>Search Customer</strong></h3>
 
-				<form class="form-margin" action = "/BankingApp/tier1/SearchExternalUser" method = "post">
+				<form class="form-margin" action = "/BankingApp/tier1/searchExternalUser" method = "post">
 	            	<div>
 	            		<input class="form-control" type="text" name="customerID" placeholder="Customer ID">
 	            	</div>

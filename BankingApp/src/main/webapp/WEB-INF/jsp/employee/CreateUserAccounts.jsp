@@ -75,11 +75,11 @@
 			<div class="jumbotron">
 
 			<h3><strong>Creat User Accounts</strong></h3>
-			<form action="/BankingApp/employee/creatAccounts" method="post">
+			<form action="/BankingApp/employee/createAccounts" method="post">
 					
 					<div class="form-group">
-						<label>Username</label>
-						<input type="text" class="form-control" name="userName" placeholder="Username" required>
+						<label>UserID</label>
+						<input type="text" class="form-control" name="userId" placeholder="userId" required>
 					</div>
 
 					<div class="form-group">

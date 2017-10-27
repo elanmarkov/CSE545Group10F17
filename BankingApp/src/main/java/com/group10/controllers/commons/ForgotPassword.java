@@ -28,8 +28,7 @@ public class ForgotPassword {
 	
 	public void setGlobals(HttpServletRequest request){
 		role = (String) request.getSession().getAttribute("role");
-		//userID = (int) request.getSession().getAttribute("userID");
-		userID = 1;
+		userID = (Integer) request.getSession().getAttribute("userID");
 		username = (String) request.getSession().getAttribute("username");		
 	}
 	
@@ -45,7 +44,7 @@ public class ForgotPassword {
 		}
 	@RequestMapping(value = "forgotpassword/verifyemail", method = RequestMethod.POST)
 		public ModelAndView verifyEmail(HttpServletRequest request, @RequestParam("Email") String email){
-		
+			setGlobals(request);
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");	
 			OtpDaoImpl odao = ctx.getBean("otpDaoImpl", OtpDaoImpl.class);
 			String message = odao.verifyEmail(email);

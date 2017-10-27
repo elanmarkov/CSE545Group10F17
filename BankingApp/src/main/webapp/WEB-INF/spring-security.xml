@@ -17,7 +17,7 @@
        <session-management invalid-session-url="/login" session-fixation-protection="newSession" >
 		   	<concurrency-control  max-sessions="1" error-if-maximum-exceeded="true" />
 		</session-management>
-		<logout logout-success-url="/login" delete-cookies="JSESSIONID" />
+		<logout logout-success-url="/login" delete-cookies="JSESSIONID" invalidate-session="true"/>
 	<csrf disabled="true"/>
 	</http>
 	

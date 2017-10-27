@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Component
 public class Logout {
-	
+	/*
 	@RequestMapping(value ="/logout", method = RequestMethod.POST)
 	public ModelAndView logoutpage(HttpServletRequest request,
 			@RequestParam("type") String type){
@@ -22,4 +22,5 @@ public class Logout {
 		}
 		return new ModelAndView("redirect:/login");
 	}
+	*/
 }
