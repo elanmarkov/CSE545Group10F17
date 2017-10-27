@@ -23,7 +23,7 @@ import com.group10.dbmodels.Customer;
 import com.group10.dbmodels.OTP;
 import com.group10.dbmodels.LoginAuthentication;
 
-public class OtpDaoImpl extends JdbcDaoSupport{
+public class OneTimePasswordDao extends JdbcDaoSupport{
 
 	String role;
 	int userID;
@@ -97,8 +97,8 @@ public class OtpDaoImpl extends JdbcDaoSupport{
 	
 	
 	public String generateOTP(String email) {
-		OTPDelivery otpDelivery = new OTPDelivery();
-		return otpDelivery.send(email);
+		SendOTPByMail OTPMailer = new SendOTPByMail(email);
+		return OTPMailer.sendOTPReturnHexVal();
 	}
 
 	public String getEmailFromPayerID(int payerid) {
@@ -120,7 +120,7 @@ public class OtpDaoImpl extends JdbcDaoSupport{
 	public void sendEmailToUser(String email, String payeeid, double amount) {
 		Properties prop = new Properties();
 		try {
-			prop.load(OtpDaoImpl.class.getClassLoader().getResourceAsStream("smtp.properties"));	
+			prop.load(OneTimePasswordDao.class.getClassLoader().getResourceAsStream("smtp.properties"));	
 			
 		} catch(FileNotFoundException fne) {
 			fne.printStackTrace();

@@ -3,22 +3,27 @@ package com.group10.dbmodels;
 import java.sql.Timestamp;
 
 public class OTP {
-	private String userEmail;
-	private String otp;
+	private String email;
+	private String hexValOTP;
+	private int numGuesses;
 	private Timestamp stamp;
-	private int attempts;
-
-	public String getUserEmail() {
-		return userEmail;
+	public String getEmail() {
+		return email;
 	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getOtp() {
-		return otp;
+	public String getHexValOTP() {
+		return hexValOTP;
 	}
-	public void setOtp(String otp) {
-		this.otp = otp;
+	public void setHexValOTP(String hexValOTP) {
+		this.hexValOTP = hexValOTP;
+	}
+	public int getNumGuesses() {
+		return numGuesses;
+	}
+	public void setNumGuesses(int numGuesses) {
+		this.numGuesses = numGuesses;
 	}
 	public Timestamp getStamp() {
 		return stamp;
@@ -26,11 +31,6 @@ public class OTP {
 	public void setStamp(Timestamp stamp) {
 		this.stamp = stamp;
 	}
-	
-	public int getAttempts() {
-		return attempts;
-	}
-	public void setAttempts(int attempts) {
-		this.attempts = attempts;
-	}
+
+
 }
