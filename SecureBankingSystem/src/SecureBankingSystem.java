@@ -1,5 +1,6 @@
 public class SecureBankingSystem {
 	public static void main (String[] args) {
-		System.out.println("SBS main will be here!");
+		SendOTPByMail test = new SendOTPByMail();
+		System.out.println(test.sendOTPReturnHexVal("emarkov@asu.edu"));
 	}
 }

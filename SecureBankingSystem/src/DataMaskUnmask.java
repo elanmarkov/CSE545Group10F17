@@ -10,7 +10,7 @@ public class DataMaskUnmask {
 	public DataMaskUnmask() {
 		
 	}
-	// AES Encryption with CBC mode will be used for masking and unmasking.
+	/*// AES Encryption with CBC mode will be used for masking and unmasking.
 	// Key managed elsewhere; this will only deal with encrypt/decrypt
 	// Accepts byte array input; the caller will deal with casting.
 	//public byte[] mask(byte[] valToMask, byte[] key) {
@@ -47,5 +47,5 @@ public class DataMaskUnmask {
 	        }
 	        return null;
 		return null;
-	}
+	}*/
 }
