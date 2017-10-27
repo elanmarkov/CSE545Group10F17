@@ -149,8 +149,8 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 			
 			// Add completed transaction to database
 			CompletedTransaction compTrans = new CompletedTransaction(pendTrans, reviewerID, "Approved"); // Make a completedTransaction object
-			String updateSQL = "INSERT INTO completed_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID,reviewerID,status) values (?,?,NOW(),?,?,?,?,?)";
-			this.getJdbcTemplate().update(updateSQL, new Object[]{compTrans.getAmount(), compTrans.getInitiatorID(), compTrans.getToAccountID(), 
+			String updateSQL = "INSERT INTO completed_transactions (amount,initiatorID,stamp,completedStamp,toAccountID,description,fromAccountID,reviewerID,status) values (?,?,?,NOW(),?,?,?,?,?)";
+			this.getJdbcTemplate().update(updateSQL, new Object[]{compTrans.getAmount(), compTrans.getInitiatorID(), compTrans.getStamp(), compTrans.getToAccountID(), 
 					compTrans.getDescription(), compTrans.getFromAccountID(), compTrans.getReviewerID(), compTrans.getStatus()});
 		}
 	}

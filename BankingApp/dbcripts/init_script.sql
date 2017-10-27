@@ -89,7 +89,7 @@ CREATE TABLE completed_transactions (
     amount double NOT NULL,
     initiatorID int NOT NULL,
     stamp Timestamp NOT NULL,
-    completedStamp Timestamp NOT NULL,
+    completedStamp Timestamp DEFAULT CURRENT_TIMESTAMP,
     toAccountID varchar(255), -- Null means withdrawl
     description varchar(255) NOT NULL, -- This will state if it is a withdrawl or deposit for easier reading
     fromAccountID varchar(255), -- Null means deposit
@@ -100,7 +100,7 @@ CREATE TABLE completed_transactions (
 
 CREATE TABLE pending_transactions (
     id int NOT NULL AUTO_INCREMENT,
-    initiatorID int NOT NULL;
+    initiatorID int NOT NULL,
     amount double NOT NULL,
     stamp Timestamp NOT NULL,
     toAccountID varchar(255), -- Null means withdrawl
@@ -117,7 +117,7 @@ CREATE TABLE pending_external_requests (
     toAccountID varchar(255) NOT NULL,
     fromAccountID varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
-    receiverID int NOT NULL,
+    payerID int NOT NULL,
     initiatorID int NOT NULL,
     PRIMARY KEY (id)
 );
@@ -126,11 +126,11 @@ CREATE TABLE completed_external_requests (
   id int NOT NULL AUTO_INCREMENT,
   amount double NOT NULL,
   stamp Timestamp NOT NULL,
-  completedStamp Timestamp NOT NULL,
+  completedStamp Timestamp DEFAULT CURRENT_TIMESTAMP,
   toAccountID varchar(255) NOT NULL,
   fromAccountID varchar(255) NOT NULL,
   description varchar(255) NOT NULL,
-  receiverId int NOT NULL,
+  payerID int NOT NULL,
   initiatorID int NOT NULL,
   PRIMARY KEY (id)
 );
