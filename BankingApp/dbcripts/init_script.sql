@@ -108,27 +108,38 @@ CREATE TABLE completed_external_requests (
 
 -- LOGIN
 CREATE TABLE user_login (
-  id int NOT NULL AUTO_INCREMENT,
+  username varchar(60) NOT NULL,
+  password varchar(255) NOT NULL,
+  enabled int NOT NULL,
   role varchar(20) NOT NULL,
-  username varchar(20) NOT NULL,
-  password varchar(20) NOT NULL,
-  user_id int NOT NULL,
+  accountNonExpired int NOT NULL,
+  accountNonLocked int NOT NULL,
+  credentialsNonExpired int NOT NULL,
+  otpNonLocked int NOT NULL,
+  PRIMARY KEY(username)
+);
+
+create TABLE user_login_attempts(
+	username varchar(60) NOT NULL,
+	attempts int NOT NULL,
+	PRIMARY KEY(username)
+);
+
+CREATE TABLE OTP(
+  id int NOT NULL AUTO_INCREMENT,
+	email varchar(40) NOT NULL,
+	otp varchar(10) NOT NULL,
+	timestamp Timestamp NOT NULL,
+	attempts int NOT NULL
   PRIMARY KEY (id)
 );
 
 CREATE TABLE pii_info (
     id int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
-    dob varchar(10) NOT NULL,
-    ssn varchar(20) NOT NULL,
+    dob varchar(20) NOT NULL,
+    ssn varchar(100) NOT NULL,
     PRIMARY KEY (id)
-);
-
-CREATE TABLE OTP(
-	email varchar(40) NOT NULL,
-	otp varchar(10) NOT NULL,
-	stamp Timestamp NOT NULL,
-	attempts int NOT NULL
 );
 
 -- LOGS
