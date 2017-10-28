@@ -8,7 +8,7 @@ import java.util.Random;
 public class GenerateRandomOTP {
 	MessageDigest hashGenerator;
 	Random randomGen;
-	final int OTPSize = 64; // using 64 bit OTP
+	final int OTPSize = 8; // using 8 byte OTP
 	public GenerateRandomOTP() {
 		// Creates message digest and random seed generator
 		try {
@@ -28,7 +28,11 @@ public class GenerateRandomOTP {
 		// Give the next OTP to be sent to the user
 		// Created from hashed random seed
 		byte[] newOTP = otpGen();
-		String hexVal = String.format("%02x", newOTP);
-		return hexVal;
+		StringBuffer hexVal = new StringBuffer();
+		for (byte bytes : newOTP) {
+			//convert hash to hex value
+			hexVal.append(String.format("%02x", bytes & 0xff));
+		}
+		return hexVal.toString();
 	}
 }

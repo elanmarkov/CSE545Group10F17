@@ -60,7 +60,6 @@ CREATE TABLE user_login (
   password varchar(100) NOT NULL,
   role varchar(20) NOT NULL,
   accountStatus int NOT NULL,
-  otpExpireStatus int NOT NULL,
   attempts int NOT NULL,
   lastModified timestamp NOT NULL,
   userId int NOT NULL,
@@ -70,9 +69,9 @@ CREATE TABLE user_login (
 
 
 CREATE TABLE OTP(
-	email varchar(40) NOT NULL,
-	otp varchar(10) NOT NULL,
-	timestamp Timestamp NOT NULL,
+	email varchar(50) NOT NULL,
+	hexValOTP varchar(16) NOT NULL,
+	issueTime Timestamp NOT NULL,
 	attempts int NOT NULL	
 );
 

@@ -20,7 +20,7 @@ public class SendOTPByMail {
 		// send a mail here
 		
 		final String username = "cse545g10@gmail.com";
-		final String password = "cse545Group10";
+		final String password = "cse545group10";
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -38,9 +38,9 @@ public class SendOTPByMail {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("from-email@gmail.com"));
+			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse("to-email@gmail.com"));
+				InternetAddress.parse(email));
 			message.setSubject("OTP Value");
 			message.setText("Your OTP is: " + OTP);
 

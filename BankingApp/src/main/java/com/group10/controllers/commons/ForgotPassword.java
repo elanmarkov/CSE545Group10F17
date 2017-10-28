@@ -47,9 +47,10 @@ public class ForgotPassword {
 		public ModelAndView verifyEmail(HttpServletRequest request, @RequestParam("Email") String email){
 		
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");	
-			OneTimePasswordDao odao = ctx.getBean("otpDaoImpl", OneTimePasswordDao.class);
-			String message = odao.verifyEmail(email);
-			if(message.equalsIgnoreCase("Exceeded otp limits. Account locked. Contact bank")){
+			OneTimePasswordDao odao = ctx.getBean("OneTimePasswordDao", OneTimePasswordDao.class);
+			String message = odao.checkEmailSendOTP(email);
+			if(message.equals("Exceeded otp limits. Account locked. Please contact bank staff.") ||
+					message.equals("No such user.") || message.equals("Error!")){
 				ModelAndView model = new ModelAndView("/login/login");
 				ctx.close();
 				return model;
@@ -69,8 +70,10 @@ public class ForgotPassword {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		OneTimePasswordDao odao = ctx.getBean("otpDaoImpl",OneTimePasswordDao.class);
 		String email = (String) request.getSession().getAttribute("forgotpassemail");
-		String message = odao.verifyOTP(otp, email);
-		if(message.equalsIgnoreCase("Incorrect OTP") || message.equalsIgnoreCase("Error in verifying OTP")){
+		String message = odao.validateOTP(otp, email);
+		if(message.equals("OTP not validated") || 
+				message.equals("Too many attempts. Account locked.") ||
+				message.equals("OTP Expired. Please try again.")){
 			ModelAndView model = new ModelAndView("/login/ForgotPasswordOtp");
 			model.addObject("message", message);
 			ctx.close();

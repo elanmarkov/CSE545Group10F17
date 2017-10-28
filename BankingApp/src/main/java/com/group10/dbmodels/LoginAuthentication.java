@@ -28,24 +28,11 @@ public class LoginAuthentication {
 	public void setAccountStatus(int accountStatus) {
 		this.accountStatus = accountStatus;
 	}
-	public int getOtpExpireStatus() {
-		return otpExpireStatus;
-	}
-	public void setOtpExpireStatus(int otpExpireStatus) {
-		this.otpExpireStatus = otpExpireStatus;
-	}
-	
 	public int getUserId() {
 		return userId;
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-	public int getAttempts() {
-		return attempts;
-	}
-	public void setAttempts(int attempts) {
-		this.attempts = attempts;
 	}
 	public Timestamp getStamp() {
 		return stamp;
@@ -57,9 +44,14 @@ public class LoginAuthentication {
     private String password;
     private String role;
     private int accountStatus;
-    private int otpExpireStatus;
     private int attempts;
-    private Timestamp stamp;
+    public int getAttempts() {
+		return attempts;
+	}
+	public void setAttempts(int attempts) {
+		this.attempts = attempts;
+	}
+	private Timestamp stamp;
     private int userId;
 	   
 }

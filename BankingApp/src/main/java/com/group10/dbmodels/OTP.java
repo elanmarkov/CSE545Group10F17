@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 public class OTP {
 	private String email;
 	private String hexValOTP;
-	private int numGuesses;
-	private Timestamp stamp;
+	private Timestamp issueTime;
+	private int attempts;
 	public String getEmail() {
 		return email;
 	}
@@ -19,17 +19,17 @@ public class OTP {
 	public void setHexValOTP(String hexValOTP) {
 		this.hexValOTP = hexValOTP;
 	}
-	public int getNumGuesses() {
-		return numGuesses;
+	public int getAttempts() {
+		return attempts;
 	}
-	public void setNumGuesses(int numGuesses) {
-		this.numGuesses = numGuesses;
+	public void setAttempts(int attempts) {
+		this.attempts = attempts;
 	}
-	public Timestamp getStamp() {
-		return stamp;
+	public Timestamp getIssueTime() {
+		return issueTime;
 	}
-	public void setStamp(Timestamp stamp) {
-		this.stamp = stamp;
+	public void setStamp(Timestamp issueTime) {
+		this.issueTime = issueTime;
 	}
 
 
