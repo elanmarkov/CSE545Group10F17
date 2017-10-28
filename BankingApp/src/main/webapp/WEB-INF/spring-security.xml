@@ -32,7 +32,7 @@
 		
 		
 		<form-login 
-	        login-page="/login/Login" 
+	        login-page="/login" 
 	        login-processing-url="/j_spring_security_check"
 	        username-parameter="username"
             password-parameter="password"
@@ -42,7 +42,7 @@
 		   	<concurrency-control  max-sessions="1" error-if-maximum-exceeded="true" />
 		</session-management>
 		<logout logout-success-url="/login" delete-cookies="JSESSIONID" invalidate-session="true"/>
-	<csrf disabled="true"/>
+	<csrf />
 	</http>
 	
 	<!-- Define the beans -->
@@ -54,7 +54,7 @@
 		  	<beans:property name="password" value="1234"/> 
 	</beans:bean>
 	
-	<beans:bean id="customAuthenticationSuccessHandler" class="com.group10.controllers.security.CustomAuthenticationSuccessHandler"/>
+	<beans:bean id="customAuthenticationSuccessHandler" class="com.group10.controllers.security.CustomAuthenticationSuccessHandler"></beans:bean>
 
 	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<beans:constructor-arg name="strength" value="10" />

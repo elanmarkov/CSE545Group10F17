@@ -95,7 +95,9 @@
  -->
 			  	  		<br>
 			  	  		<div id = "errorBox" class="form-group"></div>
+			  	  		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default" onClick ="checkEmail()" id="submit">Login</button>
+				  
 			  </form>
 
 			</div>
