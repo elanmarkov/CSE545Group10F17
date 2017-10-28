@@ -67,7 +67,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-			  <form name="myForm" action="/BankingApp/login/Login" method="post">
+			  <form name="myForm" action="<c:url value='j_spring_security_check' />" method="post">
 				  <div class="form-group">
 				    <label for="username">Username</label>
 				    <input type="email" class="form-control" id="userEmail" name="username" placeholder="Username" required>
