@@ -104,7 +104,7 @@
 
 			<br>
 
-			<a href="ForgetPassword.html">Forgot your password?</a>
+			<a href="/BankingApp/login/ForgotPassword">Forgot your password?</a>
 		</div>
 	</div>
 </div>

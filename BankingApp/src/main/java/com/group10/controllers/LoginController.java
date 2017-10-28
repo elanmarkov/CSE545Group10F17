@@ -38,4 +38,9 @@ public class LoginController {
 		return new ModelAndView("/login/Login");
 	}
 	
+	@RequestMapping("/login/ForgotPassword")
+	public  ModelAndView ForgotPass(){
+		return new ModelAndView("/login/ForgotPassword");
+	}
+	
 }
