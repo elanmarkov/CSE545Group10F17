@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class OTP {
 	private String userEmail;
 	private String otp;
-	private Timestamp timestamp;
+	private Timestamp stamp;
 	private int attempts;
 
 	public String getUserEmail() {
@@ -20,11 +20,11 @@ public class OTP {
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
-	public Timestamp getTimestamp() {
-		return timestamp;
+	public Timestamp getStamp() {
+		return stamp;
 	}
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
+	public void setStamp(Timestamp stamp) {
+		this.stamp = stamp;
 	}
 	
 	public int getAttempts() {

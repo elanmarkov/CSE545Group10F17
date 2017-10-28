@@ -16,7 +16,6 @@ import com.group10.dao.customerDashboard.CustomerDashboardDaoImpl;
 import com.group10.dbmodels.CheckingAccount;
 import com.group10.dbmodels.CreditCard;
 import com.group10.dbmodels.SavingsAccount;
-import com.group10.dbmodels.Transaction;
 
 @Controller
 public class CustomerDashboardController {

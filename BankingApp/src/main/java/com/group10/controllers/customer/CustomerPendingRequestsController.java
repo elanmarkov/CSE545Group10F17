@@ -11,20 +11,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.group10.dao.transaction.ExternalRequestsDao;
 import com.group10.dao.transaction.ExternalTransactionDaoImpl;
-import com.group10.dbmodels.PendingExternalRequest;
+import com.group10.dbmodels.PendingExternalRequests;
 
 @Controller
 public class CustomerPendingRequestsController {
 
+	int userId = 1;
+	
 	@RequestMapping("/customer/pendingRequests")
 	public ModelAndView pendingRequests() {
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
-		List<PendingExternalRequest> extRequests = extDao.getPendingRequests(1); // TODO: USE USERID FROM SESSION
+		List<PendingExternalRequests> extRequests = extDao.getPendingRequests(userId); // TODO: USE USERID FROM SESSION
 		ModelAndView model = new ModelAndView("/customer/PendingRequestManagement");
-		model.addObject("transactionList", extRequests);
+		model.addObject("requestList", extRequests);
 		return model;
 	}
 	
@@ -34,7 +36,9 @@ public class CustomerPendingRequestsController {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
-		extDao.reviewRequest(requestType, requestID);
+		if (extDao.checkPendingRequestIDValidity(requestID, userId)) {
+			extDao.reviewRequest(requestType, requestID);
+		}
 		ModelAndView model = new ModelAndView("redirect:/customer/pendingRequests");
 		return model;
 	}

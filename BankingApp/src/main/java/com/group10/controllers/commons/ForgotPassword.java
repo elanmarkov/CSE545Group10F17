@@ -28,8 +28,7 @@ public class ForgotPassword {
 	
 	public void setGlobals(HttpServletRequest request){
 		role = (String) request.getSession().getAttribute("role");
-		//userID = (int) request.getSession().getAttribute("userID");
-		userID = 1;
+		userID = (Integer) request.getSession().getAttribute("userID");
 		username = (String) request.getSession().getAttribute("username");		
 	}
 	
@@ -39,13 +38,13 @@ public class ForgotPassword {
     }
 	
 	
-	@RequestMapping("forgotpassowrd")
+	@RequestMapping("/forgotpassowrd")
 		public ModelAndView ForgotPass(){
 			return new ModelAndView("/login/ForgotPassword");
 		}
 	@RequestMapping(value = "forgotpassword/verifyemail", method = RequestMethod.POST)
 		public ModelAndView verifyEmail(HttpServletRequest request, @RequestParam("Email") String email){
-		
+			setGlobals(request);
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");	
 			OtpDaoImpl odao = ctx.getBean("otpDaoImpl", OtpDaoImpl.class);
 			String message = odao.verifyEmail(email);
@@ -83,14 +82,14 @@ public class ForgotPassword {
 		}
 	}
 	
-	@RequestMapping(value = "forgotpassword/changepassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/forgotpassword/changepassword", method = RequestMethod.POST)
 	public ModelAndView changePassword(RedirectAttributes redir, HttpServletRequest request, @RequestParam("newpassword") String newPassword,@RequestParam("confirmpassword") String confirmPassword) {
 		ModelAndView model = new ModelAndView();
 		String username = (String)request.getSession().getAttribute("forgotpassemail");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
         UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
         String type;
-        if(role.equals("ROLE_ADMIN")||role.equals("ROLE_TIER2")||role.equals("ROLE_TIER1"))
+        if(role.equals("ADMIN")||role.equals("TIER2")||role.equals("TIER1"))
 	    	type = "internal";
 	    else type = "external";
         Validator validator = new Validator();
@@ -98,25 +97,17 @@ public class ForgotPassword {
         {
         	BCryptPasswordEncoder Encoder = new BCryptPasswordEncoder();
             udao.updatePassword(Encoder.encode(newPassword), username);
-	        model.setViewName("redirect:/login/login");
+	        model.setViewName("/login/login");
 
             LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class); 	    
-    	    DbLogs dblog = new DbLogs();    
-    	    dblog.setActivity("Forgot password : " + username);
-    	    dblog.setDetails("passsword changed successfully");
-            dblog.setUserid(userID);
-            ldao.saveLogs(dblog, type);      	
+            ldao.saveLogs("Forgot password : " + username, "passsword changed successfully",userID, "internal");      	
             ctx.close();
             return model;
         }
         else{
-            model.setViewName("redirect:/forgotpassword/changepassword");
+            model.setViewName("/forgotpassword/changepassword");
         	LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-     	     DbLogs dblog = new DbLogs();
-     	     dblog.setActivity("Forgot password : " + username);
-     	     dblog.setDetails("passsword change falied");
-             dblog.setUserid(userID);
-             ldao.saveLogs(dblog, type);    
+            ldao.saveLogs("Forgot password : " + username,"passsword change falied", userID, "internal");    
              redir.addFlashAttribute("exception_message","password validation failed, try again");
              ctx.close();
              return model;

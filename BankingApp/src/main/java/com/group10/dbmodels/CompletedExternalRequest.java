@@ -18,7 +18,7 @@ public class CompletedExternalRequest {
 	public CompletedExternalRequest() {
 		
 	}
-	public CompletedExternalRequest(PendingExternalRequest req, String status) {
+	public CompletedExternalRequest(PendingExternalRequests req, String status) {
 		this.amount = req.getAmount();
 		this.stamp = req.getStamp();
 		this.toAccountID = req.getToAccountID();

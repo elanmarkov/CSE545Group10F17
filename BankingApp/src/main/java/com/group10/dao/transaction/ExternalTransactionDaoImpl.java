@@ -1,7 +1,6 @@
 /*
  * Author: Kevin Everly
  */
-
 package com.group10.dao.transaction;
 
 import java.math.BigDecimal;
@@ -13,44 +12,12 @@ import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import com.group10.dbmodels.Transaction;
 import com.group10.dbmodels.PendingTransaction;
 import com.group10.dbmodels.CompletedTransaction;
 
 public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 
-	// Author: Harsha
-	public Transaction createExternalTransaction(int payer_id, double amount, int payeeId,
-			String description, String transaction_type) {
-		// TODO Auto-generated method stub
-			Transaction extTransaction = new Transaction();
-			extTransaction.setPayee_id(payer_id);
-			extTransaction.setPayer_id(payer_id);
-			extTransaction.setAmount(amount);
-			extTransaction.setDescription(description);
-			extTransaction.setTransaction_type(transaction_type);
-			extTransaction.setStatus("pending");
-			extTransaction.setApprover("");
-			if(amount > 5000.0)
-				extTransaction.setCritical(true);
-			else
-				extTransaction.setCritical(false);
-			Timestamp ts = new Timestamp(new Date().getTime());
-			extTransaction.setTimestamp_created(ts);
-			extTransaction.setTimestamp_updated(ts);
-			extTransaction.setHashvalue("");
-			
-			String sql = "INSERT INTO transaction (payer_id,payee_id,amount,hashvalue,transaction_type,description,status,approver,critical,timestamp_created,timestamp_updated) values (?,?,?,?,?,?,?,?,?,NOW(),NOW())";
-			this.getJdbcTemplate().update(sql, new Object[]{extTransaction.getPayer_id(), extTransaction.getPayee_id(), extTransaction.getAmount(), extTransaction.getHashvalue(),
-					extTransaction.getTransaction_type(), extTransaction.getDescription(), extTransaction.getStatus(), extTransaction.getApprover(), extTransaction.getCritical(),
-					extTransaction.getTimestamp_created(), extTransaction.getTimestamp_updated()});		
-			
-			return extTransaction;
-	}
-	
-	/*
-	 * Author: Kevin Everly
-	 */
+
 	public PendingTransaction createPendingTransaction(int initiatorID, double amount, String toAccountID, String fromAccountID, String description) {
 		
 		PendingTransaction trans = new PendingTransaction(initiatorID, amount, toAccountID, fromAccountID, description);

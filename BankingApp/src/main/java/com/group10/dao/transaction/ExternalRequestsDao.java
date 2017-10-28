@@ -11,19 +11,19 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import com.group10.dbmodels.CheckingAccount;
 import com.group10.dbmodels.CompletedExternalRequest;
 import com.group10.dbmodels.CompletedTransaction;
-import com.group10.dbmodels.PendingExternalRequest;
+import com.group10.dbmodels.PendingExternalRequests;
 import com.group10.dbmodels.PendingTransaction;
 
 public class ExternalRequestsDao  extends JdbcDaoSupport{
 
-	public List<PendingExternalRequest> getPendingRequests(int userID) {
+	public List<PendingExternalRequests> getPendingRequests(int userID) {
 		String sql = "SELECT * FROM pending_external_requests WHERE payerID = " + userID;
-		return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<PendingExternalRequest>(PendingExternalRequest.class));
+		return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<PendingExternalRequests>(PendingExternalRequests.class));
 	}
 	
 	public void reviewRequest(String status, int requestID) {
 		String sql = "SELECT * FROM pending_external_requests WHERE id = " + requestID;
-		PendingExternalRequest extReq = (PendingExternalRequest)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingExternalRequest.class));
+		PendingExternalRequests extReq = (PendingExternalRequests)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingExternalRequests.class));
 		
 		String deleteSQL = "DELETE FROM pending_external_requests WHERE id ="+requestID;
 		this.getJdbcTemplate().update(deleteSQL);
@@ -51,7 +51,7 @@ public class ExternalRequestsDao  extends JdbcDaoSupport{
 		
 		int payerID = this.getJdbcTemplate().queryForObject(sql, Integer.class);
 		
-		PendingExternalRequest req = new PendingExternalRequest(amount, toAccountID, fromAccountID, "Money Request", payerID, initiatorID);
+		PendingExternalRequests req = new PendingExternalRequests(amount, toAccountID, fromAccountID, "Money Request", payerID, initiatorID);
 		
 		String updateSQL = "INSERT INTO pending_external_requests (amount, stamp, toAccountID, fromAccountID, description, payerID, initiatorID) values (?,NOW(),?,?,?,?,?)";
 		this.getJdbcTemplate().update(updateSQL, new Object[] {req.getAmount(), req.getToAccountID(), req.getFromAccountID(), req.getDescription(),
@@ -60,7 +60,20 @@ public class ExternalRequestsDao  extends JdbcDaoSupport{
 	
 	public boolean checkAccountNumberValidity(String accountNumber, int userId) {
 		
-		String sql  = "SELECT count(*) FROM accNumToTableRel WHERE (userId = 1 AND accountNumber = 450)";
+		String sql  = "SELECT count(*) FROM accNumToTableRel WHERE (userId = "+userId+" AND accountNumber = "+accountNumber+")";
+		
+		Integer count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+		
+		if (count > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkPendingRequestIDValidity(int requestId, int userId) {
+		
+		String sql  = "SELECT count(*) FROM pending_external_requests WHERE (payerId = "+userId+" AND id = "+requestId+")";
 		
 		Integer count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
 		

@@ -3,6 +3,8 @@
  */
 package com.group10.dao.customer;
 
+import java.util.Random;
+
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -27,4 +29,36 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
+	
+	// By Harsha
+		public boolean createSavingsAccount(int userId) {
+			String query = "select count(*) from savings_accounts where userId="+userId;
+			int exists = this.getJdbcTemplate().queryForObject(query, Integer.class);
+			if(exists==1){
+				Random rand = new java.util.Random();
+				String accNo= String.valueOf((int) (10000000*rand.nextFloat()));
+				String sql = "insert into savings_accounts (userId, accountNumber, balance) values (?,?,?)";
+				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0}); 
+				return true;
+			}	
+			return false;
+		}
+
+		public boolean createCheckingAccount(int userId) {
+			String query = "select count(*) from checking_accounts where userId="+userId;
+			int exists = this.getJdbcTemplate().queryForObject(query, Integer.class);
+			if(exists==1){
+				Random rand = new java.util.Random();
+				String accNo= String.valueOf((int) (10000000*rand.nextFloat()));
+				String sql = "insert into checking_accounts (userId, accountNumber, balance) values (?,?,?)";
+				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0}); 
+				return true;
+			}	
+			return false;
+		}
+
+		public boolean createCreditAccount(int userId) {
+			
+			return false;
+		}
 }

@@ -21,7 +21,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.group10.dbmodels.Customer;
 import com.group10.dbmodels.OTP;
-import com.group10.dbmodels.UserAuthentication;
+import com.group10.dbmodels.LoginAuthentication;
 
 public class OtpDaoImpl extends JdbcDaoSupport{
 
@@ -43,12 +43,12 @@ public class OtpDaoImpl extends JdbcDaoSupport{
 			return "Invalid User";
 		}
 		String query = "SELECT * FROM users WHERE username = '" + email + "' LIMIT 1";
-		List<UserAuthentication> userList = this.getJdbcTemplate().query(query,
-				new BeanPropertyRowMapper<UserAuthentication>(UserAuthentication.class));
+		List<LoginAuthentication> userList = this.getJdbcTemplate().query(query,
+				new BeanPropertyRowMapper<LoginAuthentication>(LoginAuthentication.class));
 		if (userList.size() == 0)
 			return "Invalid User";
-		if (userList.get(0).getOtpNonLocked() == 0)
-			return "Exceeded otp limits. Account locked. Contact bank";
+	//	if (userList.get(0).getAttempts() == 0)
+//			return "Exceeded otp limits. Account locked. Contact bank";
 		// Make a call to process OTP
 		return processOTP(userList.get(0).getUsername());
 	}
@@ -58,7 +58,7 @@ public class OtpDaoImpl extends JdbcDaoSupport{
 		List<OTP> otpList = this.getJdbcTemplate().query(query, new BeanPropertyRowMapper<OTP>(OTP.class));
 		if (otpList.size() == 0)
 			return "Error in verifying OTP";
-		long databaseDate = otpList.get(0).getTimestamp().getTime();
+		long databaseDate = otpList.get(0).getStamp().getTime();
 		long currentDate = (new Timestamp(System.currentTimeMillis())).getTime();
 		if (otpList.get(0).getOtp().equals(otp) == false)
 			return "Incorrect OTP";

@@ -138,7 +138,8 @@ CREATE TABLE internal_log(
   activity varchar(255) NOT NULL,
   details varchar(255) NOT NULL,
   stamp Timestamp NOT NULL,
-  FOREIGN KEY(userid) REFERENCES internal_users(id) ON UPDATE CASCADE
+  PRIMARY KEY (id)
+  -- FOREIGN KEY(userid) REFERENCES internal_users(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE external_log(
@@ -147,7 +148,8 @@ CREATE TABLE external_log(
   activity varchar(255) NOT NULL,
   details varchar(255) NOT NULL,
   stamp Timestamp NOT NULL,
-  FOREIGN KEY(userid) REFERENCES external_users(id) ON UPDATE CASCADE
+  PRIMARY KEY (id)
+  -- FOREIGN KEY(userid) REFERENCES external_users(id) ON UPDATE CASCADE
  );
 
 -- MAKE SUPERUSER FOR TESTING. CHANGE PASS FOR PROD

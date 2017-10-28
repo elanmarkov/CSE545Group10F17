@@ -11,7 +11,6 @@ import com.group10.dbmodels.CreditAccount;
 import com.group10.dbmodels.CreditCard;
 import com.group10.dbmodels.PendingTransaction;
 import com.group10.dbmodels.SavingsAccount;
-import com.group10.dbmodels.Transaction;
 
 public class CustomerDashboardDaoImpl extends JdbcDaoSupport {
 

@@ -21,13 +21,15 @@ import com.group10.dbmodels.*;
 @Controller
 public class CutomerWithdrawlDepositController {
 
+	private int userId = 1;
+	
 	@RequestMapping("/customer/deposit")
 	public  ModelAndView loadDespositPage(){
-		
+				
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
-		CheckingAccount checking = accountsDao.getCheckingAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
-		SavingsAccount savings = accountsDao.getSavingsAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		CheckingAccount checking = accountsDao.getCheckingAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		SavingsAccount savings = accountsDao.getSavingsAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
 		
 		ModelAndView model = new ModelAndView("/customer/Transaction_Deposit_Customer");
 		model.addObject("checking", checking);
@@ -38,13 +40,13 @@ public class CutomerWithdrawlDepositController {
 	@RequestMapping("/depositMoney")
 	public ModelAndView despositMoney(HttpServletRequest request, @RequestParam("depositAccount") String accountType, 
 			@RequestParam("amount") double amount, @RequestParam("accountNumber") String accountNumber, RedirectAttributes redir) {
-		
+				
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
 		// TODO: CHANGE TO USER ID FROM SESSION
-		if (extDao.checkAccountNumberValidity(accountNumber, 1)) {
-			extDao.createPendingTransaction(1, amount, accountNumber, null, "DESCRIPTION");
+		if (extDao.checkAccountNumberValidity(accountNumber, userId)) {
+			extDao.createPendingTransaction(userId, amount, accountNumber, null, "DESCRIPTION");
 			return new ModelAndView("redirect:/customer/deposit");
 		} else {
 			return new ModelAndView("redirect:/customer/deposit");
@@ -55,11 +57,11 @@ public class CutomerWithdrawlDepositController {
 	
 	@RequestMapping("/customer/withdraw")
 	public  ModelAndView loadWithdrawPage(){
-
+		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
-		CheckingAccount checking = accountsDao.getCheckingAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
-		SavingsAccount savings = accountsDao.getSavingsAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		CheckingAccount checking = accountsDao.getCheckingAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		SavingsAccount savings = accountsDao.getSavingsAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
 		
 		ModelAndView model = new ModelAndView("/customer/Transaction_Withdraw_Customer");
 		model.addObject("checking", checking);
@@ -75,7 +77,7 @@ public class CutomerWithdrawlDepositController {
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
 		// TODO: CHANGE TO USER ID FROM SESSION
-		if (extDao.checkAccountNumberValidity(accountNumber, 1)) {
+		if (extDao.checkAccountNumberValidity(accountNumber, userId)) {
 			extDao.createPendingTransaction(1, amount, accountNumber, null, "DESCRIPTION");
 			return new ModelAndView("redirect:/customer/deposit");
 		} else {

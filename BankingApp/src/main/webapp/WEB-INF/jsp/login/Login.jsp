@@ -67,7 +67,7 @@
 			<div class="jumbotron">
 			  <form name="myForm" action="/BankingApp/loginSubmit" method="post">
 				  <div class="form-group">
-				    <label for="username">Username</label>
+				    <label for="username2">Username</label>
 				    <input type="text" class="form-control" id="userName" name="username" placeholder="Username" required>
 				  </div>
 

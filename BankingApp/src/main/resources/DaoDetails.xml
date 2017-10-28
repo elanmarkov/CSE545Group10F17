@@ -45,6 +45,14 @@
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
 	 
+	 <bean id = "customUserDetailsService" class="com.group10.dao.loginAttempts.CustomUserDetailsService">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 
+	 <bean id = "loginAttemptsDaoImpl" class="com.group10.dao.loginAttempts.LoginAttemptsDaoImpl">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 
 	 <bean id = "externalTransactionDaoImpl" class="com.group10.dao.transaction.ExternalTransactionDaoImpl">
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
