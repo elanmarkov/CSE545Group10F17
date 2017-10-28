@@ -47,13 +47,13 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			
-			  <form action="verifyOTP">
+			  <form action="/BankingApp/login/OtpVerify" method="post">
 				  <div class="form-group">
 						<label>Please Enter OTP</label>
-						<input type="number" class="form-control" required>
+						<input type="text" name="otp" class="form-control" required>
 				  </div>
 
-
+					<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default" onclick="location.href='ChangePassword.html';">Verify OTP</button>
 			  </form>
 			</div>

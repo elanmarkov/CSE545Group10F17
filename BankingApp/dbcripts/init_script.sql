@@ -73,10 +73,10 @@ create TABLE user_login_attempts(
 	PRIMARY KEY(username)
 );
 CREATE TABLE OTP(
-	email varchar(40) NOT NULL,
-	otp varchar(10) NOT NULL,
-	timestamp Timestamp NOT NULL,
-	attempts int NOT NULL	
+	email varchar(50) NOT NULL,
+	hexValOTP varchar(16) NOT NULL,
+	issueTime Timestamp NOT NULL,
+	attempts int NOT NULL
 );
 
 -- End by Harsha
@@ -151,5 +151,5 @@ CREATE TABLE completed_external_requests (
 );
 
 
- 
+
  -- Kevin

@@ -1,12 +1,10 @@
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\employee\Tier2.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\employee\EmpFunctionsDaoImpl.java
-C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\otp\OTPDelivery.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\PendingTransaction.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\jdbc\test.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\CompletedExternalRequest.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\WelcomeController.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\transaction\TransactionDaoImpl.java
-C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\otp\OneTimePassword.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\CreditCard.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\PII.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\employee\Tier2PendingTransactions.java
@@ -37,10 +35,11 @@ C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\s
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\security\HandlerClass.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\User.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\security\CustomAuthenticationSuccessHandler.java
+C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\otp\GenerateRandomOTP.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\CheckingAccount.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\loginAttempts\LoginAttemptsDaoImpl.java
+C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\otp\OneTimePasswordDao.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\PendingExternalRequests.java
-C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\otp\OtpDaoImpl.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\customerDashboard\CustomerDashboardDaoImpl.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\employee\Tier1PendingTransactions.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dbmodels\DbLogs.java
@@ -51,5 +50,6 @@ C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\s
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\HelloController.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\security\MyAuthentication.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\employee\Admin.java
+C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\otp\SendOTPByMail.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\dao\JdbcSupport.java
 C:\Users\Mauricio\Documents\school\CSE 545\CSE545Group10F17-starter\BankingApp\src\main\java\com\group10\controllers\employee\Tier1.java
