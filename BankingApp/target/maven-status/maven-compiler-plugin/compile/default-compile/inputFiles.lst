@@ -18,7 +18,6 @@ E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\custome
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\security\MyAuthentication.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\commons\ForgotPassword.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\otp\OneTimePassword.java
-E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\loginAttempts\CustomUserService.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\employee\EmpFunctionsDaoImpl.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\employee\Validator.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\HelloController.java
@@ -27,7 +26,6 @@ E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\otp\OTP
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\PendingInternalRequests.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\jdbc\test.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\User.java
-E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\Role.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\employee\CreateAccount.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\Customer.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\JdbcSup.java
@@ -48,10 +46,8 @@ E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\PI
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\customer\CustomerPendingRequestsController.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\employee\UserRegistrationDaoImpl.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\employee\Tier2PendingTransactions.java
-E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\loginAttempts\UserDaoImpl.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\loginAttempts\CustomUserDetailsService.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\WelcomeController.java
-E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dbmodels\CustomUser.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\transaction\ExternalTransactionDaoImpl.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\dao\otp\OtpDaoImpl.java
 E:\Software security\BankingApp\BankingApp\src\main\java\com\group10\controllers\employee\Admin.java
