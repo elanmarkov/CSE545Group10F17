@@ -8,13 +8,36 @@
 
 	<http auto-config="true">
 		<intercept-url pattern="/employee/AdminDashboard" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminSearchUser" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminUserDetails" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminProfile" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminPendingRequest" access = "hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/employee/Tier2Dashboard" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2Dashboard" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2Profile" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2SearchUser" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2UserDetails" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2TransactionManagement" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/RegistrationInternalEmployee" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/RegistrationExternalEmployee" access = "hasAnyRole('ROLE_MANAGER','ROLE_REGULAR')"/>
+		
+		<intercept-url pattern="/employee/Tier1Dashboard" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1Profile" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1UserDetails" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1SearchUser" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1PendingRequest" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1TransactionManagement" access = "hasRole('ROLE_REGULAR')"/>
+		
+		<intercept-url pattern="/customer/*" access = "hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>
+		
 		
 		<form-login 
 	        login-page="/login/Login" 
-	       login-processing-url="/j_spring_security_check"
-	       authentication-success-handler-ref="customAuthenticationSuccessHandler"
-	    ></form-login>
+	        login-processing-url="/j_spring_security_check"
+	        username-parameter="username"
+            password-parameter="password"
+	        authentication-success-handler-ref="customAuthenticationSuccessHandler"
+	        ></form-login>
        <session-management invalid-session-url="/login" session-fixation-protection="newSession" >
 		   	<concurrency-control  max-sessions="1" error-if-maximum-exceeded="true" />
 		</session-management>
@@ -52,24 +75,11 @@
 	<beans:bean id = "myAuthentication" class = "com.group10.controllers.security.MyAuthentication">
 				<beans:property name = "userDetailsService" ref="customUserDetailsService"/>	
 			 	<beans:property name = "userDetails" ref="loginAttemptsDaoImpl"/>
-			 	<beans:property name = "passwordEncoder" ref="encoder"/>	 	
 	</beans:bean>
-		
-	<authentication-manager>
-		<authentication-provider>
-			  <user-service>
-		<user name="harsha@gmail.com" password="1234" authorities="ROLE_ADMIN" />
-		<user name="kevin@gmail.com" password="1234" authorities="ROLE_MANAGER" />
-	   </user-service>
-	   </authentication-provider>
-	</authentication-manager>
-	
-<!-- call the custom Authentication for all the stored users 
 	
 	<authentication-manager>
 		<authentication-provider
 			ref = "myAuthentication"/>
 	</authentication-manager>
--->
-
+			
 </beans:beans>

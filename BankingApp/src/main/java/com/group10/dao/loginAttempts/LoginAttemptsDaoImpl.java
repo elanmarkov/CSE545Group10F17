@@ -17,19 +17,19 @@ public class LoginAttemptsDaoImpl extends JdbcDaoSupport {
 	
 	
 	public void updateFailAttempts(String username) {
-		int attempts = this.getJdbcTemplate().queryForObject("select attempts from user_login where username="+username, Integer.class)+1;
-		String sql = "update user_login set attempts="+attempts+ " where username='"+username+"'";
+		int attempts = this.getJdbcTemplate().queryForObject("select attempts from user_login_attempts where username='"+username+"'", Integer.class)+1;
+		String sql = "update user_login_attempts set attempts="+attempts+ " where username='"+username+"'";
 		this.getJdbcTemplate().update(sql);	
 	}
 
 	public LoginAuthentication getUserAttempts(String username) {
-		String sql = "select * from user_login where username='"+username+"'";
+		String sql = "select * from user_login_attempts where username='"+username+"'";
 		//return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 		return (LoginAuthentication)this.getJdbcTemplate().queryForObject(sql,new BeanPropertyRowMapper(LoginAuthentication.class));
 	}
 
 	public void resetFailAttempts(String username) {
-		String sql = "update user_login set attempts=0 where username='"+username+"'";
+		String sql = "update user_login_attempts set attempts=0 where username='"+username+"'";
 		this.getJdbcTemplate().update(sql);
 	}
 
@@ -40,13 +40,19 @@ public class LoginAttemptsDaoImpl extends JdbcDaoSupport {
 
 	public void lockUserAccount(String username) {
 		// TODO Auto-generated method stub
-		String sql = "update user_login set accountStatus=1 where username='"+username+"'";
+		String sql = "update user_login set enabled=0 where username='"+username+"'";
 		this.getJdbcTemplate().update(sql);
 	}
 	
 	public void unLockUserAccount(String username){
-		String sql = "update user_login set accountStatus=0 where username='"+username+"'";
+		String sql = "update user_login set enable=1 where username='"+username+"'";
 		this.getJdbcTemplate().update(sql);
+	}
+
+	public int getNoUserAttempts(String username) {
+		String sql = "select attempts from user_login_attempts where username='"+username+"'";
+		//return this.getJdbcTemplate().queryForObject(sql, Integer.class);
+		return this.getJdbcTemplate().queryForObject(sql,Integer.class);
 	}
 	
 	

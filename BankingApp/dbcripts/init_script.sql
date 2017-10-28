@@ -56,19 +56,22 @@ CREATE TABLE pending_ac_requests (
 );
 
 CREATE TABLE user_login (
-  username varchar(20) NOT NULL,
-  password varchar(100) NOT NULL,
+  username varchar(60) NOT NULL,
+  password varchar(255) NOT NULL,
+  enabled int NOT NULL,
   role varchar(20) NOT NULL,
-  accountStatus int NOT NULL,
-  otpExpireStatus int NOT NULL,
-  attempts int NOT NULL,
-  lastModified timestamp NOT NULL,
-  userId int NOT NULL,
-
-  PRIMARY KEY (userId)
+  accountNonExpired int NOT NULL,
+  accountNonLocked int NOT NULL,
+  credentialsNonExpired int NOT NULL,
+  otpNonLocked int NOT NULL,
+  PRIMARY KEY(username)
 );
 
-
+create TABLE user_login_attempts(
+	username varchar(60) NOT NULL,
+	attempts int NOT NULL,
+	PRIMARY KEY(username)
+);
 CREATE TABLE OTP(
 	email varchar(40) NOT NULL,
 	otp varchar(10) NOT NULL,

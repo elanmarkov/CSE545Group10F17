@@ -3,63 +3,61 @@ package com.group10.dbmodels;
 import java.sql.Timestamp;
 
 public class LoginAuthentication {
+	 private String username;
+	    private String password;
+	    private int enabled;
+	    private String role;
+	    private int accountNonExpired;
+	    private int accountNonLocked;
+	    private int credentialsNonExpired;
+	    private int otpNonLocked;
+	    public int getAccountNonExpired() {
+	        return accountNonExpired;
+	    }
+	    public void setAccountNonExpired(int accountNonExpired) {
+	        this.accountNonExpired = accountNonExpired;
+	    }
+	    public int getAccountNonLocked() {
+	        return accountNonLocked;
+	    }
+	    public void setAccountNonLocked(int accountNonLocked) {
+	        this.accountNonLocked = accountNonLocked;
+	    }
+	    public int getCredentialsNonExpired() {
+	        return credentialsNonExpired;
+	    }
+	    public void setCredentialsNonExpired(int credentialsNonExpired) {
+	        this.credentialsNonExpired = credentialsNonExpired;
+	    }
+	    public int getOtpNonLocked() {
+	        return otpNonLocked;
+	    }
+	    public void setOtpNonLocked(int otpNonLocked) {
+	        this.otpNonLocked = otpNonLocked;
+	    }
+	    public String getUsername() {
+	        return username;
+	    }
+	    public void setUsername(String username) {
+	        this.username = username;
+	    }
+	    public String getPassword() {
+	        return password;
+	    }
+	    public void setPassword(String password) {
+	        this.password = password;
+	    }
+	    public int getEnabled() {
+	        return enabled;
+	    }
+	    public void setEnabled(int enabled) {
+	        this.enabled = enabled;
+	    }
+	    public String getRole() {
+	        return role;
+	    }
+	    public void setRole(String role) {
+	        this.role = role;
+	    }
 
-	public String getUsername() {
-		return username;
 	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
-	public int getAccountStatus() {
-		return accountStatus;
-	}
-	public void setAccountStatus(int accountStatus) {
-		this.accountStatus = accountStatus;
-	}
-	public int getOtpExpireStatus() {
-		return otpExpireStatus;
-	}
-	public void setOtpExpireStatus(int otpExpireStatus) {
-		this.otpExpireStatus = otpExpireStatus;
-	}
-	
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	public int getAttempts() {
-		return attempts;
-	}
-	public void setAttempts(int attempts) {
-		this.attempts = attempts;
-	}
-	public Timestamp getStamp() {
-		return stamp;
-	}
-	public void setStamp(Timestamp stamp) {
-		this.stamp = stamp;
-	}
-	private String username;
-    private String password;
-    private String role;
-    private int accountStatus;
-    private int otpExpireStatus;
-    private int attempts;
-    private Timestamp stamp;
-    private int userId;
-	   
-}

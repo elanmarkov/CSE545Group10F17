@@ -25,22 +25,23 @@ public class MyAuthentication extends DaoAuthenticationProvider {
 			throw e;
 		} catch (LockedException e) {
 			String error = "";
-			LoginAuthentication userAttempts = ldao.getUserAttempts(username);
-			if (userAttempts.getAttempts()>3) {
+			int userAttempts = ldao.getNoUserAttempts(username);
+			if (userAttempts>3) {
 				ldao.lockUserAccount(username);
 				
 			} else {
 				error = e.getMessage();
 			}
+		
 			throw new LockedException(error);
 		}
 	}
-	public LoginAttemptsDaoImpl getUserDetail() {
+	public LoginAttemptsDaoImpl getUserDetails() {
 		return ldao;
 	}
 
-	public void setUserDetails(LoginAttemptsDaoImpl userDetailsDao) {
-		this.ldao = userDetailsDao;
+	public void setUserDetails(LoginAttemptsDaoImpl userDetails) {
+		this.ldao = userDetails;
 	}
 	
 

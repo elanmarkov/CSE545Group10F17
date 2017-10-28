@@ -9,6 +9,7 @@ com\group10\dao\customerDashboard\CustomerDashboardDaoImpl.class
 com\group10\dao\employee\Validator.class
 com\group10\controllers\employee\Tier1.class
 com\group10\dbmodels\CheckingAccount.class
+com\group10\dao\loginAttempts\CustomUserService.class
 com\group10\dao\otp\OTPDelivery$1.class
 com\group10\dao\loginAttempts\LoginAttemptsDaoImpl.class
 com\group10\controllers\customer\MerchantController.class
@@ -48,9 +49,12 @@ com\group10\controllers\HelloController.class
 com\group10\dao\otp\OtpDaoImpl.class
 com\group10\dbmodels\CreditAccount.class
 com\group10\dbmodels\PendingInternalRequests.class
+com\group10\dbmodels\CustomUser.class
 com\group10\controllers\employee\Tier2.class
 com\group10\dao\loginAttempts\CustomUserDetailsService.class
+com\group10\dbmodels\Role.class
 com\group10\jdbc\test.class
+com\group10\dao\loginAttempts\UserDaoImpl.class
 com\group10\dao\transaction\TransactionDao.class
 com\group10\controllers\commons\ForgotPassword.class
 com\group10\dao\logs\LogsDaoImpl.class

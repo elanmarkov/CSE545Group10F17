@@ -47,8 +47,8 @@ public class OtpDaoImpl extends JdbcDaoSupport{
 				new BeanPropertyRowMapper<LoginAuthentication>(LoginAuthentication.class));
 		if (userList.size() == 0)
 			return "Invalid User";
-		if (userList.get(0).getAttempts() == 0)
-			return "Exceeded otp limits. Account locked. Contact bank";
+	//	if (userList.get(0).getAttempts() == 0)
+//			return "Exceeded otp limits. Account locked. Contact bank";
 		// Make a call to process OTP
 		return processOTP(userList.get(0).getUsername());
 	}

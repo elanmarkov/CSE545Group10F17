@@ -70,7 +70,7 @@
 			  <form name="myForm" action="<c:url value='j_spring_security_check' />" method="post">
 				  <div class="form-group">
 				    <label for="username">Username</label>
-				    <input type="text" class="form-control" id="userName" name="username" placeholder="Username" required>
+				    <input type="email" class="form-control" id="userEmail" name="username" placeholder="Username" required>
 				  </div>
 
 				  <div class="form-group">
@@ -81,11 +81,11 @@
 			  	  <div class="form-group">
 			    	<label for="role" >Role</label>
 			    	<select class="form-control" name="roleSelection" required>
-			    		<option value="customer">Individual Customer</option>
-			    		<option value="merchant">Merchant</option>
-			    		<option value="employee">Employee</option>
-			    		<option value="manager">Manager</option>
-			    		<option value="admin">Admin</option>
+			    		<option value="ROLE_CUSTOMER">Individual Customer</option>
+			    		<option value="ROLE_MERCHANT">Merchant</option>
+			    		<option value="ROLE_REGULAR">Employee</option>
+			    		<option value="ROLE_MANAGER">Manager</option>
+			    		<option value="ROLE_ADMIN">Admin</option>
 			    	</select>
 			  	  </div>
 
