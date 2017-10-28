@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,18 +11,14 @@
 		.logo{
 		margin-bottom: 0px;
 		}
-
-
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
-
 		#loginBox{
 			margin: 5% 5% 35% 30%;
 		}
-
 		.hidden{
 			visibility: hidden;
 		}
@@ -39,7 +37,7 @@
             }
   	};
   	</script>
-
+<!--
   	<script>
 		window.onload = function() {
 		  var recaptcha = document.forms["myForm"]["g-recaptcha-response"];
@@ -49,7 +47,7 @@
 		  }
 		}
 	</script>
-
+ -->
 
 </head>
 <body>
@@ -65,10 +63,10 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-			  <form name="myForm" action="/BankingApp/loginSubmit" method="post">
+			  <form name="myForm" action="<c:url value='j_spring_security_check' />" method="post">
 				  <div class="form-group">
-				    <label for="username2">Username</label>
-				    <input type="text" class="form-control" id="userName" name="username" placeholder="Username" required>
+				    <label for="username">Username</label>
+				    <input type="email" class="form-control" id="userEmail" name="username" placeholder="Username" required>
 				  </div>
 
 				  <div class="form-group">
@@ -79,28 +77,30 @@
 			  	  <div class="form-group">
 			    	<label for="role" >Role</label>
 			    	<select class="form-control" name="roleSelection" required>
-			    		<option value="customer">Individual Customer</option>
-			    		<option value="merchant">Merchant</option>
-			    		<option value="employee">Employee</option>
-			    		<option value="manager">Manager</option>
-			    		<option value="admin">Admin</option>
+			    		<option value="ROLE_CUSTOMER">Individual Customer</option>
+			    		<option value="ROLE_MERCHANT">Merchant</option>
+			    		<option value="ROLE_REGULAR">Employee</option>
+			    		<option value="ROLE_MANAGER">Manager</option>
+			    		<option value="ROLE_ADMIN">Admin</option>
 			    	</select>
 			  	  </div>
 
 			  	  <div>
-			  	  		<div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
+			  	  		<!-- <div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
 			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true">
-
+ -->
 			  	  		<br>
 			  	  		<div id = "errorBox" class="form-group"></div>
+			  	  		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default" onClick ="checkEmail()" id="submit">Login</button>
+
 			  </form>
 
 			</div>
 
 			<br>
 
-			<a href="ForgetPassword.html">Forgot your password?</a>
+			<a href="/BankingApp/login/ForgotPassword">Forgot your password?</a>
 		</div>
 	</div>
 </div>

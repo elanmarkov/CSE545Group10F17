@@ -128,6 +128,7 @@ public class Admin {
 		}
 		
 		if(isValidated){
+			UserRegistrationDaoImpl otpDao = ctx.getBean("otpDao", UserRegistrationDaoImpl.class);
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			
 			Random rand = new Random();
@@ -140,13 +141,13 @@ public class Admin {
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Successful",userID, "internal");
         	//redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-            model.setViewName("/employee/AdminDashboard");
+            model.setViewName("redirect:/employee/AdminDashboard");
 
 		}
 		else{
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Failed",userID, "internal");
-            model.setViewName("/employee/RegistrationInternalEmployee");
+            model.setViewName("redirect:/employee/RegistrationInternalEmployee");
 		}
 		ctx.close();
 		

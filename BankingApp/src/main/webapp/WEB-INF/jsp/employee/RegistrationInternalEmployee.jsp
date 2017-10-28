@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 	<html>
 	<head>
 		<title>Registration</title>
@@ -7,16 +7,13 @@
 			.logo{
 			margin-bottom: 0px;
 			}
-
 			#title{
 				margin: auto;
 				text-align: center;
 			}
-
 			#loginBox{
 				margin: 5% 5% 30% 30%;
 			}
-
 			.hidden{
 				visibility: hidden;
 			}
@@ -29,9 +26,36 @@
 	<div class="jumbotron logo">
 		<div class="container">
 		  <h2 id="title">GROUP10 BANK</h2>
-		</div>	
+		</div>
 	</div>
 	<br>
+
+
+
+<nav class="navbar navbar-default">
+	<div class="container">
+		<ul class="nav navbar-nav">
+			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+        	<!-- <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
+	          </ul>
+        	</li>
+        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
+		</ul> -->
+
+
+		<ul class="nav navbar-nav navbar-right">
+			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+
+		</ul>
+	</div>
+</nav>
+
+
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-10">
@@ -40,20 +64,27 @@
 	 				 </div>
 				<div class="jumbotron">
 			  <form action="/BankingApp/employee/internalreg" method="POST">
-				  		
+
+
+					<div class="form-group">
+					    <input type="hidden" class="form-control" id="id" name ="id" value="0">
+					  </div>
+
+
+
 					  <div class="form-group">
 					    <label for="firstName">Name</label>
 					    <input type="text" class="form-control" id="firstName" name ="name" placeholder="Last Name, First Name" required>
 					  </div>
 
 					  <div class="form-group">
-							<label for="email">Email</label>	      
-							<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>	
+							<label for="email">Email</label>
+							<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
 					  </div>
 
 					  <div class="form-group">
 							<label for="select">Role</label>
-							        <select class="form-control" name="designation" id="designation" required>
+							        <select class="form-control" name="role" id="role" required>
 							          <option value="">Please Select</option>
 							          <option value="regular">Regular</option>
 							          <option value="manager">Manager</option>
@@ -77,29 +108,30 @@
 					  </div>
 
 					  <div class="form-group">
-					    <label for="pincode">Zip Code</label>
-					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
 					  </div>
-					  
+
+					  <div class="form-group">
+					    <label for="zipcode">Zip Code</label>
+					    <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zip Code" required>
+					  </div>
+
 					  <div class="form-group">
 					    <label for="phone">Phone Number</label>
 					    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
 					  </div>
 
 					  <div class="form-group">
-					    <label for="dateOfBirth">Date of Birth</label>
-					    <input type="text" class="form-control" id="dateOfBirth" name="DoB" placeholder="mm/dd/yyyy" required>
+					    <label for="dob">Date of Birth</label>
+					    <input type="text" class="form-control" id="dob" name="dob" placeholder="mm/dd/yyyy" required>
 					  </div>
 
 					  <div class="form-group">
 					    <label for="ssn">SSN</label>
 					    <input type="text" class="form-control" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
 					  </div>
-					  
-					   <div class="form-group">
-					    <label for="username">Username</label>
-					    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-					  </div>
+
 						<div id = "errorBox" class="form-group"></div>
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
@@ -112,7 +144,6 @@
 	</div>
 
 	<script language="JavaScript" type="text/javascript">
-
 	    function Validate() {
 	    	$("#errorBox").html("");
 	            var name=$('#firstName').val();
@@ -124,20 +155,16 @@
 	            var phone = $('#phone').val();
 	            var address = $('#address').val();
 	            var dateOfBirth = $('#dateOfBirth').val();
-
 	            filter = /^[A-z]+$/;
-
 	            if(!filter.test(name))
 	            {
 	                $("#firstName").borderColor="red";
-	                window.setTimeout(function () { 
-	   					 document.getElementById('firstName').focus(); 
-					}, 0); 
+	                window.setTimeout(function () {
+	   					 document.getElementById('firstName').focus();
+					}, 0);
 	                $("#errorBox").html("Name can contain only alphabets");
 	                return false;
 	            }
-
-
 	            var filter = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 	            if(!filter.test(userEmail))
 	            {
@@ -145,25 +172,21 @@
 	                $("#errorBox").html("Please Enter a Valid Email Address");
 	                return false;
 	            }
-
 	            filterCity = /^[A-z]+$/;
-
 	            if(!filterCity.test(city))
 	            {
 	                $("#city").borderColor="red";
 	                $("#errorBox").html("City can contain only alphabets");
 	                return false;
 	            }
-
 	            filterState = /^[A-z]+$/;
-
 	            if(!filterState.test(state))
 	            {
 	                $("#state").borderColor="red";
 	                $("#errorBox").html("State can contain only alphabets");
 	                return false;
 	            }
-	            	          
+
 	            var filter1 =  /^[0-9]+$/;
 	            if(!filter1.test(pincode))
 	            {
@@ -171,14 +194,12 @@
 	                $("#errorBox").html("Zipcode can contain only numbers");
 	                return false;
 	            }
-
 	            if(!filter1.test(phone))
 	            {
 	                $("#phone").focus();
 	                $("#errorBox").html("Please Enter a Valid phone");
 	                return false;
 	            }
-
 	            var filterdob =  /^\d{2}\/\d{2}\/\d{4}$/;
 	            if(!filterdob.test(dateOfBirth))
 	            {
@@ -186,7 +207,7 @@
 	                $("#errorBox").html("Please Enter a Valid date of birth");
 	                return false;
 	            }
-	             
+
 	            var filterssn =  /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
 	            if(!filterssn.test(ssn))
 	            {
