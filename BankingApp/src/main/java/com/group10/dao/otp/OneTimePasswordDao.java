@@ -62,12 +62,13 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 		String OTPQuery = "SELECT * FROM OTP WHERE email = '" + email + "' LIMIT 1";
 		List<OTP> matches = this.getJdbcTemplate().query(OTPQuery, new BeanPropertyRowMapper<OTP>(OTP.class));
 		long currTime = (new Timestamp(System.currentTimeMillis())).getTime();
+		if(matches.get(0).getIssueTime() == null) return retVal;
 		long timeDelay = currTime - matches.get(0).getIssueTime().getTime();
 		int numGuesses = matches.get(0).getAttempts();
 		trueOTP = matches.get(0).getHexValOTP();
 		if(otp.equals(trueOTP) && numGuesses <= maxAttempts && timeDelay < maxTimeMS) {
 			retVal = "OTP validated";
-			this.getJdbcTemplate().execute("DELETE FROM otp_table WHERE userEmail = '" + email + "'");
+			this.getJdbcTemplate().execute("DELETE FROM otp WHERE email = '" + email + "'");
 		}
 		else {
 			if(numGuesses > maxAttempts) {
@@ -75,7 +76,7 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 			}
 			else if (timeDelay >= maxTimeMS) {
 				retVal = "OTP Expired. Please try again.";
-				this.getJdbcTemplate().execute("DELETE FROM otp_table WHERE userEmail = '" + email + "'");
+				this.getJdbcTemplate().execute("DELETE FROM otp WHERE email = '" + email + "'");
 			}
 			else {
 				String update = "UPDATE OTP SET hexValOTP = " + trueOTP + ", issueTime = '"
