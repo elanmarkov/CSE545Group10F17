@@ -17,7 +17,7 @@ import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
-import com.group10.dao.otp.OtpDaoImpl;
+import com.group10.dao.otp.OneTimePasswordDao;
 import com.group10.dbmodels.DbLogs;
 
 @Controller
@@ -43,33 +43,36 @@ public class ForgotPassword {
 			return new ModelAndView("/login/ForgotPassword");
 		}
 	@RequestMapping(value = "forgotpassword/verifyemail", method = RequestMethod.POST)
-		public ModelAndView verifyEmail(HttpServletRequest request, @RequestParam("Email") String email){
-			setGlobals(request);
-			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");	
-			OtpDaoImpl odao = ctx.getBean("otpDaoImpl", OtpDaoImpl.class);
-			String message = odao.verifyEmail(email);
-			if(message.equalsIgnoreCase("Exceeded otp limits. Account locked. Contact bank")){
-				ModelAndView model = new ModelAndView("/login/login");
-				ctx.close();
-				return model;
-			}
-			else{
-				ModelAndView model = new ModelAndView("/login/ForgotPasswordOtp");
-				request.getSession().removeAttribute("forgotpassemail");
-		        request.getSession().setAttribute("forgotpassemail", email);
-		        model.addObject("message", message);
-		        ctx.close();
-				return model;
-			}
-		}
+	public ModelAndView verifyEmail(HttpServletRequest request, @RequestParam("Email") String email){
 	
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");	
+		OneTimePasswordDao odao = ctx.getBean("OneTimePasswordDao", OneTimePasswordDao.class);
+		String message = odao.checkEmailSendOTP(email);
+		if(message.equals("Exceeded otp limits. Account locked. Please contact bank staff.") ||
+				message.equals("No such user.") || message.equals("Error!")){
+			ModelAndView model = new ModelAndView("/login/login");
+			ctx.close();
+			return model;
+		}
+		else{
+			ModelAndView model = new ModelAndView("/login/ForgotPasswordOtp");
+			request.getSession().removeAttribute("forgotpassemail");
+	        request.getSession().setAttribute("forgotpassemail", email);
+	        model.addObject("message", message);
+	        ctx.close();
+			return model;
+		}
+	}
+
 	@RequestMapping(value = "forgotpassword/verifyotp", method = RequestMethod.POST)
 	public ModelAndView verifyOtp(HttpServletRequest request, @RequestParam("otp") String otp){
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-		OtpDaoImpl odao = ctx.getBean("otpDaoImpl",OtpDaoImpl.class);
+		OneTimePasswordDao odao = ctx.getBean("otpDaoImpl",OneTimePasswordDao.class);
 		String email = (String) request.getSession().getAttribute("forgotpassemail");
-		String message = odao.verifyOTP(otp, email);
-		if(message.equalsIgnoreCase("Incorrect OTP") || message.equalsIgnoreCase("Error in verifying OTP")){
+		String message = odao.validateOTP(otp, email);
+		if(message.equals("OTP not validated") || 
+				message.equals("Too many attempts. Account locked.") ||
+				message.equals("OTP Expired. Please try again.")){
 			ModelAndView model = new ModelAndView("/login/ForgotPasswordOtp");
 			model.addObject("message", message);
 			ctx.close();
