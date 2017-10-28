@@ -19,7 +19,7 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<PendingInternalRequests>(PendingInternalRequests.class));
 	}
 	
-	public void modify(String address,String city,String state, String zipcode, String country, String phone, int userId){
+	public void modify(String address,String city,String state, String country, String zipcode, String phone, int userId){
 		String sql = "Update users set address='"+address+"',state='"+state+"',city='"+city+"',zipcode='"+zipcode+"',country='"+country+"',phone='"+phone+"' where id="+userId;
 		this.getJdbcTemplate().update(sql);
 	}
@@ -152,7 +152,12 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 
 		
 	}
-	
+
+	public boolean existInteralUser(int employeeID) {
+		// TODO Auto-generated method stub
+		String sql = "select count(*) from users where id="+employeeID+" and role in ('ROLE_MANAGER','ROLE_REGULAR')";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;	
+	}
 	
 
 }

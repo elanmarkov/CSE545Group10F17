@@ -321,7 +321,7 @@ public class Tier2 {
 			/*  write the dao code for admin modify
 	         * 
 	        */ 
-			fdao.modify(address, city, state, zipcode, country, phone, userId);	
+			fdao.modify(address, city, state, country,zipcode, phone, userId);	
 			redir.addFlashAttribute("error_msg","Modified the address for "+userId);
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);

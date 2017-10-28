@@ -32,8 +32,8 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport
 	public void setLoginDetails(String username, String password, String role, String email){
 		int userId = this.getJdbcTemplate().queryForObject("select id from users where email='"+email+"'", Integer.class);
 		
-		String sql = "insert into user_login(username, password, role, accountStatus, otpExpireStatus, attempts,lastModified, userId)  values(?,?,?,?,?,?,NOW(),?)";
-		this.getJdbcTemplate().update(sql, new Object[]{username, password, role, 1,0,0, userId});	
+		String sql = "insert into user_login(username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked)  values(?,?,?,?,?,?,?,?)";
+		this.getJdbcTemplate().update(sql, new Object[]{username, password, 1, role, 1,1,1,1});	
 	}
 	
 	public void setExternalUser(String name,String designation, String address, String city, String state, String country, String pincode, String phone, String email, String dob, String ssn, String username){
@@ -46,7 +46,7 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport
 	}
 	
 	public void updatePassword(String username,  String newPassword){
-		String sql = "update user_login set password = " + newPassword + "where username="+ username;
+		String sql = "update user_login set password = " + newPassword + "where username='"+ username+"'";
 		this.getJdbcTemplate().update(sql);
 	}
 	

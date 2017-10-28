@@ -201,7 +201,7 @@ public class Admin {
 			/*  write the dao code for admin modify
 	         * 
 	        */ 
-			fdao.modify(address, city, state, zipcode, country, phone, userId);	
+			fdao.modify(address, city, state, country, zipcode,phone, userId);	
 			redir.addFlashAttribute("error_msg","Modified the address for "+userId);
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);
@@ -232,7 +232,7 @@ public class Admin {
         /*
          * write the dao code for admin approval
          */
-			if(fdao.existUser(employeeID))
+			if(fdao.existInteralUser(employeeID))
 			{	
 				ldao.saveLogs("searched for internal user", ""+employeeID, userID, "internal");
 				User employeeObj = fdao.getUser(employeeID);
