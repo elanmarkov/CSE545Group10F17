@@ -27,14 +27,18 @@ public class CustomerDashboardController {
 	    CustomerDashboardDaoImpl sdao = ctx.getBean("customerDashboardDaoImpl" , CustomerDashboardDaoImpl.class);
 	    
 	    int userId = 1;
+	    String savingsStatement = Integer.toString(userId) + "SavingsStatement.txt";
+	    String checkingStatement = Integer.toString(userId) + "CheckingStatement.txt";
 	    SavingsAccount savings = sdao.savingsAccountDetails(userId);
 	    CheckingAccount checking = sdao.checkingAccountDetails(userId);
 	    //CreditAccount credit = sdao.creditAccountDetails(userId);
 	    
 	    List<PendingTransaction> pendingSavings = sdao.pendingTransactions(savings.getAccountNumber());
 	    List<CompletedTransaction> completedSavings = sdao.completedTransactions(savings.getAccountNumber());
+	    DownloadTransactions.createFile(completedSavings,savingsStatement);
 	    List<PendingTransaction> pendingChecking = sdao.pendingTransactions(checking.getAccountNumber());
 	    List<CompletedTransaction> completedChecking = sdao.completedTransactions(checking.getAccountNumber());
+	    DownloadTransactions.createFile(completedChecking, checkingStatement);
 	    //List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());	   
 	    
 	    ModelAndView model = new ModelAndView("/customer/CustomerDashboard");
