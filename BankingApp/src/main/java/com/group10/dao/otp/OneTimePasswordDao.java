@@ -66,8 +66,8 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 		if(matches.size()==0) return retVal;
 		trueOTP = matches.get(0).getHexValOTP();
 		long currTime = (new Timestamp(System.currentTimeMillis())).getTime();
-		long stampedTime = (new Timestamp(System.currentTimeMillis())).getTime();
-		//long stampedTime = matches.get(0).getIssueTime().getTime();
+		//long stampedTime = (new Timestamp(System.currentTimeMillis())).getTime();
+		long stampedTime = matches.get(0).getIssueTime().getTime();
 		long timeDelay = currTime - stampedTime;
 		int numGuesses = matches.get(0).getAttempts();
 		if(otp.equals(trueOTP) && numGuesses <= maxAttempts && timeDelay < maxTimeMS) {
