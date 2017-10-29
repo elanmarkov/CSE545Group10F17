@@ -78,7 +78,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="jumbotron">
-			<h4><strong>Make Payment</strong></h4>
+			<h4><strong>Request Payment</strong></h4>
 			  <form action="/BankingApp/customer/requestPayment" method="post">
 					 <div class="form-group">
  					    <label>Please Enter Payer's AccountNumber</label>
@@ -96,6 +96,7 @@
 					    <label for="requestAmount">Amount:</label>
 					    <input type="number" class="form-control" name="amount" placeholder="$" required>
 					  </div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default">Request Money</button>
 			  </form>
 			</div>

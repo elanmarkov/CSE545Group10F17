@@ -42,7 +42,7 @@ public class CutomerWithdrawlDepositController {
 	}
 	
 	@RequestMapping("/depositMoney")
-	public ModelAndView despositMoney(HttpServletRequest request, @RequestParam("depositAccount") String accountNumber,
+	public ModelAndView despositMoney(HttpServletRequest request, @RequestParam("accountNumber") String accountNumber,
 			@RequestParam("amount") double amount, RedirectAttributes redir) {
 
 		userId = (Integer) request.getSession().getAttribute("userID");
@@ -52,7 +52,7 @@ public class CutomerWithdrawlDepositController {
 
 		// TODO: CHANGE TO USER ID FROM SESSION
 		if (extDao.checkAccountNumberValidity(accountNumber, userId)) {
-			extDao.createPendingTransaction(userId, amount, accountNumber, null, "DEPOSIT");
+			extDao.createPendingTransaction(userId, amount, accountNumber, null, "Deposit");
 			return new ModelAndView("redirect:/customer/deposit");
 		} else {
 			return new ModelAndView("redirect:/customer/deposit");
@@ -86,12 +86,11 @@ public class CutomerWithdrawlDepositController {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
-		// TODO: CHANGE TO USER ID FROM SESSION
 		if (extDao.checkAccountNumberValidity(accountNumber, userId)) {
-			extDao.createPendingTransaction(userId, amount, accountNumber, null, "DESCRIPTION");
-			return new ModelAndView("redirect:/customer/deposit");
+			extDao.createPendingTransaction(userId, amount, null, accountNumber, "Withdraw");
+			return new ModelAndView("redirect:/customer/withdraw");
 		} else {
-			return new ModelAndView("redirect:/customer/deposit");
+			return new ModelAndView("redirect:/customer/withdraw");
 			//redir.addFlashAttribute("error_message",accountNumber+" Not Valid");
 		}		
 	}

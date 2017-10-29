@@ -28,9 +28,9 @@ public class CustomerPendingRequestsController {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
-		List<PendingExternalRequests> extRequests = extDao.getPendingRequests(userId); // TODO: USE USERID FROM SESSION
+		List<PendingExternalRequests> extRequests = extDao.getPendingRequests(userId);
 		ModelAndView model = new ModelAndView("/customer/PendingRequestManagement");
-		model.addObject("requestList", extRequests);
+		model.addObject("transactionList", extRequests);
 		return model;
 	}
 	
