@@ -33,6 +33,7 @@
 	</div>
 
 
+
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
@@ -50,12 +51,13 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
 </nav>
+
 
 
 <div class="container" id="loginBox">
@@ -67,6 +69,8 @@
 	        	<div>
 	        		<input class="form-control" type="text" name="employeeID" placeholder="Employee ID" required>
 	        	</div>
+ 				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 	        	<br>
 	       		<button type="submit" class="btn btn-sm btn-primary">Search Employee</button>
 	        </form>
@@ -76,6 +80,8 @@
 			    <thead>
 			      <tr>
 			        <th>Employee ID</th>
+			        <th>Employee Name</th>
+			        <th>Employee Role</th>
 			        <th>Employee Email</th>
 			        <th>Action</th>
 			      </tr>
@@ -83,23 +89,27 @@
 			    <tbody>
 
 			    	<c:choose>
-                    		<c:when test="${empty employeeObj}">
+                    		<c:when test="${empty user}">
                     			<tr>
-                                	<td colspan="3">No Results</td>
+                                	<td colspan="7">No Results</td>
                             	</tr>
                     		</c:when>
 
                     		<c:otherwise>
                         		<tr>
-                        			<td>${employeeObj.id}</td>
-                        			<td>${employeeObj.email}</td>
+                        			<td>${user.id}</td>
+                        			<td>${user.name}</td>
+                        			<td>${user.role}</td>
+                        			<td>${user.email}</td>
                         			<td>
                         				<form action = "/BankingApp/admin/showAccountDetails" method = "post" style="display:inline">
-                                    		<input type="hidden" name="employeeID" value="${employeeObj.id}">
+                                    		<input type="hidden" name="employeeID" value="${user.id}">
+                                    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
                                     	</form>
-                                    	<form action = "/BankingApp/admin/deleteExternalUser" method = "post" style="display:inline">
-                                    		<input type="hidden" name="employeeID" value="${employeeObj.id}">
+                                    	<form action = "/BankingApp/admin/deleteInternalUser" method = "post" style="display:inline">
+                                    		<input type="hidden" name="employeeID" value="${user.id}">
+                                    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     		<button type="submit" class="btn btn-sm btn-primary">Delete Account</button>
                                     	</form>
                         			</td>

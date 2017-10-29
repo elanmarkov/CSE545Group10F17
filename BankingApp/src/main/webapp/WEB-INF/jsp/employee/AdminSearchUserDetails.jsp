@@ -91,8 +91,8 @@
                         </tbody>
 					  </table>
 				<a href="#modifyaccount" class="btn btn-default"  data-toggle="modal">Modify Account</a>
-				<a href="/BankingApp/login/ChangePassword" class="btn btn-default">Change Password</a>
-
+<!-- 				<a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a>
+ -->
 			</div>
 		</div>
 	</div>
@@ -187,50 +187,6 @@
 
 </div>
 
-
-<!-- <div class="modal fade" id="changepassword" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><strong>Change Password</strong></h4>
-        </div>
-        <div class="modal-body">
-          <form action="/BankingApp/employee/internalreg" method="POST">
-				  		
-					  <div class="form-group">
-					    <label for="oldPassward">Old Password</label>
-					    <input type="password" class="form-control" id="oldPassward" name="oldPassward" placeholder="Old Password" required>
-					  </div>
-
-					  <div class="form-group">
-					    <label for="newPassward">New Password</label>
-					    <input type="password" class="form-control" id="newPassward" name="newPassward" placeholder="New Password" required>
-					  </div>
-
-					  <div class="form-group">
-					    <label for="confirmPassward">Confirm Password</label>
-					    <input type="password" class="form-control" id="confirmPassward" name="confirmPassward" placeholder="Confirm Password" required>
-					  </div>
-					  
-						<div id = "errorBox" class="form-group"></div>
-					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
-
-			  </form>
-        </div>
-    	<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-        </div>
-      </div>
-      
-    </div>
- -->
-
-<!-- </div> -->
 
 <!-- there was a </main> here -->
 
