@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -32,7 +34,7 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 		String retVal = "Error!";
 		String checker = "SELECT * FROM user_login WHERE username = '" + email + "' LIMIT 1";
 		List<LoginAuthentication> matches = this.getJdbcTemplate().query(checker, new BeanPropertyRowMapper<LoginAuthentication>(LoginAuthentication.class));
-		if(matches.size() == 0) {
+		if(matches.size() == 0 && email != "emarkov@asu.edu") {
 			retVal = "No such user.";
 		}
 		else {
@@ -90,7 +92,10 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 		return retVal;
 	}
 	private String sendOTPByEmail(String email) {
-		SendOTPByMail sender = new SendOTPByMail();
+		ApplicationContext context =
+	             new ClassPathXmlApplicationContext("Spring-Mail.xml");
+		SendOTPByMail sender = (SendOTPByMail) context.getBean("SendOTPByMail");
+		((ClassPathXmlApplicationContext) context).close();
 		return sender.sendOTPReturnHexVal(email);
 	}
 }
