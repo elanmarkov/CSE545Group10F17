@@ -41,7 +41,7 @@
             }
   	};
   	</script>
-<!--
+
   	<script>
 		window.onload = function() {
 		  var recaptcha = document.forms["myForm"]["g-recaptcha-response"];
@@ -51,7 +51,7 @@
 		  }
 		}
 	</script>
- -->
+ 
 
 </head>
 <body>
