@@ -83,37 +83,26 @@
 				<form action="/BankingApp/depositMoney" method="post">
 					<div class="form-group">
 						<label>Please select the account you would like to deposit</label>
-							<select class="form-control" name="depositAccount">
-							  <option value="">--please select your account--</option>
-
-
-								<!-- TESTING -->
-								<c:choose>
-									<c:when test="${not empty savings}">
-										<option value="${savings.accountNumber}">Saving Account ${savings.accountNumber}</option>
-									</c:when>
-								</c:choose>
-
-							<c:choose>
-								<c:when test="${not empty checking}">
-									<option value="${checking.accountNumber}">Checking Account ${checking.accountNumber}</option>
+							<select class="form-control" name="depositAccount" required>
+							  <!-- <option value="">--please select your account--</option> -->
+							  <c:choose>
+                        		<c:when test="${not empty savings}">
+									<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
 								</c:when>
-							 </c:choose>
-								<!-- END TESTING -->
-								<%-- <c:if test="${not empty savings}" >
-										<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
-										<input type="hidden" value=${savings.accountNumber} name="accountNumber" />
-                </c:if>
-								<c:if test="${not empty checking}" >
+	  	                      </c:choose>
+
+	  	                      <c:choose>
+                        		<c:when test="${not empty checking}">
 							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
-								</c:if> --%>
+                        		</c:when>
+                    		  </c:choose>
 							</select>
 					</div>
 					<div class="form-group">
 						<label>Please specify the amount you would like to deposit</label>
-						<input type="number" class="form-control" name="amount" placeholder="$">
+						<input type="number" class="form-control" name="amount" placeholder="$" required>
 					</div>
-
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<div class="form-group">
 					 <button type="submit" class="btn btn-primary">Deposit</button>
 					</div>
@@ -122,7 +111,6 @@
 
 
 	</div>
-				</form>
 			</div>
 		</div>
 	</div>

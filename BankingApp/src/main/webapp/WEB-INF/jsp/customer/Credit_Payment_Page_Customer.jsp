@@ -75,25 +75,27 @@
 					</div>
 
 					<div>
-						<p><h5>Account Number: <span>${creditAccount.account_number}</span></h5></p>
-						<p><h5>Next Payment Date: <span>${creditAccount.due_date}</span></h5></p>
-						<p><h5>Outstanding Balance: <span>${creditAccount.available_balance}</span></h5></p>
+						<p><h5>Account Number: <span>${creditCard.credit_card_number}</span></h5></p>
+						<p><h5>Due Date: <span>${creditCard.due_date}</span></h5></p>
+						<p><h5>Next Closing Date: <span>${creditCard.cycle_date}</span></h5></p>
 					</div>
 
+<br>
 					<form action="/BankingApp" method="post">
 						<div class="form-group">
-							<label>Please Enter the Amount to Pay</label>
-							<input type="number" class="form-control" placeholder="$" name="amountToPay" required>
+							<h5><strong>Amount to Pay</strong></h5>
+							<p><h5>${creditCard.current_amount_due}</h5></p>
 						</div>
 
 						<div class="form-group">
-							<label>Checking Account Balance</label>
-							<input type="number" class="form-control" placeholder="$" name="checkingAccountBalance">
+							<h5><strong>Checking Account Balance</strong></h5>
+							<p><h5>${checking.balance}</h5></p>
 						</div>
 
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary" name="submit">Pay</button>
 						</div>
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					</form>
 				</div>
 			</div>
