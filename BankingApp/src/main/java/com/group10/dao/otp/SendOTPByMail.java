@@ -8,7 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 
 public class SendOTPByMail {
 	private MailSender mailSender;
-	public SendOTPByMail(MailSender mailSender) {
+	public void setMailSender (MailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 	public String sendOTPReturnHexVal(String email) {

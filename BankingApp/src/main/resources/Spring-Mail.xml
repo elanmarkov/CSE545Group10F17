@@ -22,7 +22,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	</property>
 </bean>
 
-<bean id="SendOTPByMail" class="com.group10.dao.otp">
+<bean id="SendOTPByMail" class="com.group10.dao.otp.SendOTPByMail">
 	<property name="mailSender" ref="mailSender" />
 </bean>
 
