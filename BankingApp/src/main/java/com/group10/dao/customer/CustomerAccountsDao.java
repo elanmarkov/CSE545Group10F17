@@ -67,7 +67,16 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 		}
 
 		public boolean createCreditAccount(int userId) {
-			
+
+			String query = "select count(*) from credit_accounts where userId="+userId;
+			int exists = this.getJdbcTemplate().queryForObject(query, Integer.class);
+			if(exists==1){
+				Random rand = new java.util.Random();
+				String accNo= String.valueOf((int) (10000000*rand.nextFloat()));
+				String sql = "insert into credit_accounts (userId, accountNumber, currentAmountDue) values (?,?,?)";
+				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0});
+				return true;
+			}
 			return false;
 		}
 }

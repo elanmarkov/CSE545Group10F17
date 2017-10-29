@@ -36,6 +36,7 @@
 	</div>	
 </div>
 
+
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
@@ -53,8 +54,8 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
@@ -72,7 +73,12 @@
 					      <tr>
 					        <th>Request ID</th>
 					        <th>Internal User ID</th>
-					        <th>Request Type</th>
+					        <th>New Address</th>
+					        <th>State</th>
+					        <th>City</th>
+					        <th>Country</th>
+					        <th>Zip Code</th>
+					        <th>New Phone</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
@@ -84,19 +90,26 @@
                                 	</tr>
                             </c:when>
                             <c:otherwise>
-                        			<c:forEach items="${pending_list}" var="request">
+                        			<c:forEach items="${pending_list}" var="list">
                         					<tr>
-                                    		<td>${request.id}</td>
-                                    		<td>${request.internalUser.id}</td>
-											<td>${request.internalUser.id.requestType}</td>
+                                    		<td>${list.id}</td>
+                                    		<td>${list.userId}</td>
+                                    		<td>${list.address}</td>
+                                    		<td>${list.state}</td>
+                                    		<td>${list.city}</td>
+                                    		<td>${list.country}</td>
+                                    		<td>${list.zipcode}</td>
+                                    		<td>${list.phone}</td>
 											<td>
 												<form action = "/BankingApp/employee/adminPendingRequest" method = "post">
-		                                    		<input type="hidden" name="requestID" value="${request.id}">
+		                                    		<input type="hidden" name="requestID" value="${list.id}">
 		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
 				          								<option value="approve">Approve</option>
 				          								<option value="reject">Reject</option>
 				       								</select>
+       												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		                                    		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 		                                   		</form>
 											</td>

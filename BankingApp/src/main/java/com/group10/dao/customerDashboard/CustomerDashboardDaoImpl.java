@@ -16,26 +16,46 @@ public class CustomerDashboardDaoImpl extends JdbcDaoSupport {
 
 	public List<PendingTransaction> pendingTransactions(String accountNumber) {
 		String query = "SELECT * FROM pending_transactions where toAccountID="+accountNumber + " OR fromAccountID="+accountNumber;
-		return this.getJdbcTemplate().query(query, new BeanPropertyRowMapper<PendingTransaction>(PendingTransaction.class));
+		try {
+			return this.getJdbcTemplate().query(query, new BeanPropertyRowMapper<PendingTransaction>(PendingTransaction.class));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	public List<CompletedTransaction> completedTransactions(String accountNumber) {
 		String query = "SELECT * FROM completed_transactions where toAccountID="+accountNumber + " OR fromAccountID="+accountNumber;
-		return this.getJdbcTemplate().query(query, new BeanPropertyRowMapper<CompletedTransaction>(CompletedTransaction.class));
+		try {
+			return this.getJdbcTemplate().query(query, new BeanPropertyRowMapper<CompletedTransaction>(CompletedTransaction.class));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	public SavingsAccount savingsAccountDetails(int userId){
 		String query = "select * from savings_accounts where userId=" + userId;
-		return (SavingsAccount)this.getJdbcTemplate().queryForObject(query, new BeanPropertyRowMapper(SavingsAccount.class));	
+		try {
+			return (SavingsAccount) this.getJdbcTemplate().queryForObject(query, new BeanPropertyRowMapper(SavingsAccount.class));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public CheckingAccount checkingAccountDetails(int userId){
 		String query = "select * from checking_accounts where userId=" + userId;
-		return (CheckingAccount)this.getJdbcTemplate().queryForObject(query, new BeanPropertyRowMapper(CheckingAccount.class));			
+		try {
+			return (CheckingAccount) this.getJdbcTemplate().queryForObject(query, new BeanPropertyRowMapper(CheckingAccount.class));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public CreditAccount creditAccountDetails(int userId){
 		String query = "select * from credit_accounts where userId=" + userId;
-		return (CreditAccount)this.getJdbcTemplate().queryForObject(query, new BeanPropertyRowMapper(CreditAccount.class));		
+		try {
+			return (CreditAccount) this.getJdbcTemplate().queryForObject(query, new BeanPropertyRowMapper(CreditAccount.class));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

@@ -19,11 +19,13 @@ import com.group10.dbmodels.SavingsAccount;
 @Controller
 public class TransferController {
 
-	int userId = 1;
+	int userId;
 
 	@RequestMapping("/customer/transferBetweenAccounts")
 	public ModelAndView loadTransferBetweenAccountsPage(HttpServletRequest request) {
-		
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
 		CheckingAccount checking = accountsDao.getCheckingAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
@@ -41,7 +43,8 @@ public class TransferController {
 	@RequestMapping("/transferfundsBetweenAccounts")
 	public ModelAndView submitTransferBetweenAccounts(HttpServletRequest request, @RequestParam("transferTo") String transferTo,
 			@RequestParam("transferFrom") String transferFrom, @RequestParam("transferAmount") double amount, RedirectAttributes redir) {
-		
+
+		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
@@ -57,6 +60,8 @@ public class TransferController {
 	@RequestMapping("/transferfundsToOthersAccounts")
 	public ModelAndView submitTransferToOthers(HttpServletRequest request, @RequestParam("transferMode") String transferMode, @RequestParam("payeeInfo") String payeeInfo,
 			@RequestParam("transferFrom") String transferFrom, @RequestParam("transferAmount") double amount, RedirectAttributes redir) {
+
+		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
@@ -76,10 +81,12 @@ public class TransferController {
 	@RequestMapping("/customer/transferToOthers")
 	public ModelAndView loadTransferToOthersPage(HttpServletRequest request) {
 
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
-		CheckingAccount checking = accountsDao.getCheckingAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
-		SavingsAccount savings = accountsDao.getSavingsAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		CheckingAccount checking = accountsDao.getCheckingAccount(userId);
+		SavingsAccount savings = accountsDao.getSavingsAccount(userId);
 		CreditAccount credit = accountsDao.getCreditAccount(userId);
 		
 		ModelAndView model = new ModelAndView("/customer/FundsTransfer_send_to_others_Customer");

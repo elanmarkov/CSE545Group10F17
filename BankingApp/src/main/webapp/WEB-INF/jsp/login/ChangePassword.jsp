@@ -18,7 +18,7 @@
 		}
 
 		#loginBox{
-			margin: 5% 5% 35% 35%;
+			margin: 5% 5% 35% 30%;
 		}
 
 		.hidden{
@@ -32,7 +32,7 @@
 		function checkPassword(){
 
 		var password=$('#newPassword').val();
-		var filter = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{6,16}$/;
+		var filter = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{5,20}$/;
 		var confirm = $('#confirmPassword').val();
 		if(!(password === confirm))
 		{
@@ -74,11 +74,8 @@
 				  <div>
 
 				  	<ul>
-				  		<li>The password must be between 6-16 characters long.</li>
-				  		<li>It must contain at least one number</li>
-				  		<li>It must contain at least one letter</li>
-				  		<li>It must contain one lower case and one upper case letter</li>
-				  		<li>It must contain at least one special character(!@#$%^&*)</li>
+				  		<li>Password length: 5 to 20</li>
+				  		<li>Rules: number, lower case letter, upper case letter and special character(!@#$%^&+=)</li>
 				  	</ul>
 				  </div>
 

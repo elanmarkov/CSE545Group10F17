@@ -21,10 +21,12 @@ import com.group10.dbmodels.*;
 @Controller
 public class CutomerWithdrawlDepositController {
 
-	private int userId = 1;
+	private int userId;
 	
 	@RequestMapping("/customer/deposit")
-	public  ModelAndView loadDespositPage(){
+	public  ModelAndView loadDespositPage(HttpServletRequest request){
+
+		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
@@ -42,7 +44,9 @@ public class CutomerWithdrawlDepositController {
 	@RequestMapping("/depositMoney")
 	public ModelAndView despositMoney(HttpServletRequest request, @RequestParam("depositAccount") String accountNumber,
 			@RequestParam("amount") double amount, RedirectAttributes redir) {
-				
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 
@@ -58,8 +62,10 @@ public class CutomerWithdrawlDepositController {
 	}
 	
 	@RequestMapping("/customer/withdraw")
-	public  ModelAndView loadWithdrawPage(){
-		
+	public  ModelAndView loadWithdrawPage(HttpServletRequest request){
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
 		CheckingAccount checking = accountsDao.getCheckingAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
@@ -74,13 +80,15 @@ public class CutomerWithdrawlDepositController {
 	@RequestMapping("/withdrawMoney")
 	public ModelAndView withdrawMoney(HttpServletRequest request, @RequestParam("withdrawAccount") String accountType, 
 			@RequestParam("amount") double amount, @RequestParam("accountNumber") String accountNumber, RedirectAttributes redir) {
-		
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
 		// TODO: CHANGE TO USER ID FROM SESSION
 		if (extDao.checkAccountNumberValidity(accountNumber, userId)) {
-			extDao.createPendingTransaction(1, amount, accountNumber, null, "DESCRIPTION");
+			extDao.createPendingTransaction(userId, amount, accountNumber, null, "DESCRIPTION");
 			return new ModelAndView("redirect:/customer/deposit");
 		} else {
 			return new ModelAndView("redirect:/customer/deposit");

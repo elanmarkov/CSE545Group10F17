@@ -10,14 +10,17 @@
 
 		margin-bottom: 0px;
 		}
+
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
+
 		#loginBox{
 			margin: 5% 5% 25% 30%;
 		}
+
 		.hidden{
 			visibility: hidden;
 		}
@@ -60,8 +63,8 @@
 				  </div>
 
 				  <div id = "errorBox" class="form-group"></div>
-				  <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
-				  <button type="submit" class="btn btn-default">Submit</button>
+				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				  <button type="submit" class="btn btn-default" onclick="checkEmail()">Submit</button>
 			  </form>
 			</div>
 		</div>

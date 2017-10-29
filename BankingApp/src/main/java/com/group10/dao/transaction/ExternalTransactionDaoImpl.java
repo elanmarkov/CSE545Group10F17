@@ -104,9 +104,9 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 		String sql = "SELECT * FROM pending_transactions WHERE id="+transactionID; 
 		PendingTransaction pendTrans = (PendingTransaction)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(PendingTransaction.class));
 		
-		if ((pendTrans.getAmount() > 5000) && !(role.equals("tier2"))) {
+		if ((pendTrans.getAmount() > 5000) && !(role.equals("ROLE_MANAGER"))) {
 			//TODO: ERROR. UNAUTHORIZED ATTEMPT TO APPROVE CRITICAL TRANSACTION
-		} else if(role.equals("tier1") || role.equals("tier2")){
+		} else if(role.equals("ROLE_REGULAR") || role.equals("ROLE_MANAGER")){
 			// DELETE PENDING TRANSACTION
 			String deleteSQL = "DELETE FROM pending_transactions WHERE id ="+transactionID;
 			this.getJdbcTemplate().update(deleteSQL);

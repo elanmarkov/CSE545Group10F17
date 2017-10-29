@@ -82,114 +82,198 @@
 				<div class="tab-content">
 					<div id="checkingAccount" class="tab-pane fade in active">
 						<div>
-							<p><strong><h4>Checking Account Number: <span>${checkingAccount.accountNumber}</span></h4></strong></p>
-							<p><strong><h4>Current Balance: <span>${checkingAccount.balance}</span></h4></strong></p>
+							<p><strong><h4>Checking Account Number: <span>${checking.accountNumber}</span></h4></strong></p>
+							<p><strong><h4>Current Balance: $<span>${checking.balance}</span></h4></strong></p>
 						</div>
 
 						<div>
-							<p><h4>Last 5 transactions</h4></p>
+							<p><h4>Pending Transactions</h4></p>
 							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Description</th>
-										<th>Transaction Type</th>
+										<th>Initiator ID</th>
+										<th>Payer</th>
 										<th>Payee</th>
 										<th>Amount</th>
-										<th>Status</th>
 										<th>Date</th>
+										<th>Description</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="transaction" items="${checkingList}" varStatus="loop">
+									<c:forEach var="pendingChecking" items="${pendingChecking}" varStatus="loop">
 										<tr>
 											<th scope="row">${loop.index + 1}</th>
-											<td>${transaction.description}</td>
-											<td>${transaction.transactionType}</td>
-											<td>${transaction.payee_id}</td>
-											<td>${transaction.amount}</td>
-											<td>${transaction.status}</td>
-											<td>${transaction.timestamp_updated}</td>
+											<td>${pendingChecking.initiatorID}</td>
+											<td>${pendingChecking.fromAccountID}</td>
+											<td>${pendingChecking.toAccountID}</td>
+											<td>${pendingChecking.amount}</td>
+											<td>${pendingChecking.stamp}</td>
+											<td>${pendingChecking.description}</td>
 										</tr>
 									</c:forEach>
-
-
-
 								</tbody>
 								</table>
-							<a href="/BankingApp/showCheckingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
+
+								<p><h4>Completed Transactions</h4></p>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Amount</th>
+											<th>Payer</th>
+											<th>Payee</th>
+											<th>Description</th>
+											<th>Reviewer ID</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="completedChecking" items="${completedChecking}" varStatus="loop">
+											<tr>
+												<th scope="row">${loop.index + 1}</th>
+												<td>${completedChecking.amount}</td>
+												<td>${completedChecking.fromAccountID}</td>
+												<td>${completedChecking.toAccountID}</td>
+												<td>${completedChecking.description}</td>
+												<td>${completedChecking.reviewerID}</td>
+												<td>${completedChecking.status}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+									</table>
+
+							<a href="/BankingApp/customer/downloadStatements"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
 						</div>
 				</div>
 
 	<div id="savingAccount" class="tab-pane fade">
-		<p><strong><h4>Saving Account Number: <span>${savingAccount.accountNumber}</span></h4></strong></p>
-		<p><strong><h4>Current Balance: <span>${savingAccount.balance}</span></h4></strong></p>
+		<p><strong><h4>Saving Account Number: <span>${savings.accountNumber}</span></h4></strong></p>
+		<p><strong><h4>Current Balance: $<span>${savings.balance}</span></h4></strong></p>
 		<div>
-			<p><h4>Last 5 transactions</h4></p>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Description</th>
-						<th>Transaction Type</th>
-						<th>Payee</th>
-						<th>Amount</th>
-						<th>Status</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="transaction" items="${savingsList}" varStatus="loop">
-						<tr>
-							<th scope="row">${loop.index + 1}</th>
-							<td>${transaction.description}</td>
-							<td>${transaction.transactionType}</td>
-							<td>${transaction.payee_id}</td>
-							<td>${transaction.amount}</td>
-							<td>${transaction.status}</td>
-							<td>${transaction.timestamp_updated}</td>
-						</tr>
-					</c:forEach>
+			<p><h4>Pending Transactions</h4></p>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Initiator ID</th>
+										<th>Payer</th>
+										<th>Payee</th>
+										<th>Amount</th>
+										<th>Date</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="pendingSavings" items="${pendingSavings}" varStatus="loop">
+										<tr>
+											<th scope="row">${loop.index + 1}</th>
+											<td>${pendingSavings.initiatorID}</td>
+											<td>${pendingSavings.fromAccountID}</td>
+											<td>${pendingSavings.toAccountID}</td>
+											<td>${pendingSavings.amount}</td>
+											<td>${pendingSavings.stamp}</td>
+											<td>${pendingSavings.description}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+								</table>
 
-				</tbody>
-			</table>
-			<a href="/BankingApp/showSavingTransactions"><button type="button" class="btn btn-default">View Details</button></a>
+								<p><h4>Completed Transactions</h4></p>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Amount</th>
+											<th>Payer</th>
+											<th>Payee</th>
+											<th>Description</th>
+											<th>Reviewer ID</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="completedSavings" items="${completedSavings}" varStatus="loop">
+											<tr>
+												<th scope="row">${loop.index + 1}</th>
+												<td>${completedSavings.amount}</td>
+												<td>${completedSavings.fromAccountID}</td>
+												<td>${completedSavings.toAccountID}</td>
+												<td>${completedSavings.description}</td>
+												<td>${completedSavings.reviewerID}</td>
+												<td>${completedSavings.status}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+									</table>
+
+							<a href="/BankingApp/customer/downloadStatements"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
 		</div>
 	</div>
 
 	<div id="creditCard" class="tab-pane fade">
-		<p><strong><h4>Credit Card Number: <span>${creditCardNumber.accountNumber}</span></h4></strong></p>
-		<p><strong><h4>Current Balance: <span>${creditCardNumber.balance}</span></h4></strong></p>
+		<p><strong><h4>Credit Card Number: <span>${credit.accountNumber}</span></h4></strong></p>
+		<p><strong><h4>Current Amount Due: $<span>${credit.currentAmountDue}</span></h4></strong></p>
+		<a href="/BankingApp/customer/payCredit"><button type="button" class="btn btn-default">Make Payment</button></a>
+		<br>
 		<div>
-			<p><h4>Last 5 transactions</h4></p>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Description</th>
-						<th>Transaction Type</th>
-						<th>Payee</th>
-						<th>Amount</th>
-						<th>Status</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:forEach var="transaction" items="${creditList}" varStatus="loop">
-					<tr>
-						<th scope="row">${loop.index + 1}</th>
-						<td>${transaction.description}</td>
-						<td>${transaction.transactionType}</td>
-						<td>${transaction.payee_id}</td>
-						<td>${transaction.amount}</td>
-						<td>${transaction.status}</td>
-						<td>${transaction.timestamp_updated}</td>
-					</tr>
-				</c:forEach>
+			<p><h4>Pending Transactions</h4></p>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Initiator ID</th>
+										<th>Payer</th>
+										<th>Payee</th>
+										<th>Amount</th>
+										<th>Date</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="pendingCredit" items="${pendingCredit}" varStatus="loop">
+										<tr>
+											<th scope="row">${loop.index + 1}</th>
+											<td>${pendingCredit.initiatorID}</td>
+											<td>${pendingCredit.fromAccountID}</td>
+											<td>${pendingCredit.toAccountID}</td>
+											<td>${pendingCredit.amount}</td>
+											<td>${pendingCredit.stamp}</td>
+											<td>${pendingCredit.description}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+								</table>
 
-				</tbody>
-			</table>
-			<a href="/BankingApp/showCreditTransactions"><button type="button" class="btn btn-default">View Details</button></a>
+								<p><h4>Completed Transactions</h4></p>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Amount</th>
+											<th>Payer</th>
+											<th>Payee</th>
+											<th>Description</th>
+											<th>Reviewer ID</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="completedCredit" items="${completedCredit}" varStatus="loop">
+											<tr>
+												<th scope="row">${loop.index + 1}</th>
+												<td>${completedCredit.amount}</td>
+												<td>${completedCredit.fromAccountID}</td>
+												<td>${completedCredit.toAccountID}</td>
+												<td>${completedCredit.description}</td>
+												<td>${completedCredit.reviewerID}</td>
+												<td>${completedCredit.status}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+									</table>
+
+							<a href="/BankingApp/customer/downloadStatements"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
 		</div>
 	</div>
 

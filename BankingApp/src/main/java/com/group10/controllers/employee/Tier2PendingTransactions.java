@@ -23,13 +23,17 @@ import com.group10.dbmodels.PendingTransaction;
 
 @Controller
 public class Tier2PendingTransactions {
-	
+
+	int userId;
+
 	@ExceptionHandler(HandlerClass.class)
     public String handleResourceNotFoundException() {
         return "redirect:/exception";
     }
+
 	@RequestMapping("/employee/Tier2TransactionManagement")
-	public  ModelAndView loadPendingReqPage(){
+	public  ModelAndView loadPendingReqPage(HttpServletRequest request){
+
 		ModelAndView model = new ModelAndView("/employee/Tier2TransactionManagement");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
@@ -41,27 +45,29 @@ public class Tier2PendingTransactions {
 	@RequestMapping(value = "/tier2/transactionReview", method = RequestMethod.POST) 
 	public ModelAndView reviewedTransaction(HttpServletRequest request, @RequestParam("transactionID") String transId, 
 			@RequestParam("requestDecision") String requestDecision, RedirectAttributes redir) {
-		
-			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
-			
-			if (requestDecision.equals("approve")) {
-				//TODO: PASS REVIEWER ID FROM SESSION and role
-				extDao.approveTransaction(transId, 1, "tier2");
-			} else if (requestDecision.equals("reject")) {
-				//TODO: PASS REVIEWER ID FROM SESSION
-				extDao.declineTransaction(transId, 1, "tier2");
-			}
-			
-			ModelAndView model = new ModelAndView("redirect:/employee/Tier2TransactionManagement");
-			return model;
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+		int reviewerId = userId;
+		String role = (String) request.getSession().getAttribute("role");
+
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
+
+		if (requestDecision.equals("approve")) {
+			extDao.approveTransaction(transId, reviewerId, role);
+		} else if (requestDecision.equals("reject")) {
+			extDao.declineTransaction(transId, reviewerId, role);
+		}
+
+		ModelAndView model = new ModelAndView("redirect:/employee/Tier2TransactionManagement");
+		return model;
 	}
 	
 	@RequestMapping(value = "/tier2/transactionNew", method = RequestMethod.POST)
 	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") String fromAccountID,
 			@RequestParam("receiverAccountNumber") String toAccountID, @RequestParam("amountToAdd") double amount, RedirectAttributes redir) {
 		try {
-			int userId = 1;
+			userId = (Integer) request.getSession().getAttribute("userID");
 			
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);

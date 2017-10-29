@@ -84,31 +84,35 @@
 				<form action="/BankingApp/withdrawMoney" method="post">
 					<div class="form-group">
 						<label>Please select the account you would like to withdraw</label>
-							<select class="form-control" name="withdrawAccount">
-							  <option value="">--please select your account--</option>
-								<c:if test="${not empty savings}" >
+							<select class="form-control" name="withdrawAccount" required>
+							  <!-- <option value="">--please select your account--</option> -->
+								<c:choose>
+	                        		<c:when test="${not empty savings}">
 										<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
-										<input type="hidden" value=${savings.accountNumber} name="accountNumber" /> <!-- Do this again for chcking/credit-->
-                </c:if>
-								<c:if test="${not empty checking}" >
-							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
-								</c:if>
+									</c:when>
+		  	                    </c:choose>
+
+		  	                    <c:choose>
+	                        		<c:when test="${not empty checking}">
+								  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
+	                        		</c:when>
+	                    		 </c:choose>
 							</select>
 					</div>
 					<div class="form-group">
 						<label>Please specify the amount you would like to withdraw</label>
-						<input type="number" class="form-control" name="amount" placeholder="$">
+						<input type="number" class="form-control" name="amount" placeholder="$" required>
 					</div>
 
 					<div class="form-group">
 					 <button type="submit" class="btn btn-primary" value="Submit">Withdraw</button>
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				</form>
 		</div>
 
 
 	</div>
-				</form>
 			</div>
 		</div>
 	</div>

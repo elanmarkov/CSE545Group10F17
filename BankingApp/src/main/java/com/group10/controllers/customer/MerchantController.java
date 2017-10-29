@@ -11,16 +11,22 @@ import com.group10.dao.transaction.ExternalRequestsDao;
 import com.group10.dbmodels.CheckingAccount;
 import com.group10.dbmodels.SavingsAccount;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class MerchantController {
 
+	int userId;
+
 	@RequestMapping("/authorizeMerchant")
-	public ModelAndView loadMerchantPage() {
-		
+	public ModelAndView loadMerchantPage(HttpServletRequest request) {
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
-		CheckingAccount checking = accountsDao.getCheckingAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
-		SavingsAccount savings = accountsDao.getSavingsAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		CheckingAccount checking = accountsDao.getCheckingAccount(userId);
+		SavingsAccount savings = accountsDao.getSavingsAccount(userId);
 		
 		ModelAndView model = new ModelAndView("customer/merchantMakePayment");
 		model.addObject("savings", savings);
@@ -29,15 +35,17 @@ public class MerchantController {
 	}
 	
 	@RequestMapping("/customer/requestPayment")
-	public ModelAndView requestMoney(@RequestParam("transferFrom") String transferFrom, @RequestParam("transferTo") String transferTo,
+	public ModelAndView requestMoney(HttpServletRequest request, @RequestParam("transferFrom") String transferFrom, @RequestParam("transferTo") String transferTo,
 			@RequestParam("amount") double amount) {
-		
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
 		// TODO: CHANGE TO USER ID FROM SESSION
-		if (extDao.checkAccountNumberValidity(transferTo, 1) && extDao.checkAccountNumberValidity(transferFrom, 1)) {
-			extDao.createPendingRequest(transferFrom, transferTo, amount, 1); //TODO: USE USER_ID FROM SESSION
+		if (extDao.checkAccountNumberValidity(transferTo, userId) && extDao.checkAccountNumberValidity(transferFrom, userId)) {
+			extDao.createPendingRequest(transferFrom, transferTo, amount, userId);
 			return new ModelAndView("redirect:/customer/dashboard");
 		} else {
 			return new ModelAndView("redirect:/customer/dashboard");

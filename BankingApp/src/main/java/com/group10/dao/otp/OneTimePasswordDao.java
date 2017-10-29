@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -61,13 +63,16 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
         String trueOTP = "";
         String OTPQuery = "SELECT * FROM OTP WHERE email = '" + email + "' LIMIT 1";
         List<OTP> matches = this.getJdbcTemplate().query(OTPQuery, new BeanPropertyRowMapper<OTP>(OTP.class));
-        long currTime = (new Timestamp(System.currentTimeMillis())).getTime();
-        long timeDelay = currTime - matches.get(0).getIssueTime().getTime();
-        int numGuesses = matches.get(0).getAttempts();
+        if(matches.size()==0) return retVal;
         trueOTP = matches.get(0).getHexValOTP();
+        long currTime = (new Timestamp(System.currentTimeMillis())).getTime();
+        //long stampedTime = (new Timestamp(System.currentTimeMillis())).getTime();
+        long stampedTime = matches.get(0).getIssueTime().getTime();
+        long timeDelay = currTime - stampedTime;
+        int numGuesses = matches.get(0).getAttempts();
         if(otp.equals(trueOTP) && numGuesses <= maxAttempts && timeDelay < maxTimeMS) {
             retVal = "OTP validated";
-            this.getJdbcTemplate().execute("DELETE FROM otp_table WHERE userEmail = '" + email + "'");
+            this.getJdbcTemplate().execute("DELETE FROM OTP WHERE email = '" + email + "'");
         }
         else {
             if(numGuesses > maxAttempts) {
@@ -75,11 +80,10 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
             }
             else if (timeDelay >= maxTimeMS) {
                 retVal = "OTP Expired. Please try again.";
-                this.getJdbcTemplate().execute("DELETE FROM otp_table WHERE userEmail = '" + email + "'");
+                this.getJdbcTemplate().execute("DELETE FROM OTP WHERE email = '" + email + "'");
             }
             else {
-                String update = "UPDATE OTP SET hexValOTP = " + trueOTP + ", issueTime = '"
-                        + matches.get(0).getIssueTime() + "', attempts = " + (numGuesses + 1) + " WHERE email = '" + email
+                String update = "UPDATE OTP SET attempts = " + (numGuesses + 1) + " WHERE email = '" + email
                         + "'";
                 this.getJdbcTemplate().update(update);
             }
@@ -87,7 +91,10 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
         return retVal;
     }
     private String sendOTPByEmail(String email) {
-        SendOTPByMail sender = new SendOTPByMail();
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("Spring-Mail.xml");
+        SendOTPByMail sender = (SendOTPByMail) context.getBean("SendOTPByMail");
+        ((ClassPathXmlApplicationContext) context).close();
         return sender.sendOTPReturnHexVal(email);
     }
 }

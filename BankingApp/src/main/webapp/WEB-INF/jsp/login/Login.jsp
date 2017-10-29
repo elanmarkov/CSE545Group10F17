@@ -41,7 +41,7 @@
             }
   	};
   	</script>
-<!--
+
   	<script>
 		window.onload = function() {
 		  var recaptcha = document.forms["myForm"]["g-recaptcha-response"];
@@ -51,7 +51,7 @@
 		  }
 		}
 	</script>
- -->
+ 
 
 </head>
 <body>
@@ -74,7 +74,7 @@
 				  </div>
 
 				  <div class="form-group">
-			    	<label for="userPassword" >Password</label>
+			    	<label for="userPassword">Password</label>
 			    	<input type="password" class="form-control" id="userPassword" name="password" placeholder="Password" required>
 			  	  </div>
 
@@ -89,13 +89,12 @@
 			    	</select>
 			  	  </div>
 
-			  	  <div>
 			  	  		 <div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
 			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true">
 			  	  		<br>
 			  	  		<div id = "errorBox" class="form-group"></div>
 			  	  		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
-				  <button type="submit" class="btn btn-default" onClick ="checkEmail()" id="submit">Login</button>
+				  <button type="submit" class="btn btn-default" id="submit" onclick="checkEmail()">Login</button>
 
 			  </form>
 

@@ -90,31 +90,55 @@
 				<form action="/BankingApp/transferfundsBetweenAccounts" method="post">
 					<div class="form-group">
 						<label>Please select the account you would like to transfer to</label>
-							<select class="form-control" name="transferTo">
-							  <option value="">--please select the account transfer to--</option>
-							  <option value="${savings.accountNumber}">Savings ${savings.accountNumber}</option>
-							  <option value="${checking.accountNumber}">Checking ${checking.accountNumber}</option>
+							<select class="form-control" name="transferTo" required>
+							  <!-- <option value="">--please select the account transfer to--</option> -->
+							  <c:choose>
+                        		<c:when test="${not empty savings}">
+									<option value="${savings.accountNumber}">Savings ${savings.accountNumber}</option>
+								</c:when>
+	  	                      </c:choose>
+
+	  	                      <c:choose>
+                        		<c:when test="${not empty checking}">
+							  		<option value="${checking.accountNumber}">Checking ${checking.accountNumber}</option>
+                        		</c:when>
+                    		  </c:choose>
+								<c:choose>
+									<c:when test="${not empty credit}">
+													<option value="credit">Checking: ${credit.accountNumber} - balance: ${credit.currentAmountDue}</option>
+										</c:when>
+							</c:choose>
 							</select>
 					</div>
 
 					<div class="form-group">
 						<label>Please select the account you would like to transfer from</label>
-							<select class="form-control" name="transferFrom">
-							  <option value="">--please select the account transfer from--</option>
-							  <option value="${savings.accountNumber}">Saving Account ${savings.accountNumber}</option>
-							  <option value="${checking.accountNumber}">Checking Account ${checking.accountNumber}</option>
+							<select class="form-control" name="transferFrom" required>
+							  <!-- <option value="">--please select the account transfer from--</option> -->
+							  <c:choose>
+                        		<c:when test="${not empty savings}">
+									<option value="${savings.accountNumber}">Savings ${savings.accountNumber}</option>
+								</c:when>
+	  	                      </c:choose>
+
+	  	                      <c:choose>
+                        		<c:when test="${not empty checking}">
+							  		<option value="${checking.accountNumber}">Checking ${checking.accountNumber}</option>
+                        		</c:when>
+                    		  </c:choose>
 							</select>
 					</div>
 
 
 					<div class="form-group">
 						<label>Please specify the amount you would like to transfer</label>
-						<input type="number" class="form-control" placeholder="$" name="transferAmount">
+						<input type="number" class="form-control" placeholder="$" name="transferAmount" required>
 					</div>
 
 					<div class="form-group">
 					 <button type="submit" class="btn btn-primary" name="submit">Transfer</button>
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				</form>
 			</div>
 		</div>

@@ -13,14 +13,18 @@ import com.group10.dao.transaction.ExternalRequestsDao;
 import com.group10.dao.transaction.ExternalTransactionDaoImpl;
 import com.group10.dbmodels.PendingExternalRequests;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class CustomerPendingRequestsController {
 
-	int userId = 1;
+	int userId;
 	
 	@RequestMapping("/customer/pendingRequests")
-	public ModelAndView pendingRequests() {
-		
+	public ModelAndView pendingRequests(HttpServletRequest request) {
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		
@@ -31,8 +35,10 @@ public class CustomerPendingRequestsController {
 	}
 	
 	@RequestMapping("/employee/PendingRequestManagement")
-	public ModelAndView reviewRequest(@RequestParam("requestType") String requestType, @RequestParam("requestID") int requestID) {
-		
+	public ModelAndView reviewRequest(HttpServletRequest request, @RequestParam("requestType") String requestType, @RequestParam("requestID") int requestID) {
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalRequestsDao extDao = ctx.getBean("externalRequestsDao",ExternalRequestsDao.class);
 		

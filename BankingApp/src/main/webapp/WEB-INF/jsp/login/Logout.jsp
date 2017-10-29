@@ -69,6 +69,7 @@
 				  <div><h3><strong>Do you really want to log out?</strong></h3></div>
 				  <div class="radio"><label><input type="radio" name="yes">Yes</label></div>
 				  <div class="radio"><label><input type="radio" name="no">No</label></div>
+  				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 			  </form>
 

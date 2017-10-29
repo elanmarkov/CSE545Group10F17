@@ -46,7 +46,7 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport
 	}
 	
 	public void updatePassword(String username,  String newPassword){
-		String sql = "update user_login set password = " + newPassword + "where username='"+ username+"'";
+		String sql = "update user_login set password = '" + newPassword + "' where username='"+ username+"'";
 		this.getJdbcTemplate().update(sql);
 	}
 	

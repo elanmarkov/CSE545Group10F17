@@ -19,7 +19,7 @@ public class Validator{
 		return Pattern.matches(pattern, String.valueOf(number));
 	}
 	public Boolean validatePassword(String password ){
-		String pattern =  "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,16}$";
+		String pattern =  "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{5,20}$";
 		return Pattern.matches(pattern, password);
 	}
 	public Boolean validateSSN(String ssn){
