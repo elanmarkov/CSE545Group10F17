@@ -1,6 +1,11 @@
 package com.group10.dbmodels;
 
 public class PII {
+	private int id;
+	private int userid;
+	private String dob;
+	private String ssn;
+
 	public int getId() {
 		return id;
 	}
@@ -25,8 +30,4 @@ public class PII {
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
-	private int id;
-	private int userid;
-	private String dob;
-	private String ssn;
 }

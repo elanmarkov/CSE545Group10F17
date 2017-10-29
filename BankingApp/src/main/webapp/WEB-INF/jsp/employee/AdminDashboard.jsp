@@ -62,7 +62,13 @@
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/login/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<div>
+				<form name="logoutForm" action="/BankingApp/login/Logout" method="post" display: inline>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<button type="submit" class="btn btn-default navbar-btn">Log out</button>
+				</form>
+			</div>
+			
 		
 		</ul>
 	</div>

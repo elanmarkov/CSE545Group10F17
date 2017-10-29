@@ -123,7 +123,11 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 				double balance = this.getJdbcTemplate().queryForObject(balanceSQL, Double.class);
 				
 				//Subtract differnce (balance - amount)
-				balance = balance - pendTrans.getAmount();
+				if (table.equals("credit_accounts")) {
+					balance = balance + pendTrans.getAmount();
+				} else {
+					balance = balance - pendTrans.getAmount();
+				}
 				
 				//Update table with new balance
 				String updateSQL = "UPDATE "+table+" SET balance = "+balance+" WHERE accountNumber="+pendTrans.getFromAccountID();
@@ -142,7 +146,11 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 				double balance = this.getJdbcTemplate().queryForObject(balanceSQL, Double.class);
 				
 				//Subtract differnce (balance - amount)
-				balance = balance + pendTrans.getAmount();
+				if (table.equals("credit_accounts")) {
+					balance = balance - pendTrans.getAmount();
+				} else {
+					balance = balance + pendTrans.getAmount();
+				}
 				
 				//Update table with new balance
 				String updateSQL = "UPDATE "+table+" SET balance = "+balance+" WHERE accountNumber="+pendTrans.getToAccountID();

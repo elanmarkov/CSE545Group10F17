@@ -1,6 +1,7 @@
 package com.group10.controllers.customer;
 import com.group10.dbmodels.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +30,13 @@ public class CustomerDashboardController {
 
 		userId = (Integer) request.getSession().getAttribute("userID");
 
+
  		ApplicationContext  ctx = new ClassPathXmlApplicationContext("DaoDetails.xml"); 
 	    CustomerDashboardDaoImpl sdao = ctx.getBean("customerDashboardDaoImpl" , CustomerDashboardDaoImpl.class);
-	    
+
+	    String savingsStatement = Integer.toString(userId) + "SavingsStatement.txt";
+	    String checkingStatement = Integer.toString(userId) + "CheckingStatement.txt";
+
 	    SavingsAccount savings = sdao.savingsAccountDetails(userId);
 	    CheckingAccount checking = sdao.checkingAccountDetails(userId);
 	    CreditAccount credit = sdao.creditAccountDetails(userId);
@@ -42,7 +47,14 @@ public class CustomerDashboardController {
 	    List<CompletedTransaction> completedChecking = sdao.completedTransactions(checking.getAccountNumber());
 	    List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());
 	    List<CompletedTransaction> completedCredit = sdao.completedTransactions(credit.getAccountNumber());
-	    
+
+	    try {
+			DownloadTransactions.createFile(completedSavings, savingsStatement);
+			DownloadTransactions.createFile(completedChecking, checkingStatement);
+		} catch (IOException e) {
+
+		}
+
 	    ModelAndView model = new ModelAndView("/customer/CustomerDashboard");
 	    model.addObject("savings", savings);
 	    model.addObject("checking", checking);

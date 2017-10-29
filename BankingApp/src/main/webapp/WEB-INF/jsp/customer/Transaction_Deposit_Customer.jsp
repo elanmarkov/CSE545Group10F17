@@ -83,17 +83,17 @@
 				<form action="/BankingApp/depositMoney" method="post">
 					<div class="form-group">
 						<label>Please select the account you would like to deposit</label>
-							<select class="form-control" name="depositAccount" required>
+							<select class="form-control" name="accountNumber" required>
 							  <!-- <option value="">--please select your account--</option> -->
 							  <c:choose>
                         		<c:when test="${not empty savings}">
-									<option value="savings">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
+									<option value="${savings.accountNumber}">Savings: ${savings.accountNumber} - balance: ${savings.balance}</option>
 								</c:when>
 	  	                      </c:choose>
 
 	  	                      <c:choose>
                         		<c:when test="${not empty checking}">
-							  	<option value="checking">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
+							  	<option value="${checking.accountNumber}">Checking: ${checking.accountNumber} - balance: ${checking.balance}</option>
                         		</c:when>
                     		  </c:choose>
 								<c:choose>

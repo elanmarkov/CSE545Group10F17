@@ -36,6 +36,8 @@
 	</div>	
 </div>
 
+
+
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
@@ -53,13 +55,12 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
 </nav>
-
 
 
 <div class="container" id="loginBox">
@@ -72,6 +73,7 @@
 					    <thead>
 					      <tr>
 					        <th>Employee ID</th>
+					        <th>Log Type</th>
 					        <th>Activity</th>
 					        <th>Details</th>
 					        <th>Timestamp</th>
@@ -79,18 +81,19 @@
 					    </thead>
 					    <tbody>
 						<c:choose>
-						<c:when test="${empty logs}">
+						<c:when test="${empty loglist}">
                 			<tr>
-                            	<td colspan="4">No Logs found</td>
+                            	<td colspan="5">No Logs found</td>
                         	</tr>
                 		</c:when>
                 		<c:otherwise>
                 			<c:forEach items="${loglist}" var="log">
 								<tr>
-									<td>${log.userid}</td>
+									<td>${log.userId}</td>
+									<td>${log.logtype}</td>									
 									<td>${log.activity}</td>
 									<td>${log.details}</td>
-									<td>${log.timestamp}</td>
+									<td>${log.stamp}</td>
 								</tr>
 							</c:forEach>
                 		</c:otherwise>

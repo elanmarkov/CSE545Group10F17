@@ -43,11 +43,10 @@
 
 
 
-
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
+			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
         	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
@@ -61,8 +60,8 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
@@ -83,16 +82,28 @@
 					</div>
 
 					<div class="form-group">
-						<label class="checkbox-inline">
-					      <input type="checkbox" name="checking" value="yes">Checking Account
-					    </label>
-					    <label class="checkbox-inline">
-					      <input type="checkbox" name="savings" value="yes">Savings Account
-					    </label>
-					    <label class="checkbox-inline">
-					      <input type="checkbox" name="credit" value="yes">Credit Card
-					    </label>
+						<label>Checking Account</label>
+								<select class="form-control" name="checking">
+								  <option value="">--please select--</option>
+								  <option value="yes">Yes</option>
+								  <option value="no">No</option>
+								</select>
+							<br>
+							<label>Savings Account</label>
+								<select class="form-control" name="savings">
+								  <option value="">--please select--</option>
+								  <option value="yes">Yes</option>
+								  <option value="no">No</option>
+								</select>
+							<br>
+							<label>Credit Card</label>
+								<select class="form-control" name="checking">
+								  <option value="">--please select--</option>
+								  <option value="yes">Yes</option>
+								  <option value="no">No</option>
+								</select>
 					</div>
+				   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
 					 <input type="submit" value="Create">
 

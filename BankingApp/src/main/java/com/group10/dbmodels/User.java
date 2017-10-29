@@ -3,15 +3,15 @@ package com.group10.dbmodels;
 public class User {
 	private int id;
 	private String name;
-    private String role;
+  private String role;
 	private String address;
 	private String city;
 	private String state;
 	private String country;
 	private String zipcode;
 	private String phone;
-	private String dob;
-	private String ssn;
+	private String dob;  // not used
+	private String ssn;  // not used
 	private String email;
 
 	public String getEmail() {
@@ -27,7 +27,7 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -46,7 +46,7 @@ public class User {
 	public void setState(String state) {
 		this.state = state;
 	}
-	
+
 	public String getZipcode() {
 		return zipcode;
 	}
@@ -71,16 +71,16 @@ public class User {
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
-	
+
 	public String getCountry() {
 		return country;
 		// TODO Auto-generated method stub
-		
+
 	}
 	public void setCountry(String country) {
 		this.country =  country;
 		// TODO Auto-generated method stub
-		
+
 	}
 	public String getRole() {
 		return role;

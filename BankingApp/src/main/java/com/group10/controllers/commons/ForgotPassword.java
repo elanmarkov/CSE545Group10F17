@@ -148,3 +148,4 @@ public class ForgotPassword {
 		return hashBuffer.toString();
 	}
 }
+

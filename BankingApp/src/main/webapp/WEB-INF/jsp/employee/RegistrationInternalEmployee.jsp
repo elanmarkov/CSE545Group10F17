@@ -31,7 +31,6 @@
 	<br>
 
 
-
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
@@ -43,14 +42,15 @@
 	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
 	          </ul>
         	</li>
+
         	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
 		</ul> -->
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-
+			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+		
 		</ul>
 	</div>
 </nav>
@@ -85,10 +85,9 @@
 					  <div class="form-group">
 							<label for="select">Role</label>
 							        <select class="form-control" name="role" id="role" required>
-							          <option value="">Please Select</option>
-							          <option value="regular">Regular</option>
-							          <option value="manager">Manager</option>
-							          <option value="admin">Admin</option>
+							          	<option value="ROLE_REGULAR">Employee</option>
+			    						<option value="ROLE_MANAGER">Manager</option>
+			    						<option value="ROLE_ADMIN">Admin</option>
 							        </select>
 					  </div>
 
@@ -133,6 +132,8 @@
 					  </div>
 
 						<div id = "errorBox" class="form-group"></div>
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
 

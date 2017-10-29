@@ -78,8 +78,8 @@ public class CutomerWithdrawlDepositController {
 	}
 	
 	@RequestMapping("/withdrawMoney")
-	public ModelAndView withdrawMoney(HttpServletRequest request, @RequestParam("withdrawAccount") String accountType, 
-			@RequestParam("amount") double amount, @RequestParam("accountNumber") String accountNumber, RedirectAttributes redir) {
+	public ModelAndView withdrawMoney(HttpServletRequest request, @RequestParam("amount") double amount,
+									  @RequestParam("accountNumber") String accountNumber, RedirectAttributes redir) {
 
 		userId = (Integer) request.getSession().getAttribute("userID");
 

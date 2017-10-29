@@ -78,7 +78,7 @@
 			    	<input type="password" class="form-control" id="userPassword" name="password" placeholder="Password" required>
 			  	  </div>
 
-			  	  <div class="form-group">
+			  	  <!-- <div class="form-group">
 			    	<label for="role" >Role</label>
 			    	<select class="form-control" name="roleSelection" required>
 			    		<option value="ROLE_CUSTOMER">Individual Customer</option>
@@ -88,7 +88,7 @@
 			    		<option value="ROLE_ADMIN">Admin</option>
 			    	</select>
 			  	  </div>
-
+ -->
 			  	  		 <div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
 			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true">
 			  	  		<br>
