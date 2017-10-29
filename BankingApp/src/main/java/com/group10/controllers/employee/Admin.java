@@ -87,7 +87,7 @@ public class Admin {
 		return new ModelAndView("/employee/AdminUserDetails");
 	}
 */
-	@RequestMapping("/employee/internalreg", method =RequestMethod.POST)
+	@RequestMapping(value = "/employee/internalreg", method =RequestMethod.POST)
 	public ModelAndView InternalRegister(@ModelAttribute("user") User newUser/*, RedirectAttributes redir*/){
 	//	try{
 				ModelAndView model = new ModelAndView();
@@ -298,16 +298,16 @@ public class Admin {
 	}
 
 	@RequestMapping("/employee/AdminUserDetails")
-	public ModelAndView (HttpServletRequest request, @RequestParam("employeeID") String employeeID, RedirectAttributes redir){
+	public ModelAndView AdminUserDetails(HttpServletRequest request, RedirectAttributes redir){
 		try{
 			ModelAndView model = new ModelAndView();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
-			ldao.saveLogs("Accessed details of employee", ""+employeeID, userID, "internal");
-			User user = fdao.getUser(employeeID);
-			PII pii = fdao.getUserPII(employeeID);
+			ldao.saveLogs("Accessed details of employee", ""+userID, userID, "internal");
+			User user = fdao.getUser(userID);
+			PII pii = fdao.getUserPII(userID);
 			model.addObject("pii", pii);
 			model.addObject("user",user);
 

@@ -1,6 +1,7 @@
 package com.group10.controllers.customer;
 import com.group10.dbmodels.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import com.group10.dbmodels.SavingsAccount;
 public class CustomerDashboardController {
 	
 	@RequestMapping("/customer/dashboard")
-	public ModelAndView display(){
+	public ModelAndView display() throws IOException{
 
  		ApplicationContext  ctx = new ClassPathXmlApplicationContext("DaoDetails.xml"); 
 	    CustomerDashboardDaoImpl sdao = ctx.getBean("customerDashboardDaoImpl" , CustomerDashboardDaoImpl.class);
