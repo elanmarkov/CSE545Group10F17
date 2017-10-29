@@ -7,54 +7,76 @@
 	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/*"  />
-		
-		<form-login 
-	        login-page="/login/login" 
+		<intercept-url pattern="/employee/AdminDashboard" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminSearchUser" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminUserDetails" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminProfile" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/AdminPendingRequest" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/Tier2Dashboard" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2Dashboard" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2Profile" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2SearchUser" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2UserDetails" access = "hasRole('ROLE_MANAGER')"/>
+		<intercept-url pattern="/employee/Tier2TransactionManagement" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/RegistrationInternalEmployee" access = "hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/employee/RegistrationExternalEmployee" access = "hasAnyRole('ROLE_MANAGER','ROLE_REGULAR')"/>
+
+		<intercept-url pattern="/employee/Tier1Dashboard" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1Profile" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1UserDetails" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1SearchUser" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1PendingRequest" access = "hasRole('ROLE_REGULAR')"/>
+		<intercept-url pattern="/employee/Tier1TransactionManagement" access = "hasRole('ROLE_REGULAR')"/>
+
+		<intercept-url pattern="/customer/*" access = "hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>
+
+
+		<form-login
+	        login-page="/login"
+	        login-processing-url="/j_spring_security_check"
 	        username-parameter="username"
             password-parameter="password"
-></form-login>
+	        authentication-success-handler-ref="customAuthenticationSuccessHandler"
+	        ></form-login>
        <session-management invalid-session-url="/login" session-fixation-protection="newSession" >
 		   	<concurrency-control  max-sessions="1" error-if-maximum-exceeded="true" />
 		</session-management>
-		<logout logout-success-url="/login" delete-cookies="JSESSIONID" />
-	<csrf disabled="true"/>
+		<logout logout-success-url="/login" delete-cookies="JSESSIONID" invalidate-session="true"/>
+	<csrf />
 	</http>
-	
+
 	<!-- Define the beans -->
 
-	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 			<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		 	<beans:property name="url" value="jdbc:mysql://localhost:3306/banking"/>
 		 	<beans:property name="username" value="root"/>
-		  	<beans:property name="password" value="1234"/> 
+		  	<beans:property name="password" value="1234"/>
 	</beans:bean>
-	
-	<beans:bean id="customAuthenticationSuccessHandler" class="com.group10.controllers.security.CustomAuthenticationSuccessHandler"/>
+
+	<beans:bean id="customAuthenticationSuccessHandler" class="com.group10.controllers.security.CustomAuthenticationSuccessHandler"></beans:bean>
 
 	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<beans:constructor-arg name="strength" value="10" />
 	</beans:bean>
-	
+
 	<beans:bean id="loginAttemptsDaoImpl" class="com.group10.dao.loginAttempts.LoginAttemptsDaoImpl" >
 		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
-	
-	 
+
+
     <beans:bean id="customUserDetailsService" class="com.group10.dao.loginAttempts.CustomUserDetailsService">
 		<beans:property name="usersByUsernameQuery" value="select * from user_login where username = ?"/>
 		<beans:property name="authoritiesByUsernameQuery" value="select username, role from user_login where username =?" />
 		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
-	
+
 	<!-- Define the custom AUthentication bean -->
 	<beans:bean id = "myAuthentication" class = "com.group10.controllers.security.MyAuthentication">
-				<beans:property name = "userDetailsService" ref="customUserDetailsService"/>	
+				<beans:property name = "userDetailsService" ref="customUserDetailsService"/>
 			 	<beans:property name = "userDetails" ref="loginAttemptsDaoImpl"/>
-			 	<beans:property name = "passwordEncoder" ref="encoder"/>	 	
 	</beans:bean>
-		
-	<!-- call the custom Authentication for all the stored users -->
+
 	<authentication-manager>
 		<authentication-provider
 			ref = "myAuthentication"/>
