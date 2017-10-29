@@ -83,8 +83,7 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 				this.getJdbcTemplate().execute("DELETE FROM OTP WHERE email = '" + email + "'");
 			}
 			else {
-				String update = "UPDATE OTP SET hexValOTP = " + trueOTP 
-						+ "', attempts = " + (numGuesses + 1) + " WHERE email = '" + email
+				String update = "UPDATE OTP SET attempts = " + (numGuesses + 1) + " WHERE email = '" + email
 						+ "'";
 				this.getJdbcTemplate().update(update);
 			}
