@@ -18,7 +18,7 @@
 		}
 
 		#loginBox{
-			margin: 5% 5% 35% 30%;
+			margin: 5% 5% 35% 32%;
 		}
 
 		.hidden{
@@ -61,7 +61,7 @@
 	</div>	
 </div>
 
-<div class="container" id="loginBox">
+<!-- <div class="container" id="loginBox">
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
@@ -72,6 +72,21 @@
   				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 			  </form>
+
+			</div>
+
+
+		</div>
+	</div>
+</div> -->
+
+
+<div class="container" id="loginBox">
+	<div class="row">
+		<div class="col-lg-5">
+			<div class="jumbotron">
+			  <div ><strong><h4>Thanks for using our bank!</h4></strong></div>
+			  <a href="/BankingApp/login">Login again?</a>
 
 			</div>
 
