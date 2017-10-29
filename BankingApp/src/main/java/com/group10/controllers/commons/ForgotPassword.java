@@ -1,6 +1,8 @@
 package com.group10.controllers.commons;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group10.controllers.security.HandlerClass;
+import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
@@ -90,17 +93,20 @@ public class ForgotPassword {
 
 	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
 	public ModelAndView changePasswordSubmit(RedirectAttributes redir, HttpServletRequest request, @RequestParam("newPassword") String newPassword,@RequestParam("confirmpassword") String confirmPassword) {
-		//setGlobals(request); // TODO: LOG USER IN WHEN THEY SUBMIT CORRECT OTP
-		userID = 5;
-		username = "keverly1@asu.edu";
+		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView();
 		String username = (String)request.getSession().getAttribute("forgotpassemail");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
-
+		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl", EmpFunctionsDaoImpl.class);
+		int userID = edao.getUserIdByName(username);
+		String role = edao.getUserRoleByName(username);
 		Validator validator = new Validator();
 		if(newPassword.equals(confirmPassword) && validator.validatePassword(confirmPassword))
 		{
+	    	session.setAttribute("username", username);
+			session.setAttribute("userID", userID);
+			session.setAttribute("role", role);
 			String hashedPass = hash(newPassword);
 			udao.updatePassword(username, hashedPass);
 			model.setViewName("redirect:/login");

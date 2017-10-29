@@ -80,6 +80,12 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
+	public String getUserRoleByName(String email) {
+		// TODO Auto-generated method stub
+		String sql = "select role from users where email='"+email+"'";
+		return this.getJdbcTemplate().queryForObject(sql, String.class);
+	}
+	
 	public User getInternalUser(int employeeID) {
 		// TODO Auto-generated method stub
 		String sql = "select * from users where id="+employeeID+" and role in ('manager','regular','admin')";
