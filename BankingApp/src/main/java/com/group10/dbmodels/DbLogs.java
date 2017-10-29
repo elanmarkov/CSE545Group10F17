@@ -6,10 +6,10 @@ import java.sql.Timestamp;
 public class DbLogs {
 	private int userId;
 	private String activity;
-	private String details;
+	private String details; // msg + security timestamp + signature from TSA
 	private Timestamp stamp;
 	private String logtype;
-	
+
 	public String getActivity() {
 		return activity;
 	}
@@ -23,7 +23,7 @@ public class DbLogs {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	
+
 	public String getLogtype() {
 		return logtype;
 	}
@@ -42,6 +42,6 @@ public class DbLogs {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
-	
+
+
 }
