@@ -28,7 +28,7 @@ public class OTP {
 	public Timestamp getIssueTime() {
 		return issueTime;
 	}
-	public void setStamp(Timestamp issueTime) {
+	public void setIssueTime(Timestamp issueTime) {
 		this.issueTime = issueTime;
 	}
 
