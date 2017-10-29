@@ -34,7 +34,7 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 		String retVal = "Error!";
 		String checker = "SELECT * FROM user_login WHERE username = '" + email + "' LIMIT 1";
 		List<LoginAuthentication> matches = this.getJdbcTemplate().query(checker, new BeanPropertyRowMapper<LoginAuthentication>(LoginAuthentication.class));
-		if(matches.size() == 0 && email != "emarkov@asu.edu") {
+		if(matches.size() == 0) {
 			retVal = "No such user.";
 		}
 		else {
