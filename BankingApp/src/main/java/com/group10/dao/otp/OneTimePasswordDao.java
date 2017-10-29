@@ -61,7 +61,7 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 	public String validateOTP(String otp, String email) {
 		String retVal = "OTP not validated";
 		String trueOTP = "";
-		String OTPQuery = "SELECT * FROM otp WHERE email = '" + email + "' LIMIT 1";
+		String OTPQuery = "SELECT * FROM OTP WHERE email = '" + email + "' LIMIT 1";
 		List<OTP> matches = this.getJdbcTemplate().query(OTPQuery, new BeanPropertyRowMapper<OTP>(OTP.class));
 		if(matches.size()==0) return retVal;
 		trueOTP = matches.get(0).getHexValOTP();
@@ -72,7 +72,7 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 		int numGuesses = matches.get(0).getAttempts();
 		if(otp.equals(trueOTP) && numGuesses <= maxAttempts && timeDelay < maxTimeMS) {
 			retVal = "OTP validated";
-			this.getJdbcTemplate().execute("DELETE FROM otp WHERE email = '" + email + "'");
+			this.getJdbcTemplate().execute("DELETE FROM OTP WHERE email = '" + email + "'");
 		}
 		else {
 			if(numGuesses > maxAttempts) {
