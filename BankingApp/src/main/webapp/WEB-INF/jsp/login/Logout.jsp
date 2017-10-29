@@ -65,7 +65,7 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-			  <form name="logoutForm" action="/BankingApp/logout" method="post">
+			  <form name="logoutForm" action="/BankingApp/login/Logout" method="post">
 				  <div><h3><strong>Do you really want to log out?</strong></h3></div>
 				  <div class="radio"><label><input type="radio" name="yes">Yes</label></div>
 				  <div class="radio"><label><input type="radio" name="no">No</label></div>
