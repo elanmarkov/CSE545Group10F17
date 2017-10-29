@@ -11,14 +11,18 @@
 		.logo{
 		margin-bottom: 0px;
 		}
+
+
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
+
 		#loginBox{
 			margin: 5% 5% 35% 30%;
 		}
+
 		.hidden{
 			visibility: hidden;
 		}
@@ -86,9 +90,8 @@
 			  	  </div>
 
 			  	  <div>
-			  	  		<!-- <div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
+			  	  		 <div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
 			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true">
- -->
 			  	  		<br>
 			  	  		<div id = "errorBox" class="form-group"></div>
 			  	  		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
@@ -100,7 +103,7 @@
 
 			<br>
 
-			<a href="/BankingApp/login/ForgotPassword">Forgot your password?</a>
+			<a href="/BankingApp/login/forgotpassword">Forgot your password?</a>
 		</div>
 	</div>
 </div>
