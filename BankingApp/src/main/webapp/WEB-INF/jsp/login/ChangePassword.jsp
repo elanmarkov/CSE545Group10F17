@@ -18,7 +18,7 @@
 		}
 
 		#loginBox{
-			margin: 5% 5% 35% 35%;
+			margin: 5% 5% 35% 30%;
 		}
 
 		.hidden{
@@ -32,7 +32,7 @@
 		function checkPassword(){	
 		
 		var password=$('#newPassword').val();	
-		var filter = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{6,16}$/;
+		var filter = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{5,20}$/;
 		var confirm = $('#confirmPassword').val();
 		if(!(password === confirm))
 		{
@@ -65,20 +65,17 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			<h3>New Password</h3>
-			  <form action="changepassword" method="POST" id="submit">
+			  <form action="/BankingApp/login/ChangePassword" method="POST" id="submit">
 				  <div class="form-group">
 				    <label for="newPassword">Please Enter New Password</label>
-				    <input type="password" class="form-control" id="newPassword" placeholder="New Password" required>
+				    <input type="password" class="form-control" name="newpassword" placeholder="New Password" required>
 				  </div>
 
 				  <div>
 
 				  	<ul>
-				  		<li>The password must be between 6-16 characters long.</li>
-				  		<li>It must contain at least one number</li>
-				  		<li>It must contain at least one letter</li>
-				  		<li>It must contain one lower case and one upper case letter</li>
-				  		<li>It must contain at least one special character(!@#$%^&*)</li>
+				  		<li>Password length: 5 to 20</li>
+				  		<li>Rules: number, lower case letter, upper case letter and special character(@#$%^&+=)</li>
 				  	</ul>
 				  </div>
 
@@ -87,8 +84,8 @@
 				    <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" id ="confirmPassword" required>
 				    
 				  </div>
-
-				  <button type="submit" class="btn btn-default" onClick="checkPassword()" id="submit">Submit</button>
+				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				  <button type="submit" class="btn btn-default" onclick="checkPassword()">Submit</button>
 			  </form>
 			</div>
 		</div>

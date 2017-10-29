@@ -27,6 +27,8 @@
 	</style>
 
 
+	<link href="jquery.virtual_keyboard.css" rel="stylesheet">
+	<script src="jquery.virtual_keyboard.js"></script>
 </head>
 <body>
 
@@ -47,14 +49,14 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			
-			  <form action="verifyOTP">
+			  <form action="/BankingApp/login/OTPVerify" method="post">
 				  <div class="form-group">
 						<label>Please Enter OTP</label>
-						<input type="number" class="form-control" required>
+						<input type="text" id="virtualKeyboard" class="form-control" name="otp" required>
+						
 				  </div>
-
-
-				  <button type="submit" class="btn btn-default" onclick="location.href='ChangePassword.html';">Verify OTP</button>
+				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				  <button type="submit" class="btn btn-default">Verify OTP</button>
 			  </form>
 			</div>
 		</div>

@@ -4,20 +4,23 @@
 	<title>Forget Password</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-
+	
 	<style type="text/css">
 		.logo{
-
+	
 		margin-bottom: 0px;
 		}
+
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
+
 		#loginBox{
 			margin: 5% 5% 25% 30%;
 		}
+
 		.hidden{
 			visibility: hidden;
 		}
@@ -27,9 +30,9 @@
 </head>
 <body>
 
-	<script language="JavaScript" type="text/javascript">
+	<script language="JavaScript" type="text/javascript"> 
     function checkEmail(){
-    var userEmail = $('#recoveryEmail').val();
+    var userEmail = $('#recoveryEmail').val();  
     console.log(userEmail);
     var filter = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             if(!filter.test(userEmail))
@@ -44,7 +47,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">WELCOME TO GROUP10 BANK</h2>
-	</div>
+	</div>	
 </div>
 
 
@@ -52,14 +55,15 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-
-			  <form action="PasswordRecoveryEmail">
+			
+			  <form action="BankingApp/login/forgotpassword/verifyemail" method="post">
 				  <div class="form-group">
 				    <label for="recoveryEmail">Please Enter Email for Password Recovery</label>
-				    <input type="email" class="form-control" id="recoveryEmail" placeholder="Recovery Email" required>
+				    <input type="email" class="form-control" name="recoveryEmail" placeholder="Recovery Email" required>
 				  </div>
 
 				  <div id = "errorBox" class="form-group"></div>
+				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default" onclick="checkEmail()">Submit</button>
 			  </form>
 			</div>
