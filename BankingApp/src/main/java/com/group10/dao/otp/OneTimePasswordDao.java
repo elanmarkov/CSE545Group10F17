@@ -80,7 +80,7 @@ public class OneTimePasswordDao extends JdbcDaoSupport{
 			}
 			else if (timeDelay >= maxTimeMS) {
 				retVal = "OTP Expired. Please try again.";
-				this.getJdbcTemplate().execute("DELETE FROM otp WHERE email = '" + email + "'");
+				this.getJdbcTemplate().execute("DELETE FROM OTP WHERE email = '" + email + "'");
 			}
 			else {
 				String update = "UPDATE OTP SET hexValOTP = " + trueOTP + ", issueTime = '"
