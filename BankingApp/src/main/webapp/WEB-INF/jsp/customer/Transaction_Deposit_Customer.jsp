@@ -115,6 +115,7 @@
 					</div>
 
 					<div class="form-group">
+						<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 					 <button type="submit" class="btn btn-primary">Deposit</button>
 					</div>
 				</form>

@@ -4,10 +4,10 @@
 	<title>Change Password</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -27,11 +27,11 @@
 	</style>
 
 
-		
+
 		<script language="JavaScript" type="text/javascript">
-		function checkPassword(){	
-		
-		var password=$('#newPassword').val();	
+		function checkPassword(){
+
+		var password=$('#newPassword').val();
 		var filter = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{6,16}$/;
 		var confirm = $('#confirmPassword').val();
 		if(!(password === confirm))
@@ -39,13 +39,13 @@
 			alert("Password Mismatch");
 			return false;
 		}
-		if(!filter.test(password))
-		{
-			
-	    	alert("Please Enter a valid password");
-			return false;
-		}
-		
+		// if(!filter.test(password))
+		// {
+		//
+	  //   	alert("Please Enter a valid password");
+		// 	return false;
+		// }
+
 		}
 	</script>
 
@@ -57,7 +57,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">WELCOME TO SSGROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 <div class="container" id="loginBox">
@@ -65,10 +65,10 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			<h3>New Password</h3>
-			  <form action="changepassword" method="POST" id="submit">
+			  <form action="/BankingApp/changepassword" method="POST" id="submit">
 				  <div class="form-group">
 				    <label for="newPassword">Please Enter New Password</label>
-				    <input type="password" class="form-control" id="newPassword" placeholder="New Password" required>
+				    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password" required>
 				  </div>
 
 				  <div>
@@ -85,9 +85,9 @@
 				  <div class="form-group">
 				    <label for="confirmPassword">Please Confirm New Password</label>
 				    <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" id ="confirmPassword" required>
-				    
-				  </div>
 
+				  </div>
+					<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default" onClick="checkPassword()" id="submit">Submit</button>
 			  </form>
 			</div>

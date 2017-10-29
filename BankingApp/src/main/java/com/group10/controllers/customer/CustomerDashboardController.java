@@ -29,19 +29,22 @@ public class CustomerDashboardController {
 	    int userId = 1;
 	    SavingsAccount savings = sdao.savingsAccountDetails(userId);
 	    CheckingAccount checking = sdao.checkingAccountDetails(userId);
-	    //CreditAccount credit = sdao.creditAccountDetails(userId);
+	    CreditAccount credit = sdao.creditAccountDetails(userId);
 	    
 	    List<PendingTransaction> pendingSavings = sdao.pendingTransactions(savings.getAccountNumber());
 	    List<CompletedTransaction> completedSavings = sdao.completedTransactions(savings.getAccountNumber());
 	    List<PendingTransaction> pendingChecking = sdao.pendingTransactions(checking.getAccountNumber());
 	    List<CompletedTransaction> completedChecking = sdao.completedTransactions(checking.getAccountNumber());
-	    //List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());	   
+	    List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());
+	    List<CompletedTransaction> completedCredit = sdao.completedTransactions(credit.getAccountNumber());
 	    
 	    ModelAndView model = new ModelAndView("/customer/CustomerDashboard");
 	    model.addObject("pendingSavings", pendingSavings);
 	    model.addObject("completedSavings", completedSavings);
 	    model.addObject("pendingChecking", pendingChecking);
 	    model.addObject("completedChecking", completedChecking);
+	    model.addObject("pendingCredit", pendingCredit);
+	    model.addObject("completedCredit", completedCredit);
 	    
 		return model;		
 

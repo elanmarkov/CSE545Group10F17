@@ -41,7 +41,7 @@
 	 <bean id = "empFunctionsDaoImpl" class="com.group10.dao.employee.EmpFunctionsDaoImpl">
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
-
+	 
 	 <bean id = "customUserDetailsService" class="com.group10.dao.loginAttempts.CustomUserDetailsService">
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
@@ -49,7 +49,7 @@
 	 <bean id = "loginAttemptsDaoImpl" class="com.group10.dao.loginAttempts.LoginAttemptsDaoImpl">
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
-	 
+	
 	 <bean id = "externalTransactionDaoImpl" class="com.group10.dao.transaction.ExternalTransactionDaoImpl">
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
@@ -60,7 +60,10 @@
 	
 	<bean id = "externalRequestsDao" class="com.group10.dao.transaction.ExternalRequestsDao">
 	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>	 
+	 
+	 	<bean id = "OneTimePasswordDao" class="com.group10.dao.otp.OneTimePasswordDao">
+	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>
-
-
+	 
 </beans>

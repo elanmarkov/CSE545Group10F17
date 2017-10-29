@@ -53,14 +53,15 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 
-			  <form action="PasswordRecoveryEmail">
+			  <form action="/BankingApp/login/forgotpassword/verifyemail" method="post">
 				  <div class="form-group">
 				    <label for="recoveryEmail">Please Enter Email for Password Recovery</label>
-				    <input type="email" class="form-control" id="recoveryEmail" placeholder="Recovery Email" required>
+				    <input type="email" class="form-control" name="recoveryEmail" placeholder="Recovery Email" required>
 				  </div>
 
 				  <div id = "errorBox" class="form-group"></div>
-				  <button type="submit" class="btn btn-default" onclick="checkEmail()">Submit</button>
+				  <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+				  <button type="submit" class="btn btn-default">Submit</button>
 			  </form>
 			</div>
 		</div>

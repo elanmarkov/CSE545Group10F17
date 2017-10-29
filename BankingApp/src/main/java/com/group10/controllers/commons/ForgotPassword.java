@@ -40,7 +40,7 @@ public class ForgotPassword {
 
 	@RequestMapping("/login/forgotpassword")
 	public ModelAndView ForgotPass(){
-		return new ModelAndView("/login/ForgotPassword");
+		return new ModelAndView("/login/ForgetPassword");
 	}
 	@RequestMapping(value = "/login/forgotpassword/verifyemail", method = RequestMethod.POST)
 	public ModelAndView verifyEmail(HttpServletRequest request, @RequestParam("recoveryEmail") String email){
@@ -50,7 +50,7 @@ public class ForgotPassword {
 		String message = odao.checkEmailSendOTP(email);
 		if(message.equals("Exceeded otp limits. Account locked. Please contact bank staff.") ||
 				message.equals("No such user.") || message.equals("Error!")){
-			ModelAndView model = new ModelAndView("/login/Login");
+			ModelAndView model = new ModelAndView("redirect:/login/Login");
 			ctx.close();
 			return model;
 		}
@@ -85,8 +85,9 @@ public class ForgotPassword {
 		}
 	}
 
-	@RequestMapping(value = "/login/ChangePassword", method = RequestMethod.POST)
-	public ModelAndView changePassword(RedirectAttributes redir, HttpServletRequest request, @RequestParam("newpassword") String newPassword,@RequestParam("confirmpassword") String confirmPassword) {
+	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
+	public ModelAndView changePasswordSubmit(RedirectAttributes redir, HttpServletRequest request, @RequestParam("newPassword") String newPassword,@RequestParam("confirmpassword") String confirmPassword) {
+		setGlobals(request);
 		ModelAndView model = new ModelAndView();
 		String username = (String)request.getSession().getAttribute("forgotpassemail");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -100,7 +101,7 @@ public class ForgotPassword {
 		{
 			BCryptPasswordEncoder Encoder = new BCryptPasswordEncoder();
 			udao.updatePassword(Encoder.encode(newPassword), username);
-			model.setViewName("/login/Login");
+			model.setViewName("redirect:/login/Login");
 
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 			ldao.saveLogs("Forgot password : " + username, "passsword changed successfully",userID, "internal");
@@ -108,12 +109,17 @@ public class ForgotPassword {
 			return model;
 		}
 		else{
-			model.setViewName("/login/ForgotPassword");
+			model.setViewName("redirect:/login/ForgetPassword");
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 			ldao.saveLogs("Forgot password : " + username,"passsword change falied", userID, "internal");
 			redir.addFlashAttribute("exception_message","password validation failed, try again");
 			ctx.close();
 			return model;
 		}
+	}
+
+	@RequestMapping("/login/ChangePassword")
+	public ModelAndView changePassword() {
+		return new ModelAndView("/login/ChangePassword");
 	}
 }

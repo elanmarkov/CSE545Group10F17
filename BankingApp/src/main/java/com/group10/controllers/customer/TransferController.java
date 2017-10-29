@@ -2,6 +2,7 @@ package com.group10.controllers.customer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.group10.dbmodels.CreditAccount;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,18 +18,23 @@ import com.group10.dbmodels.SavingsAccount;
 
 @Controller
 public class TransferController {
-	
+
+	int userId = 1;
+
 	@RequestMapping("/customer/transferBetweenAccounts")
-	public ModelAndView loadTransferBetweenAccountsPage() {
+	public ModelAndView loadTransferBetweenAccountsPage(HttpServletRequest request) {
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
-		CheckingAccount checking = accountsDao.getCheckingAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
-		SavingsAccount savings = accountsDao.getSavingsAccount(1); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		CheckingAccount checking = accountsDao.getCheckingAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		SavingsAccount savings = accountsDao.getSavingsAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		CreditAccount credit = accountsDao.getCreditAccount(userId);
 		
 		ModelAndView model = new ModelAndView("/customer/FundsTransfer_between_accounts_Customer");
 		model.addObject("checking", checking);
 		model.addObject("savings", savings);
+		model.addObject("credit", credit);
+
 		return model;
 	}
 	
@@ -36,8 +42,7 @@ public class TransferController {
 	public ModelAndView submitTransferBetweenAccounts(HttpServletRequest request, @RequestParam("transferTo") String transferTo,
 			@RequestParam("transferFrom") String transferFrom, @RequestParam("transferAmount") double amount, RedirectAttributes redir) {
 		
-		int userId = 1;
-		
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
@@ -52,9 +57,7 @@ public class TransferController {
 	@RequestMapping("/transferfundsToOthersAccounts")
 	public ModelAndView submitTransferToOthers(HttpServletRequest request, @RequestParam("transferMode") String transferMode, @RequestParam("payeeInfo") String payeeInfo,
 			@RequestParam("transferFrom") String transferFrom, @RequestParam("transferAmount") double amount, RedirectAttributes redir) {
-		
-		int userId = 1;
-				
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		
@@ -71,18 +74,18 @@ public class TransferController {
 	}
 	
 	@RequestMapping("/customer/transferToOthers")
-	public ModelAndView loadTransferToOthersPage() {
-		
-		int userId = 1;
-		
+	public ModelAndView loadTransferToOthersPage(HttpServletRequest request) {
+
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		CustomerAccountsDao accountsDao = ctx.getBean("customerAccountDao",CustomerAccountsDao.class);
 		CheckingAccount checking = accountsDao.getCheckingAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
 		SavingsAccount savings = accountsDao.getSavingsAccount(userId); // TODO: MAKE THIS THE CURRENT USERID FROM SESSION
+		CreditAccount credit = accountsDao.getCreditAccount(userId);
 		
 		ModelAndView model = new ModelAndView("/customer/FundsTransfer_send_to_others_Customer");
 		model.addObject("checking", checking);
 		model.addObject("savings", savings);
+		model.addObject("credit", credit);
 		return model;
 	}
 }

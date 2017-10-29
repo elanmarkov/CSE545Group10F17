@@ -4,23 +4,20 @@
 	<title>OTP Verify</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
-
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
-
 		#loginBox{
 			margin: 5% 5% 25% 30%;
 		}
-
 		.hidden{
 			visibility: hidden;
 		}
@@ -34,7 +31,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">WELCOME TO GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 <div class="alert alert-warning hidden" id="errorBox">
@@ -46,14 +43,14 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="jumbotron">
-			
-			  <form action="verifyOTP">
+
+			  <form action="/BankingApp/login/OtpVerify" method="post">
 				  <div class="form-group">
 						<label>Please Enter OTP</label>
-						<input type="number" class="form-control" required>
+						<input type="text" name="otp" class="form-control" required>
 				  </div>
 
-
+					<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				  <button type="submit" class="btn btn-default" onclick="location.href='ChangePassword.html';">Verify OTP</button>
 			  </form>
 			</div>

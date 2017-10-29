@@ -25,6 +25,7 @@ import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.PII;
 import com.group10.dbmodels.User;
 import com.group10.dbmodels.PendingInternalRequests;
+import com.group10.dao.otp.OneTimePasswordDao;
 
 @Controller
 public class Admin {
@@ -128,9 +129,11 @@ public class Admin {
 		}
 		
 		if(isValidated){
-			UserRegistrationDaoImpl otpDao = ctx.getBean("otpDao", UserRegistrationDaoImpl.class);
+			OneTimePasswordDao otpDao = ctx.getBean("OneTimePasswordDao",OneTimePasswordDao.class);
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			
+
+			String pass = otpDao.checkEmailSendOTP(email);
+
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
 			String password = encoder.encode(rawPassword); 

@@ -29,7 +29,16 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 			return null;
 		}
 	}
-	
+
+	public CreditAccount getCreditAccount(int userID) {
+		String sql = "SELECT * FROM credit_accounts WHERE userID = " + userID;
+		try {
+			return  (CreditAccount)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(CreditAccount.class));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	// By Harsha
 		public boolean createSavingsAccount(int userId) {
 			String query = "select count(*) from savings_accounts where userId="+userId;

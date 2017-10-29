@@ -113,6 +113,7 @@
 		       								</select>
                                     		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 										</div>
+										<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
                                		</form>
 								</td>
 	                		</tr>

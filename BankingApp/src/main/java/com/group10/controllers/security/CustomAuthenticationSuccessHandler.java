@@ -48,12 +48,18 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		session.setAttribute("role", role);
 		arg1.setStatus(HttpServletResponse.SC_OK);
 
-    	if(role.equalsIgnoreCase("ROLE_ADMIN")) arg1.sendRedirect("/BankingApp/employee/AdminDashboard");
-    	else if(role.equalsIgnoreCase("ROLE_REGULAR")) arg1.sendRedirect("/BankingApp/employee/Tier1Dashboard");
-    	else if(role.equalsIgnoreCase("ROLE_MANAGER")) arg1.sendRedirect("/BankingApp/employee/Tier2Dashboard");
-    	else if(role.equalsIgnoreCase("ROLE_CUSTOMER")) arg1.sendRedirect("/BankingApp/customer/CustomerDashboard");
-    	else if(role.equalsIgnoreCase("ROLE_MERCHANT")) arg1.sendRedirect("/BankingApp/customer/Merchantdashboard");
-    	ctx.close();  
+		if (authUser.isEnabled()) {
+			if(role.equalsIgnoreCase("ROLE_ADMIN")) arg1.sendRedirect("/BankingApp/employee/AdminDashboard");
+			else if(role.equalsIgnoreCase("ROLE_REGULAR")) arg1.sendRedirect("/BankingApp/employee/Tier1Dashboard");
+			else if(role.equalsIgnoreCase("ROLE_MANAGER")) arg1.sendRedirect("/BankingApp/employee/Tier2Dashboard");
+			else if(role.equalsIgnoreCase("ROLE_CUSTOMER")) arg1.sendRedirect("/BankingApp/customer/dashboard");
+			else if(role.equalsIgnoreCase("ROLE_MERCHANT")) arg1.sendRedirect("/BankingApp/customer/dashboard");
+
+		} else {
+			arg1.sendRedirect("/BankingApp/login/ChangePassword");
+			ctx.close();
+		}
+
 	}
 /*
 //Verify captcha received during the login session
