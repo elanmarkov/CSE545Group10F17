@@ -38,4 +38,8 @@ public class LoginController {
 		return new ModelAndView("/login/Login");
 	}
 	
+	@RequestMapping(value = "/login/Logout", method =RequestMethod.POST)
+	public  ModelAndView Logout(HttpServletRequest request){
+		return new ModelAndView("/login/Logout");
+	}
 }

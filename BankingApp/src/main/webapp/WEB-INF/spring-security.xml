@@ -41,7 +41,7 @@
        <session-management invalid-session-url="/login" session-fixation-protection="newSession" >
 		   	<concurrency-control  max-sessions="1" error-if-maximum-exceeded="true" />
 		</session-management>
-		<logout logout-success-url="/login" delete-cookies="JSESSIONID" invalidate-session="true"/>
+		<logout logout-success-url="/login/Logout" delete-cookies="JSESSIONID" invalidate-session="true"/>
 	<csrf />
 	</http>
 	
