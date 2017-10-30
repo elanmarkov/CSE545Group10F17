@@ -33,7 +33,7 @@ public class CreateAccount {
 	@RequestMapping(value = "/employee/createAccounts", method= RequestMethod.POST)
 	public ModelAndView createAccounts(HttpServletRequest request, @RequestParam("username") String userEmail,@RequestParam("savings") String saving,@RequestParam("credit") String credit
 			, @RequestParam("checking") String checking, RedirectAttributes redir){
-//		try{
+		try{
 			ModelAndView model = new ModelAndView();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			CustomerAccountsDao cdao = ctx.getBean("customerAccountDao", CustomerAccountsDao.class);
@@ -67,8 +67,8 @@ public class CreateAccount {
 			ctx.close();
 			return model;
 			
-//		}catch(Exception e){
-//			throw new HandlerClass();
-//		}
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 	}
 }

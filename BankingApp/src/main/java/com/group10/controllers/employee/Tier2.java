@@ -5,6 +5,8 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.group10.controllers.security.CustomPasswordEncoder;
+import com.group10.dao.otp.OneTimePasswordDao;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,8 +62,8 @@ public class Tier2 {
 	}
 
 	@RequestMapping("/employee/externalreg")
-	public ModelAndView InternalRegister(@ModelAttribute("user") User newUser, RedirectAttributes redir){
-		try{
+	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser, RedirectAttributes redir){
+//		try{
 				ModelAndView model = new ModelAndView();
 
 		String name = newUser.getName();
@@ -100,18 +102,27 @@ public class Tier2 {
 		}
 
 		if(isValidated){
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			CustomPasswordEncoder encoder = new CustomPasswordEncoder();
 
+			//Create otp password
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
 			String password = encoder.encode(rawPassword);
-			udao.setInternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn);
+
+			//Set Info
+			udao.setExternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, email);
 			udao.setLoginDetails(email, password, role, email);
+			udao.setLoginAttempts(email, 0);
+
+			// Create OTP and send Email
+			ClassPathXmlApplicationContext ctx2 = new ClassPathXmlApplicationContext("DaoDetails.xml");
+			OneTimePasswordDao odao = ctx2.getBean("OneTimePasswordDao", OneTimePasswordDao.class);
+			String message = odao.checkEmailSendOTP(email);
 
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Successful",userID, "internal");
         	//redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-            model.setViewName("/employee/AdminDashboard");
+            model.setViewName("redirect:/employee/goHome");
 
 		}
 		else{
@@ -123,9 +134,9 @@ public class Tier2 {
 
 		return model;
 
-		}catch(Exception e){
-			throw new HandlerClass();
-		}
+//		}catch(Exception e){
+//			throw new HandlerClass();
+//		}
 	}
 
 
@@ -150,7 +161,7 @@ public class Tier2 {
 
 	@RequestMapping(value = "/tier2/pendingRequest", method =RequestMethod.POST)
 	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") int requestId, @RequestParam("requestDecision") String reqDecision,
-			@RequestParam("userId") int userId/*,RedirectAttributes redir*/){
+			@RequestParam("userId") int userId, RedirectAttributes redir){
 
 	//	try{
 			ModelAndView model = new ModelAndView();
@@ -355,7 +366,7 @@ public class Tier2 {
 	}
 
 	@RequestMapping(value = "/employee/tier2Modify", method =RequestMethod.POST)
-	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
+	public ModelAndView modifyRequests(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
 			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
 			 @RequestParam("id") int userId,RedirectAttributes redir){
 		//try{
@@ -386,20 +397,11 @@ public class Tier2 {
 		}
 	*/}
 
-//	@RequestMapping("/employee/createAccounts")
-//	public ModelAndView createUserAccounts(HttpServletRequest request, @RequestParam("username") String username,
-//										   @RequestParam("checking") String checking, @RequestParam("savings") String savings,
-//										   @RequestParam("credit") String credit){
-//
-//		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-//		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-//
-//		if (checking.equals("yes")){
-//			fdao.
-//		}
-//		ModelAndView model = new ModelAndView("redirect:/employee/createAccounts");
-//		return model;
-//	}
+	@RequestMapping("/employee/Tier2CreateUserAccounts")
+	public ModelAndView createAccount(){
+
+		return new ModelAndView("/employee/Tier2CreateUserAccounts");
+	}
 
 
 }

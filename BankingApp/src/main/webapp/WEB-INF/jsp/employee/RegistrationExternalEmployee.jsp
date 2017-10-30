@@ -73,7 +73,7 @@
 						        <select class="form-control" name="role" id="designation" required>
 						          <option value="">Please Select</option>
 						          <option value="ROLE_CUSTOMER">Customer</option>
-						          <option value="ROLE_MERCHANT">Manager</option>
+						          <option value="ROLE_MERCHANT">Merchant</option>
 						        </select>
 					</div>
 
@@ -92,6 +92,11 @@
 				    <label for="state">State</label>
 				    <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
 				  </div>
+
+					<div class="form-group">
+						<label for="country">Country</label>
+						<input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
+					</div>
 
 				  <div class="form-group">
 				    <label for="pincode">Zip Code</label>

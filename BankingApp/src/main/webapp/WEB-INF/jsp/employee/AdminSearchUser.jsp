@@ -3,12 +3,12 @@
 	<head>
 		<title>Admin Search</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		
+
 		<style type="text/css">
 			.logo{
-		
+
 			margin-bottom: 0px;
-			} 
+			}
 			#title{
 				margin: auto;
 				text-align: center;
@@ -29,7 +29,7 @@
 	<div class="jumbotron logo">
 		<div class="container">
 		  <h2 id="title">GROUP10 BANK</h2>
-		</div>	
+		</div>
 	</div>
 
 
@@ -51,9 +51,9 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/AdminProfile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -75,7 +75,7 @@
 	       		<button type="submit" class="btn btn-sm btn-primary">Search Employee</button>
 	        </form>
 			<br>
-			
+
 			  <table class="table table-hover">
 			    <thead>
 			      <tr>
@@ -117,13 +117,13 @@
                 		</c:otherwise>
                 	</c:choose>
 
-			    			      
+
 			    </tbody>
 			  </table>
-		
 
-	<br><br>	
-	
+
+	<br><br>
+
 	</div>
 
 

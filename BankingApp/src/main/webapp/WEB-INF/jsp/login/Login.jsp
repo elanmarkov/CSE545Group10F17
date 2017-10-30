@@ -89,8 +89,8 @@
 			    	</select>
 			  	  </div>
  -->
-			  	  		 <div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
-			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true">
+			  	  		 <%-- <div class="g-recaptcha" data-sitekey="6Lf84DQUAAAAAIbAPRxbmk2OiIfoYcKYZQ0TUU0H"></div>
+			  	  		        <input type="hidden" name="recaptcha" data-rule-recaptcha="true"> --%>
 			  	  		<br>
 			  	  		<div id = "errorBox" class="form-group"></div>
 			  	  		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>

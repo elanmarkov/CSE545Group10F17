@@ -22,13 +22,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import com.group10.dao.employee.EmpFunctionsDaoImpl;
 
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationFailureHandler implements AuthenticationSuccessHandler {
 
 	public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1, Authentication arg2)
 			throws IOException, ServletException {
@@ -39,7 +41,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String role_raw = arg2.getAuthorities().toString();
         String role = role_raw.substring(1, role_raw.length() -1 );
         EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl", EmpFunctionsDaoImpl.class);
-		
+
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = authUser.getUsername();
     	int userID = edao.getUserIdByName(username);
@@ -61,6 +63,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		}
 
 	}
+
+//	@Override
+//	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException  {
+//		response.sendRedirect("/BankingApp/login/ChangePassword");
+//	}
 /*
 //Verify captcha received during the login session
 public boolean verify(String captcha) throws IOException{

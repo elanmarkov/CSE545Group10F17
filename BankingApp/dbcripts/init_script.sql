@@ -155,8 +155,9 @@ CREATE TABLE completed_external_requests (
 CREATE TABLE accNumToTableRel (
   id int NOT NULL AUTO_INCREMENT,
   accountNumber varchar(255) NOT NULL,
-  table varchar(255) NOT NULL,
-  userId int NOT NULL
+  `table` varchar(255) NOT NULL,
+  userId int NOT NULL,
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE credit_accounts (

@@ -257,7 +257,7 @@ public class Admin {
 	}
 
 
-	@RequestMapping(value = "/admin/showAccountDetails", method =RequestMethod.POST)
+	@RequestMapping(value = "/employee/AdminUserDetails", method =RequestMethod.POST)
 	public ModelAndView showAccountDetails(HttpServletRequest request, @RequestParam("employeeID") int employeeID, RedirectAttributes redir){
 
 		try{
@@ -319,6 +319,26 @@ public class Admin {
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
+	}
+
+	@RequestMapping("/employee/AdminProfile")
+	public ModelAndView AdminProfilePage(HttpServletRequest request){
+
+		userID = (Integer) request.getSession().getAttribute("userID");
+
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+		ModelAndView model = new ModelAndView();
+
+		ldao.saveLogs("account accessed for user", ""+userID, userID, "Admin");
+		User user = fdao.getUser(userID);
+		model.addObject("user",user);
+		PII pii = fdao.getUserPII(userID);
+		model.addObject("pii", pii);
+		//redir.addFlashAttribute("error_msg","Employee Found");
+		model.setViewName("/employee/AdminUserDetails");
+		return model;
 	}
 
 	@RequestMapping(value = "/employee/AdminModify", method =RequestMethod.POST)

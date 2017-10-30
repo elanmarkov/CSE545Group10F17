@@ -33,7 +33,7 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport
 		int userId = this.getJdbcTemplate().queryForObject("select id from users where email='"+email+"'", Integer.class);
 		
 		String sql = "insert into user_login(username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked)  values(?,?,?,?,?,?,?,?)";
-		this.getJdbcTemplate().update(sql, new Object[]{username, password, 1, role, 1,1,1,1});	
+		this.getJdbcTemplate().update(sql, new Object[]{username, password, 1, role, 1,1,1,1});
 	}
 	
 	public void setLoginAttempts(String email, int attempts){
@@ -43,17 +43,21 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport
 		this.getJdbcTemplate().update(sql, new Object[]{email, attempts});	
 	}
 	
-	public void setExternalUser(String name,String designation, String address, String city, String state, String country, String pincode, String phone, String email, String dob, String ssn, String username){
+	public void setExternalUser(String name,String role, String address, String city, String state, String country, String zipcode, String phone, String email, String dob, String ssn, String username){
 		String sql = "insert into users (name, role, address, city, state, country, zipcode, phone, email) values(?,?,?,?,?,?,?,?,?)";
-		this.getJdbcTemplate().update(sql, new Object[]{name, designation, address, city, state, country, pincode, phone, email});
+		this.getJdbcTemplate().update(sql, new Object[]{name, role, address, city, state, country, zipcode, phone, email});
 
 		int userId = this.getJdbcTemplate().queryForObject("select id from users where email='"+email+"'", Integer.class);
 		String sql2 = "insert into pii_info (userId, dob, ssn) values(?,?,?)";
 		this.getJdbcTemplate().update(sql2, new Object[]{userId, dob,ssn});
+
 	}
 	
 	public void updatePassword(String username,  String newPassword){
 		String sql = "update user_login set password = '" + newPassword + "' where username='"+ username+"'";
+		this.getJdbcTemplate().update(sql);
+
+		String sql2 = "UPDATE user_login SET enabled = 1 WHERE username = '"+username+"'";
 		this.getJdbcTemplate().update(sql);
 	}
 	

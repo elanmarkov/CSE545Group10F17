@@ -52,6 +52,20 @@ public class Employee {
 		return null;
 	}
 	
-	
+	@RequestMapping("/employee/goHome")
+	public ModelAndView goHome(HttpServletRequest request) {
+
+		String role = (String) request.getSession().getAttribute("role");
+
+		if (role.equals("ROLE_ADMIN")) {
+			return new ModelAndView(("redirect:/employee/AdminDashboard"));
+		} else if (role.equals("ROLE_MANAGER")) {
+			return new ModelAndView("redirect:/employee/Tier2Dashboard");
+		} else if (role.equals("ROLE_REGULAR")) {
+			return new ModelAndView("redirect:/employee/Tier1Dashboard");
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
 	
 }

@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 
 
+import com.group10.dbmodels.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,6 @@ import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.logs.LogsDaoImpl;
-import com.group10.dbmodels.DbLogs;
-import com.group10.dbmodels.User;
-import com.group10.dbmodels.PII;
-import com.group10.dbmodels.PendingInternalRequests;
 
 
 @Controller
@@ -62,7 +59,7 @@ public class Tier1 {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		ModelAndView model = new ModelAndView();
-		List<PendingInternalRequests> pending_list = edao.getAdminPendingRequests();
+		List<PendingAccountChangeRequests> pending_list = edao.getExternalPendingRequests();
 		model.addObject("pending_list", pending_list);
 		model.setViewName("/employee/Tier1PendingRequest");
 		ctx.close();
@@ -166,7 +163,7 @@ public class Tier1 {
 		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 		ModelAndView model = new ModelAndView();
-		userID = (Integer)request.getSession().getAttribute("UserID");
+		setGlobals(request);
 		ldao.saveLogs("modified for profile user", ""+userID, userID, "internal");
 		User user = fdao.getUser(userID);
 		model.addObject("user",user);
@@ -204,6 +201,38 @@ public class Tier1 {
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
+	}
+
+	@RequestMapping(value = "/tier1/pendingRequest", method =RequestMethod.POST)
+	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") int requestId, @RequestParam("requestDecision") String reqDecision,
+										@RequestParam("userId") int userId, RedirectAttributes redir){
+
+		//	try{
+		ModelAndView model = new ModelAndView();
+
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+		ldao.saveLogs("Account change request", reqDecision, userId, "external");
+
+		if(reqDecision.equals("approve"))
+			fdao.approveTier2Request(requestId);
+		else
+			fdao.deleteTier2Request(requestId);
+		//	redir.addFlashAttribute("error_msg","Request"+reqDecision);
+		model.setViewName("/employee/Tier2PendingRequest");
+		ctx.close();
+		return model;
+/*
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+*/	}
+
+	@RequestMapping("/employee/Tier1CreateUserAccounts")
+	public ModelAndView createAccount(){
+
+		return new ModelAndView("/employee/Tier1CreateUserAccounts");
 	}
 	
 }

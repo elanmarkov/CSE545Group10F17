@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>Tier 2 Pending Request Management</title>
@@ -7,20 +7,16 @@
 
 	<style type="text/css">
 		.logo{
-
 		margin-bottom: 0px;
 		}
-
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
-
 		#loginBox{
 			margin: 5% 5% 10% 8%;
 		}
-
 		.hidden{
 			visibility: hidden;
 		}
@@ -41,21 +37,11 @@
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="/BankingApp/employee/Tier2Dashboard">Home</a></li>
-        	<!-- <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
-	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
-	          </ul>
-        	</li>
-
-        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
-		</ul> -->
 
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 
 		</ul>
 	</div>
@@ -66,51 +52,42 @@
 		<div class="col-lg-16">
 			<div class="jumbotron">
 			<h3><strong>Pending Request Management ${amount}</strong></h3>
-				  <table class="table table-hover">
+				 <table class="table table-hover">
 					    <thead>
 					      <tr>
-					        <th>Transaction ID</th>
-					        <th>Initiator ID</th>
-					        <th>Payer</th>
-					        <th>Payee</th>
-					        <th>Transaction Amount</th>
-					        <th>Description</th>
+					        <th>Request ID</th>
+					        <th>Internal User ID</th>
+					        <th>Request Type</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-                        	<c:choose>
-
+        				<c:choose>
 					    	<c:when test="${empty pending_list}">
                         			<tr>
-                                    	<td colspan="7">No Pending Transaction</td>
+                                    	<td colspan="7">No Pending Request</td>
                                 	</tr>
                             </c:when>
                             <c:otherwise>
-                        			<c:forEach items="${pending_list}" var="transaction">
+                        			<c:forEach items="${pending_list}" var="request">
                         					<tr>
-                                    		<td>${transaction.id}</td>
-                                    		<td>${transaction.initiatorID}</td>
-											<td>${transaction.fromAccountID}</td>
-											<td>${transaction.toAccountID}</td>
-											<td>${transaction.amount}</td>
-											<td>${transaction.description}</td>
+                                    		<td>${request.id}</td>
+                                    		<td>${request.userId}</td>
 											<td>
 												<form action = "/BankingApp/tier2/pendingRequest" method = "post">
-		                                    	<input type="hidden" name="requestID" value="${transaction.id}">
+		                                    		<input type="hidden" name="requestID" value="${request.id}">
+ 		                                    		<input type="hidden" name="userId" value="${request.userId}">
+
 		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
 				          								<option value="approve">Approve</option>
 				          								<option value="reject">Reject</option>
 				       								</select>
-				       								 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
+															<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		                                    		<button type="submit" class="btn btn-xs btn-default">Submit</button>
-
 		                                   		</form>
 											</td>
                                 		</tr>
-
                             		</c:forEach>
                         		</c:otherwise>
                         	</c:choose>

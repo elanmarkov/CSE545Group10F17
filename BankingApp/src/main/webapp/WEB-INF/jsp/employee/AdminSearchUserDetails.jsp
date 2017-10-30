@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 	<title>My Profile</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style  type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 		#title{
@@ -21,8 +21,8 @@
 		.hidden{
 			visibility: hidden;
 		}
-		
-		
+
+
 	</style>
 
 
@@ -32,7 +32,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 
@@ -53,9 +53,9 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/AdminProfile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -66,7 +66,7 @@
 		<div class="col-lg-14">
 			<div class="jumbotron">
 			<h3><strong>User Details</strong></h3>
-			
+
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -78,7 +78,7 @@
 						      <th>Address</th>
 					      </tr>
 					    </thead>
-					    
+
 					      <tbody>
         					<tr>
 	                    		<td>${user.id}</td>
@@ -100,7 +100,7 @@
 	<div class="row">
 		<div class="col-lg-14">
 			<div class="jumbotron">
-			<h3><strong>PII Information</strong></h3>			
+			<h3><strong>PII Information</strong></h3>
 				<table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -108,18 +108,18 @@
                                <th>Date of Birth</th>
 					      </tr>
 					    </thead>
-					    
+
 					      <tbody>
         					<tr>
 	                    		<td>${pii.ssn}</td>
                     			<td>${pii.dob}</td>
-								
+
 	                		</tr>
-                        				
+
 	                </tbody>
 				  </table>
-			
-			
+
+
 
 			</div>
 		</div>
@@ -129,7 +129,7 @@
 
 <div class="modal fade" id="modifyaccount" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -140,7 +140,7 @@
           <form action="/BankingApp/employee/adminModify" method="POST">
 				  	  <div class="form-group">
 					    <input type="hidden" class="form-control" id="id" name="id" value="${user.id}" required>
-					  </div>	
+					  </div>
 
 					  <div class="form-group">
 					    <label for="address">Address</label>
@@ -166,12 +166,12 @@
 					    <label for="country">Country</label>
 					    <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
 					  </div>
-					  
+
 					  <div class="form-group">
 					    <label for="phone">Phone Number</label>
 					    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
 					  </div>
-					  
+
 						<div id = "errorBox" class="form-group"></div>
 					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
@@ -185,7 +185,7 @@
 			<button type="button" class="btn btn-default" data-dismiss="modal" style="float:right">Close</button>
         </div>
       </div>
-      
+
     </div>
 
 </div>
@@ -211,7 +211,7 @@
         }
         ;
     }
-</script> 
+</script>
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

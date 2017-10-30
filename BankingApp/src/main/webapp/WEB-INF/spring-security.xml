@@ -37,6 +37,7 @@
 	        username-parameter="username"
             password-parameter="password"
 	        authentication-success-handler-ref="customAuthenticationSuccessHandler"
+			authentication-failure-handler-ref="customAuthenticationSuccessHandler"
 	        ></form-login>
        <session-management invalid-session-url="/login" session-fixation-protection="newSession" >
 		   	<concurrency-control  max-sessions="1" error-if-maximum-exceeded="true" />

@@ -3,11 +3,11 @@
 <head>
 	<title>Admin Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	
+
 	<style type="text/css">
 		.logo{
-	
-		margin-bottom: 0px; 
+
+		margin-bottom: 0px;
 		}
 
 		#title{
@@ -33,14 +33,14 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+			<li><a href="/BankingApp/employee/AdminProfile">Home</a></li>
         	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
@@ -56,7 +56,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -116,7 +116,7 @@
                                 		</tr>
                             		</c:forEach>
                         		</c:otherwise>
-                        	</c:choose>			      
+                        	</c:choose>
 					    </tbody>
 					  </table>
 			  </form>
