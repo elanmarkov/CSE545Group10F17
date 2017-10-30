@@ -93,9 +93,6 @@ public class ForgotPassword {
 
 	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
 	public ModelAndView changePasswordSubmit(RedirectAttributes redir, HttpServletRequest request, @RequestParam("newPassword") String newPassword,@RequestParam("confirmpassword") String confirmPassword) {
-		//setGlobals(request); // TODO: LOG USER IN WHEN THEY SUBMIT CORRECT OTP
-		userID = 5;
-		username = "keverly1@asu.edu";
 
 		HttpSession session = request.getSession();
 
@@ -105,8 +102,8 @@ public class ForgotPassword {
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
 
 		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl", EmpFunctionsDaoImpl.class);
-		int userID = edao.getUserIdByName(username);
-		String role = edao.getUserRoleByName(username);
+		userID = edao.getUserIdByName(username);
+		role = edao.getUserRoleByName(username);
 
 		Validator validator = new Validator();
 		if(newPassword.equals(confirmPassword) && validator.validatePassword(confirmPassword))

@@ -188,10 +188,6 @@ public class Tier1 {
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 			userID = (Integer)request.getSession().getAttribute("UserID");
-
-			/*  write the dao code for admin modify
-	         * 
-	        */ 
 			
 			fdao.generateInternalRequest(address, city, state, zipcode, country, phone, userID);	
 			redir.addFlashAttribute("error_msg","Generated request for account modification for "+userID);

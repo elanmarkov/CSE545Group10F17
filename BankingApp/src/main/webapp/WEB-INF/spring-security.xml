@@ -76,6 +76,11 @@
 				<beans:property name = "userDetailsService" ref="customUserDetailsService"/>	
 			 	<beans:property name = "userDetails" ref="loginAttemptsDaoImpl"/>
 	</beans:bean>
+
+	<bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="yourJdbcUserService" />
+		<property name="passwordEncoder" ref="encoder" />
+	</bean>
 	
 	<authentication-manager>
 		<authentication-provider
