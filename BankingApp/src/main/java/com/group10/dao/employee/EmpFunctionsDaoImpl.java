@@ -80,48 +80,66 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class);
 	}
 
+	public String getUserRoleByName(String email) {
+		// TODO Auto-generated method stub
+		String sql = "select role from users where email='"+email+"'";
+		return this.getJdbcTemplate().queryForObject(sql, String.class);
+	}
+
 	public User getInternalUser(int employeeID) {
 		// TODO Auto-generated method stub
-		String sql = "select * from users where id="+employeeID+" and role in ('manager','regular','admin')";
+		String sql = "select * from users where id="+employeeID+" and role in ('ROLE_MANAGER','ROLE_REGULAR','ROLE_ADMIN')";
+		return (User)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
+	}
+
+	public User getInternalUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		String sql = "select * from users where email='"+email+"' and role in ('ROLE_MANAGER','ROLE_REGULAR','ROLE_ADMIN')";
 		return (User)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
 	}
 	
 	public User getExternalUser(int customerId) {
 		// TODO Auto-generated method stub
-		String sql = "select * from users where id="+customerId+" and role in ('customer','merchant')";
+		String sql = "select * from users where id="+customerId+" and role in ('ROLE_CUSTOMER','ROLE_MERCHANT')";
 		return (User)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
 	}
 
 	public void deleteExternalUser(int customerId) {
-		String sql = "delete from users where id="+customerId+" and role in ('customer','merchant')";
+		String sql = "delete from users where id="+customerId+" and role in ('ROLE_CUSTOMER','ROLE_MERCHANT')";
 		this.getJdbcTemplate().update(sql);	
 	}
 	
 	public void deleteInternalUser(int employeeID) {
-		String sql = "delete from users where id="+employeeID+" and role in ('admin','manager','regular')";
+		String sql = "delete from users where id="+employeeID+" and role in ('ROLE_ADMIN','ROLE_MANAGER','ROLE_REGULAR')";
 		this.getJdbcTemplate().update(sql);	
 	}
 
 	public boolean existExternalUser(int customerID) {
 		// TODO Auto-generated method stub
-				String sql = "select count(*) from users where id="+customerID+ " and role in ('customer','merchant')";
+				String sql = "select count(*) from users where id="+customerID+ " and role in ('ROLE_CUSTOMER','ROLE_MERCHANT')";
 				return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;	
 	}
 	public boolean existInternalUser(int employeeID) {
 		// TODO Auto-generated method stub
-				String sql = "select count(*) from users where id="+employeeID+" and role in ('admin','manager','regular')";
+				String sql = "select count(*) from users where id="+employeeID+" and role in ('ROLE_ADMIN','ROLE_MANAGER','ROLE_REGULAR')";
 				return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;	
+	}
+
+	public boolean existInternalUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		String sql = "select count(*) from users where email='"+email+"' and role in ('ROLE_ADMIN','ROLE_MANAGER','ROLE_REGULAR')";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
 	}
 
 	public boolean existTier1User(int employeeID) {
 		// TODO Auto-generated method stub
-		String sql = "select count(*) from users where id="+employeeID+" and role='regular";
+		String sql = "select count(*) from users where id="+employeeID+" and role='ROLE_REGULAR";
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;		
 		}
 
 	public User getTier1User(int employeeID) {
 		// TODO Auto-generated method stub
-		String sql = "select * from users where id="+employeeID+" and role ='regular'";
+		String sql = "select * from users where id="+employeeID+" and role ='ROLE_REGULAR'";
 		return (User)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
 
 	}

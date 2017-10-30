@@ -21,6 +21,9 @@ import com.group10.dao.employee.Validator;
 import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dao.otp.OneTimePasswordDao;
 import com.group10.dbmodels.DbLogs;
+import com.group10.dao.employee.EmpFunctionsDaoImpl;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ForgotPassword {
@@ -93,14 +96,24 @@ public class ForgotPassword {
 		//setGlobals(request); // TODO: LOG USER IN WHEN THEY SUBMIT CORRECT OTP
 		userID = 5;
 		username = "keverly1@asu.edu";
+
+		HttpSession session = request.getSession();
+
 		ModelAndView model = new ModelAndView();
 		String username = (String)request.getSession().getAttribute("forgotpassemail");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
 
+		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl", EmpFunctionsDaoImpl.class);
+		int userID = edao.getUserIdByName(username);
+		String role = edao.getUserRoleByName(username);
+
 		Validator validator = new Validator();
 		if(newPassword.equals(confirmPassword) && validator.validatePassword(confirmPassword))
 		{
+			session.setAttribute("username", username);
+			session.setAttribute("userID", userID);
+			session.setAttribute("role", role);
 			String hashedPass = hash(newPassword);
 			udao.updatePassword(username, hashedPass);
 			model.setViewName("redirect:/login");

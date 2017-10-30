@@ -222,7 +222,7 @@ public class Admin {
 
 
 	@RequestMapping(value = "/admin/searchInternalUser", method =RequestMethod.POST)
-	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID/*, RedirectAttributes redir*/){
+	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeEmail/*, RedirectAttributes redir*/){
 //		try{
 
 			ModelAndView model =new ModelAndView();
@@ -234,10 +234,10 @@ public class Admin {
         /*
          * write the dao code for admin approval
          */
-			if(fdao.existInteralUser(employeeID))
+			if(fdao.existInternalUserByEmail(employeeEmail))
 			{
-				ldao.saveLogs("searched for internal user", ""+employeeID, userID, "internal");
-				User employeeObj = fdao.getUser(employeeID);
+				ldao.saveLogs("searched for internal user", ""+employeeEmail, userID, "internal");
+				User employeeObj = fdao.getInternalUserByEmail(employeeEmail);
 				model.addObject("user",employeeObj);
 				//redir.addFlashAttribute("error_msg","Employee Found");
 				model.setViewName("/employee/AdminSearchUser");

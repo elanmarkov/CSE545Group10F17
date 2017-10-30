@@ -30,6 +30,7 @@ public class CustomerDashboardController {
 
 		userId = (Integer) request.getSession().getAttribute("userID");
 
+		ModelAndView model = new ModelAndView("/customer/CustomerDashboard");
 
  		ApplicationContext  ctx = new ClassPathXmlApplicationContext("DaoDetails.xml"); 
 	    CustomerDashboardDaoImpl sdao = ctx.getBean("customerDashboardDaoImpl" , CustomerDashboardDaoImpl.class);
@@ -40,31 +41,41 @@ public class CustomerDashboardController {
 	    SavingsAccount savings = sdao.savingsAccountDetails(userId);
 	    CheckingAccount checking = sdao.checkingAccountDetails(userId);
 	    CreditAccount credit = sdao.creditAccountDetails(userId);
-	    
-	    List<PendingTransaction> pendingSavings = sdao.pendingTransactions(savings.getAccountNumber());
-	    List<CompletedTransaction> completedSavings = sdao.completedTransactions(savings.getAccountNumber());
-	    List<PendingTransaction> pendingChecking = sdao.pendingTransactions(checking.getAccountNumber());
-	    List<CompletedTransaction> completedChecking = sdao.completedTransactions(checking.getAccountNumber());
-	    List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());
-	    List<CompletedTransaction> completedCredit = sdao.completedTransactions(credit.getAccountNumber());
 
-	    try {
-			DownloadTransactions.createFile(completedSavings, savingsStatement);
-			DownloadTransactions.createFile(completedChecking, checkingStatement);
-		} catch (IOException e) {
+		model.addObject("savings", savings);
+		model.addObject("checking", checking);
+		model.addObject("credit", credit);
 
+	    if (savings != null ) {
+			List<PendingTransaction> pendingSavings = sdao.pendingTransactions(savings.getAccountNumber());
+			List<CompletedTransaction> completedSavings = sdao.completedTransactions(savings.getAccountNumber());
+			model.addObject("pendingSavings", pendingSavings);
+			model.addObject("completedSavings", completedSavings);
+			try {
+				DownloadTransactions.createFile(completedSavings, savingsStatement);
+			} catch (IOException e) {
+
+			}
+		}
+		if (checking != null) {
+			List<PendingTransaction> pendingChecking = sdao.pendingTransactions(checking.getAccountNumber());
+			List<CompletedTransaction> completedChecking = sdao.completedTransactions(checking.getAccountNumber());
+			model.addObject("pendingChecking", pendingChecking);
+			model.addObject("completedChecking", completedChecking);
+			try {
+				DownloadTransactions.createFile(completedChecking, checkingStatement);
+			} catch (IOException e) {
+
+			}
+		}
+		if (credit != null) {
+			List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());
+			List<CompletedTransaction> completedCredit = sdao.completedTransactions(credit.getAccountNumber());
+			model.addObject("pendingCredit", pendingCredit);
+			model.addObject("completedCredit", completedCredit);
 		}
 
-	    ModelAndView model = new ModelAndView("/customer/CustomerDashboard");
-	    model.addObject("savings", savings);
-	    model.addObject("checking", checking);
-	    model.addObject("credit", credit);
-	    model.addObject("pendingSavings", pendingSavings);
-	    model.addObject("completedSavings", completedSavings);
-	    model.addObject("pendingChecking", pendingChecking);
-	    model.addObject("completedChecking", completedChecking);
-	    model.addObject("pendingCredit", pendingCredit);
-	    model.addObject("completedCredit", completedCredit);
+
 	    
 		return model;		
 

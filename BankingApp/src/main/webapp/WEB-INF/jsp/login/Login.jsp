@@ -51,7 +51,7 @@
 		  }
 		}
 	</script>
- 
+
 
 </head>
 <body>
@@ -69,8 +69,8 @@
 			<div class="jumbotron">
 			  <form name="myForm" action="<c:url value='j_spring_security_check' />" method="post">
 				  <div class="form-group">
-				    <label for="username">Username</label>
-				    <input type="email" class="form-control" id="userEmail" name="username" placeholder="Username" required>
+				    <label for="username">Email</label>
+				    <input type="email" class="form-control" id="userEmail" name="username" placeholder="Email" required>
 				  </div>
 
 				  <div class="form-group">
