@@ -143,7 +143,7 @@
 									</tbody>
 									</table>
 
-							<a href="/BankingApp/customer/downloadStatements"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
+							<a href="/BankingApp/customer/downloadCheckings"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
 						</div>
 				</div>
 
@@ -207,7 +207,7 @@
 									</tbody>
 									</table>
 
-							<a href="/BankingApp/customer/downloadStatements"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
+							<a href="/BankingApp/customer/downloadSavings"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
 		</div>
 	</div>
 
@@ -273,7 +273,7 @@
 									</tbody>
 									</table>
 
-							<a href="/BankingApp/customer/downloadStatements"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
+							<a href="/BankingApp/customer/downloadCredit"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
 		</div>
 	</div>
 
