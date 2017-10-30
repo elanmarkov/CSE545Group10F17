@@ -79,6 +79,7 @@
 						    <thead>
 						      <tr>
 						        <th>Employee ID</th>
+						        <th>Employee Name</th>
 						        <th>Employee Email</th>
 						        <th>Action</th>
 						      </tr>
@@ -94,6 +95,7 @@
 	                        		<c:otherwise>
                                 		<tr>
                                 			<td>${employeeObj.id}</td>
+                                			<td>${employeeObj.name}</td>
                                 			<td>${employeeObj.email}</td>
                                 			<td>
                                 				<form action = "/BankingApp/tier2/showInternalAccount" method = "post" style="display:inline">
@@ -134,6 +136,7 @@
 	                        <thead>
 	                            <tr>
 	                                <th>Customer ID</th>
+	                                <th>Customer Name</th>
 	                                <th>Customer Email</th>
 	                                <th>Action</th>
 	                            </tr>
@@ -149,6 +152,7 @@
 	                        		<c:otherwise>
                                 		<tr>
                                 			<td>${customerObj.id}</td>
+                                			<td>${customerObj.name}</td>
                                 			<td>${customerObj.email}</td>
                                 			<td>
                                 				<form action = "/BankingApp/tier2/showExternalAccount" method = "post" style="display:inline">

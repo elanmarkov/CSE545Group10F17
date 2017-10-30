@@ -138,7 +138,10 @@
         </div>
         <div class="modal-body">
           <form action="/BankingApp/employee/adminModify" method="POST">
-				  		
+				  	  <div class="form-group">
+					    <input type="hidden" class="form-control" id="id" name="id" value="${user.id}" required>
+					  </div>	
+
 					  <div class="form-group">
 					    <label for="address">Address</label>
 					    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>

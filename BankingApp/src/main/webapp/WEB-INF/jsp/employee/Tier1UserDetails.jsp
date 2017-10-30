@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-	<title>My Profile</title>
+	<title>Tier 1 User Details</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 	
@@ -54,7 +54,7 @@
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
@@ -72,7 +72,7 @@
 					      <tr>
 					          <th>User ID</th>
 						      <th>Name</th>
-						      <th>Designation</th>
+						      <th>Role</th>
 						      <th>Email</th>
 						      <th>Phone</th>
 						      <th>Address</th>
@@ -83,7 +83,7 @@
         					<tr>
 	                    		<td>${user.id}</td>
                     			<td>${user.name}</td>
-                    			<td>${user.designation}</td>
+                    			<td>${user.role}</td>
                     			<td>${user.email}</td>
                     			<td>${user.phone}</td>
                     			<td>${user.address}</td>
@@ -93,13 +93,13 @@
 				<a href="#modifyaccount" class="btn btn-default"  data-toggle="modal">Modify Account</a>
 				<!-- <a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a> -->
 
-				<a href="/BankingApp/login/ChangePassword" class="btn btn-default">Change Password</a>
+				<!-- <a href="/BankingApp/login/ChangePassword" class="btn btn-default">Change Password</a> -->
 
 			</div>
 		</div>
 	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-lg-14">
 			<div class="jumbotron">
 			<h3><strong>PII Information</strong></h3>			
@@ -125,7 +125,7 @@
 
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 </div>
 
@@ -139,8 +139,11 @@
           <h4 class="modal-title"><strong>Account Info</strong></h4>
         </div>
         <div class="modal-body">
-          <form action="/BankingApp/employee/internalreg" method="POST">
-				  		
+          <form action="/BankingApp/tier1/modifyAccount" method="POST">
+				  	  <div class="form-group">
+					    <input type="hidden" class="form-control" id="id" name="id" value="${user.id}" required>
+					  </div>	
+
 					  <div class="form-group">
 					    <label for="address">Address</label>
 					    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
@@ -159,6 +162,11 @@
 					  <div class="form-group">
 					    <label for="pincode">Zip Code</label>
 					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
 					  </div>
 					  
 					  <div class="form-group">
@@ -226,11 +234,11 @@
     </div> -->
 
 <!-- </div> -->
- -->
+ 
 
 
 	
-</main>
+<!-- </main> -->
 
 <script language="JavaScript" type="text/javascript">
     function Validate() {

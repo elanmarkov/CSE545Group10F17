@@ -52,7 +52,7 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
@@ -71,7 +71,7 @@
 					      <tr>
 					          <th>User ID</th>
 						      <th>Name</th>
-						      <th>Designation</th>
+						      <th>Role</th>
 						      <th>Email</th>
 						      <th>Phone</th>
 						      <th>Address</th>
@@ -82,7 +82,7 @@
         					<tr>
 	                    		<td>${user.id}</td>
                     			<td>${user.name}</td>
-                    			<td>${user.designation}</td>
+                    			<td>${user.role}</td>
                     			<td>${user.email}</td>
                     			<td>${user.phone}</td>
                     			<td>${user.address}</td>
@@ -112,8 +112,8 @@
 					    
 					      <tbody>
         					<tr>
-	                    		<td>${user.ssn}</td>
-                    			<td>${user.dateOfBirth}</td>
+	                    		<td>${pii.ssn}</td>
+                    			<td>${pii.dob}</td>
 								
 	                		</tr>
                         				
@@ -138,7 +138,10 @@
           <h4 class="modal-title"><strong>Account Info</strong></h4>
         </div>
         <div class="modal-body">
-          <form action="/BankingApp/employee/internalreg" method="POST">
+          <form action="/BankingApp/employee/tier2Modify" method="POST">
+          			  <div class="form-group">
+					    <input type="hidden" class="form-control" id="id" name="id" value="${user.id}" required>
+					  </div>
 				  		
 					  <div class="form-group">
 					    <label for="address">Address</label>
@@ -158,6 +161,11 @@
 					  <div class="form-group">
 					    <label for="pincode">Zip Code</label>
 					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
 					  </div>
 					  
 					  <div class="form-group">
@@ -186,7 +194,7 @@
 <!-- <div class="modal fade" id="changepassword" role="dialog">
     <div class="modal-dialog">
     
-      <!-- Modal content-->
+      <!- Modal content-->
       <!-- <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -225,7 +233,7 @@
     </div> -->
 
 <!-- </div> -->
- -->
+ 
 
 
 	

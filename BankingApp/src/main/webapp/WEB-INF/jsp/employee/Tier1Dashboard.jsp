@@ -62,7 +62,7 @@
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
@@ -81,7 +81,7 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			  <h3>Create User Accounts</h3>
-			  <a href="/BankingApp/employee/CreateUserAccounts"><button type="button" class="btn btn-default navbar-btn">Create</button></a>
+			  <a href="/BankingApp/employee/Tier1CreateUserAccounts"><button type="button" class="btn btn-default navbar-btn">Create</button></a>
 			</div>
 		</div>
  

@@ -61,11 +61,11 @@
 					
 					<div class="form-group">
 						<label for="select">Role</label>
-						        <select class="form-control" name="designation" id="designation" required>
+						        <select class="form-control" name="role" id="designation" required>
 						          <option value="">Please Select</option>
-						          <option value="regular">Regular</option>
-						          <option value="manager">Manager</option>
-						          <option value="admin">Admin</option>
+						          <option value="ROLE_REGULAR">Regular</option>
+						          <option value="ROLE_MANAGER">Manager</option>
+						          <option value="ROLE_ADMIN">Admin</option>
 						        </select>
 					</div>
 				  
@@ -87,7 +87,7 @@
 
 				  <div class="form-group">
 				    <label for="pincode">Zip Code</label>
-				    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+				    <input type="text" class="form-control" id="pincode" name="zipcode" placeholder="Zip Code" required>
 				  </div>
 				  
 				  <div class="form-group">
@@ -97,7 +97,7 @@
 
 				  <div class="form-group">
 				    <label for="dateOfBirth">Date of Birth</label>
-				    <input type="text" class="form-control" id="dateOfBirth" name="DoB" placeholder="mm/dd/yyyy" required>
+				    <input type="text" class="form-control" id="dateOfBirth" name="dob" placeholder="mm/dd/yyyy" required>
 				  </div>
 
 				 <div class="form-group">

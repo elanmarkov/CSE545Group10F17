@@ -81,7 +81,7 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			  <h3>Create User Accounts</h3>
-			  <a href="/BankingApp/employee/CreateUserAccounts"><button type="button" class="btn btn-default navbar-btn">Create</button></a>
+			  <a href="/BankingApp/employee/Tier2CreateUserAccounts"><button type="button" class="btn btn-default navbar-btn">Create</button></a>
 			</div>
 		</div>
 
@@ -108,7 +108,7 @@
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			  <h3>User Search</h3>
-			  <a href="/BankingApp/employee/AdminSearchUser"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
+			  <a href="/BankingApp/employee/Tier2SearchUser"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
 			</div>
 		</div>
 	</div>

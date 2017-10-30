@@ -145,7 +145,7 @@
 					</div>
 
 					<div class="form-group">
-					    <label>Please Enter the Amount/label>
+					    <label>Please Enter the Amount</label>
 					    <input type="number" class="form-control" placeholder="$" name="amountToAdd" required>
 				  	</div>
 					 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

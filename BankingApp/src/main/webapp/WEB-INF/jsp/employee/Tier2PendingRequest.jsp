@@ -70,11 +70,11 @@
 					    <thead>
 					      <tr>
 					        <th>Transaction ID</th>
-					        <th>Payer ID</th>
-					        <th>Payee ID</th>
+					        <th>Initiator ID</th>
+					        <th>Payer</th>
+					        <th>Payee</th>
 					        <th>Transaction Amount</th>
-					        <th>Transaction Type</th>
-					        <th>Critical Transaction</th>
+					        <th>Description</th>
 					        <th>Action</th>
 					      </tr>
 					    </thead>
@@ -90,14 +90,14 @@
                         			<c:forEach items="${pending_list}" var="transaction">
                         					<tr>
                                     		<td>${transaction.id}</td>
-											<td>${transaction.payer_id}</td>
-											<td>${transaction.payee_id}</td>
+                                    		<td>${transaction.initiatorID}</td>
+											<td>${transaction.fromAccountID}</td>
+											<td>${transaction.toAccountID}</td>
 											<td>${transaction.amount}</td>
-											<td>${transaction.transaction_type}</td>
-											<td>${transaction.critical}</td>
+											<td>${transaction.description}</td>
 											<td>
-												<form action = "/BankingApp/employee/tier2req" method = "post">
-		                                    	<input type="hidden" name="requestID" value="${request.id}">
+												<form action = "/BankingApp/tier2/pendingRequest" method = "post">
+		                                    	<input type="hidden" name="requestID" value="${transaction.id}">
 		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
 				          								<option value="approve">Approve</option>

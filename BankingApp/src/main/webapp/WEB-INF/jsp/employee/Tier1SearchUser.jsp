@@ -51,7 +51,7 @@
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
@@ -79,6 +79,7 @@
                     <thead>
                         <tr>
                             <th>Customer ID</th>
+                            <th>Customer Name</th>
                             <th>Customer Email</th>
                             <th>Action</th>
                         </tr>
@@ -95,6 +96,7 @@
                         		<c:otherwise>
                             		<tr>
                             			<td>${customerObj.id}</td>
+                            			<td>${customerObj.name}</td>
                             			<td>${customerObj.email}</td>
                             			<td>
                             				<form action = "/BankingApp/tier1/showExternalAccount" method = "post" style="display:inline">
