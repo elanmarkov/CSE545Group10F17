@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en"> 
+<!DOCTYPE html> 
+<html lang="en">
 <head>
 	<title>My Profile</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -35,11 +35,10 @@
 	</div>	
 </div>
 
-
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+			<li><a href="/BankingApp/employee/Tier2Dashboard">Home</a></li>
         	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
@@ -53,7 +52,7 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
@@ -72,7 +71,7 @@
 					      <tr>
 					          <th>User ID</th>
 						      <th>Name</th>
-						      <th>Role</th>
+						      <th>Designation</th>
 						      <th>Email</th>
 						      <th>Phone</th>
 						      <th>Address</th>
@@ -83,7 +82,7 @@
         					<tr>
 	                    		<td>${user.id}</td>
                     			<td>${user.name}</td>
-                    			<td>${user.role}</td>
+                    			<td>${user.designation}</td>
                     			<td>${user.email}</td>
                     			<td>${user.phone}</td>
                     			<td>${user.address}</td>
@@ -91,7 +90,9 @@
                         </tbody>
 					  </table>
 				<a href="#modifyaccount" class="btn btn-default"  data-toggle="modal">Modify Account</a>
-				<a href="/BankingApp/login/ChangePassword" class="btn btn-default">Change Password</a>
+				<!-- <a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a>
+ -->
+ 				<a href="/BankingApp/login/ChangePassword" class="btn btn-default">Change Password</a>
 
 			</div>
 		</div>
@@ -111,8 +112,8 @@
 					    
 					      <tbody>
         					<tr>
-	                    		<td>${pii.ssn}</td>
-                    			<td>${pii.dob}</td>
+	                    		<td>${user.ssn}</td>
+                    			<td>${user.dateOfBirth}</td>
 								
 	                		</tr>
                         				
@@ -137,7 +138,7 @@
           <h4 class="modal-title"><strong>Account Info</strong></h4>
         </div>
         <div class="modal-body">
-          <form action="/BankingApp/employee/adminModify" method="POST">
+          <form action="/BankingApp/employee/internalreg" method="POST">
 				  		
 					  <div class="form-group">
 					    <label for="address">Address</label>
@@ -156,12 +157,7 @@
 
 					  <div class="form-group">
 					    <label for="pincode">Zip Code</label>
-					    <input type="text" class="form-control" id="pincode" name="zipcode" placeholder="Zip Code" required>
-					  </div>
-
-					  <div class="form-group">
-					    <label for="country">Country</label>
-					    <input type="text" class="form-control" id="country" name="country" placeholder="Country" required>
+					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
 					  </div>
 					  
 					  <div class="form-group">
@@ -170,10 +166,10 @@
 					  </div>
 					  
 						<div id = "errorBox" class="form-group"></div>
-					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
-
 
 			  </form>
 
@@ -186,7 +182,6 @@
     </div>
 
 </div>
-
 
 <!-- <div class="modal fade" id="changepassword" role="dialog">
     <div class="modal-dialog">
@@ -216,7 +211,7 @@
 					  </div>
 					  
 						<div id = "errorBox" class="form-group"></div>
-					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
 
 			  </form>
@@ -228,11 +223,13 @@
       </div>
       
     </div> -->
- -->
 
 <!-- </div> -->
+ -->
 
-<!-- there was a </main> here -->
+
+	
+<!-- </main> -->
 
 <script language="JavaScript" type="text/javascript">
     function Validate() {

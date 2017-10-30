@@ -50,7 +50,7 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
@@ -69,6 +69,9 @@
 	            		<input class="form-control" type="text" name="customerID" placeholder="Customer ID">
 	            	</div>
 	            	<br>
+
+	            	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		       		<button type="submit" class="btn btn-sm btn-primary">Search Customer</button>
 	            </form>
 	            <br>
@@ -96,6 +99,8 @@
                             			<td>
                             				<form action = "/BankingApp/tier1/showExternalAccount" method = "post" style="display:inline">
 	                                    		<input type="hidden" name="customerID" value="${customerObj.id}">
+	                                    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 	                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
 	                                    	</form>
                             			</td>

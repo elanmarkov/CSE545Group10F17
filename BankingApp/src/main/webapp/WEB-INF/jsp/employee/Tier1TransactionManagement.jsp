@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-	<title>Tier 2 Transaction Management</title>
+	<title>Tier 1 Transaction Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 
@@ -61,7 +61,7 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 
 		</ul>
@@ -112,6 +112,8 @@
 		          								<option value="approve">Approve</option>
 		          								<option value="reject">Reject</option>
 		       								</select>
+		       								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                                     		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 										</div>
                                		</form>
@@ -148,6 +150,7 @@
 					    <label>Please Enter the Amount/label>
 					    <input type="number" class="form-control" placeholder="$" name="amountToAdd" required>
 				  	</div>
+				  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
 					<div class="form-group">
 					 <button type="submit" class="btn btn-primary" name="submit">Add</button>

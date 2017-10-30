@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Tier 1 Dashboard</title>
+	<title>Tier 1 Create User Accounts</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
 
@@ -10,7 +10,7 @@
 
 		margin-bottom: 0px;
 		}
-
+ 
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
@@ -46,7 +46,7 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
+			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
         	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
@@ -60,7 +60,7 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 
 		</ul>
@@ -73,7 +73,7 @@
 		<div class="col-lg-14">
 			<div class="jumbotron">
 
-			<h3><strong>Creat User Accounts</strong></h3>
+			<h3><strong>Create User Accounts</strong></h3>
 			<form action="/BankingApp/employee/createAccounts" method="post">
 
 					<div class="form-group">

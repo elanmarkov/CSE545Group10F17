@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-	<title>Tier 2 Pending Request Management</title>
+	<title>Tier 1 Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	
 	<style type="text/css">
@@ -53,7 +53,7 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
@@ -102,6 +102,8 @@
 				          								<option value="approve">Approve</option>
 				          								<option value="reject">Reject</option>
 				       								</select>
+				       								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		                                    		<button type="submit" class="btn btn-xs btn-default">Submit</button>
 		                                   		</form>
 											</td>

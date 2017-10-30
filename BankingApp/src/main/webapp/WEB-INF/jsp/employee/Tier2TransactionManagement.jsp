@@ -60,8 +60,8 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 
 		</ul>
 	</div>
@@ -148,6 +148,7 @@
 					    <label>Please Enter the Amount/label>
 					    <input type="number" class="form-control" placeholder="$" name="amountToAdd" required>
 				  	</div>
+					 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
 					<div class="form-group">
 					 <button type="submit" class="btn btn-primary" name="submit">Add</button>

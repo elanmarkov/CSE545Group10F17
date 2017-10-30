@@ -36,25 +36,27 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
-        	<li class="dropdown">
+			<li><a href="/BankingApp/employee/Tier2Dashboard">Home</a></li>
+        	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="#">Internal</a></li>
-	            <li><a href="#">External</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
+	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
 	          </ul>
         	</li>
 
-        	<li><a href="#">Pending Request</a></li>
-		</ul>
+        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
+		</ul> -->
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+		
 		</ul>
 	</div>
 </nav>
+
 
 
 <div class="container" id="loginBox">
@@ -66,6 +68,8 @@
 		            	<div>
 		            		<input class="form-control" type="text" name="employeeID" placeholder="Employee ID" required>
 		            	</div>
+		            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		            	<br>
 			       		<button type="submit" class="btn btn-sm btn-primary">Search Employee</button>
 				     </form>
@@ -94,6 +98,8 @@
                                 			<td>
                                 				<form action = "/BankingApp/tier2/showInternalAccount" method = "post" style="display:inline">
 		                                    		<input type="hidden" name="employeeID" value="${employeeObj.id}">
+		                                    		 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
 		                                    	</form>
                                 			</td>
@@ -119,6 +125,8 @@
 	            		<input class="form-control" type="text" name="customerID" placeholder="Customer ID">
 	            	</div>
 	            	<br>
+	            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		       		<button type="submit" class="btn btn-sm btn-primary">Search Customer</button>
 	            </form>
 	            <br>
@@ -145,10 +153,14 @@
                                 			<td>
                                 				<form action = "/BankingApp/tier2/showExternalAccount" method = "post" style="display:inline">
 		                                    		<input type="hidden" name="customerID" value="${customerObj.id}">
+		                                    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
 		                                    	</form>
 		                                    	<form action = "/BankingApp/tier2/deleteExternalUser" method = "post" style="display:inline">
 		                                    		<input type="hidden" name="customerID" value="${customerObj.id}">
+		                                    		 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 		                                    		<button type="submit" class="btn btn-sm btn-primary">Delete Account</button>
 		                                    	</form>
                                 			</td>

@@ -53,7 +53,7 @@
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/UserDetailsEmployee"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
@@ -90,7 +90,9 @@
                         </tbody>
 					  </table>
 				<a href="#modifyaccount" class="btn btn-default"  data-toggle="modal">Modify Account</a>
-				<a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a>
+				<!-- <a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a>
+ -->
+ 				<a href="/BankingApp/login/ChangePassword" class="btn btn-default">Change Password</a>
 
 			</div>
 		</div>
@@ -164,6 +166,8 @@
 					  </div>
 					  
 						<div id = "errorBox" class="form-group"></div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
 
@@ -179,7 +183,7 @@
 
 </div>
 
-<div class="modal fade" id="changepassword" role="dialog">
+<!-- <div class="modal fade" id="changepassword" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -220,12 +224,12 @@
       
     </div>
 
-</div>
-
+<!-- </div> -->
+ -->
 
 
 	
-</main>
+<!-- </main> -->
 
 <script language="JavaScript" type="text/javascript">
     function Validate() {

@@ -105,12 +105,14 @@
 				    <input type="text" class="form-control" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
 				  </div>
 
-				  <div class="form-group">
+				 <!--  <div class="form-group">
 				    <label for="username">Username</label>
 				    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-				  </div>
+				  </div> -->
 				  
 					<div id = "errorBox" class="form-group"></div>
+				 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 				  <button type="submit" id="submit" class="btn btn-default"onclick="Validate()">Submit</button>
 
 			  </form>

@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Tier 1 Dashboard</title>
+	<title>Tier 2 Create User Accounts</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
-
+ 
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
 			text-align: center;
 		}
 
-		#tabContent{
-			margin: 5% 5% 10% 10%;
+		#loginBox{
+			margin: 5% 5% 10% 7%;
 		}
 
 		.hidden{
 			visibility: hidden;
 		}
 
-		
-		
+
+
 	</style>
 
 
@@ -37,9 +37,8 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
-
 
 
 
@@ -47,7 +46,7 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
+			<li><a href="/BankingApp/employee/Tier2Dashboard">Home</a></li>
         	<!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
@@ -61,61 +60,63 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+
 		</ul>
 	</div>
 </nav>
 
 
-<div class="container">
+<div class="container-fluid" id="loginBox">
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-14">
 			<div class="jumbotron">
-			  <h3>Create External User</h3>
-			  <a href="/BankingApp/employee/RegistrationExternalEmployee"><button type="button" class="btn btn-default navbar-btn">Create</button></a>
-			</div>
-		</div>
 
-		<div class="col-lg-6">
-			<div class="jumbotron">
-			  <h3>Create User Accounts</h3>
-			  <a href="/BankingApp/employee/CreateUserAccounts"><button type="button" class="btn btn-default navbar-btn">Create</button></a>
+			<h3><strong>Create User Accounts</strong></h3>
+			<form action="/BankingApp/employee/createAccounts" method="post">
+
+					<div class="form-group">
+						<label>User Email</label>
+						<input type="text" class="form-control" name="username" placeholder="User Email" required>
+					</div>
+
+					<div class="form-group">
+						<label>Checking Account</label>
+								<select class="form-control" name="checking">
+								  <option value="">--please select--</option>
+								  <option value="yes">Yes</option>
+								  <option value="no">No</option>
+								</select>
+							<br>
+							<label>Savings Account</label>
+								<select class="form-control" name="savings">
+								  <option value="">--please select--</option>
+								  <option value="yes">Yes</option>
+								  <option value="no">No</option>
+								</select>
+							<br>
+							<label>Credit Card</label>
+								<select class="form-control" name="credit">
+								  <option value="">--please select--</option>
+								  <option value="yes">Yes</option>
+								  <option value="no">No</option>
+								</select>
+					</div>
+				   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+					 <input type="submit" value="Create">
+
+			</form>
+
 			</div>
 		</div>
- 
-		
 	</div>
 </div>
 
-<div class="container">
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="jumbotron">
-			  <h3>Pending Request</h3>
-			  <a href="/BankingApp/employee/Tier1PendingRequest"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
-			</div>
-		</div>
-		
-		<div class="col-lg-6">
-			<div class="jumbotron">
-			  <h3>Transaction Management</h3>
-			  <a href="/BankingApp/employee/Tier1TransactionManagement"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
-			</div>
-		</div>
-
-		<div class="col-lg-6">
-			<div class="jumbotron">
-			  <h3>User Search</h3>
-			  <a href="/BankingApp/employee/Tier1SearchUser"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
-			</div>
-		</div>
-	</div>
-</div>
 
 
- 
+
 
 
 
