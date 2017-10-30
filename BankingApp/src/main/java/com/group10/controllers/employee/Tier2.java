@@ -75,7 +75,7 @@ public class Tier2 {
 		String number = newUser.getPhone();
 		String dob = newUser.getDob();
 		String ssn = newUser.getSsn();
-		String username = email.split("@")[0];
+		String username = email;
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		
 		
@@ -105,8 +105,8 @@ public class Tier2 {
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
 			String password = encoder.encode(rawPassword); 
-			udao.setInternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, username); 
-			udao.setLoginDetails(username, password, role, email);
+			udao.setInternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn); 
+			udao.setLoginDetails(email, password, role, email);
 		
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Successful",userID, "internal");

@@ -104,7 +104,7 @@ public class Admin {
 		String number = newUser.getPhone();
 		String dob = newUser.getDob();
 		String ssn = newUser.getSsn();
-		String username = email.split("@")[0];
+		String username = email;
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 
 
@@ -134,10 +134,11 @@ public class Admin {
 
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
-			String password = encoder.encode(rawPassword);
+			String password = encoder.encode(rawPassword); //change password upon first login
 		//	dob = encoder.encode(dob);
-			udao.setInternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, username);
+			udao.setInternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn);
 			udao.setLoginDetails(username, password, role, email);
+			udao.setLoginAttempts(email, 0); //attempts init to 0
 
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Successful",userID, "internal");
