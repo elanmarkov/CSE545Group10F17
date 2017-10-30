@@ -60,8 +60,8 @@
 
 
 				<ul class="nav navbar-nav navbar-right">
-					<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-					<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
+					<a href="/BankingApp/customer/profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+					<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 				</ul>
 			</div>
 		</nav>

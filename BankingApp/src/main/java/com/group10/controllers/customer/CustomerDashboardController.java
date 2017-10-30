@@ -71,9 +71,19 @@ public class CustomerDashboardController {
 
 	}
 
-//	@RequestMapping("/customer/profile")
-//	public ModelAndView viewProfile(HttpServletRequest request) {
-//
-//	}
+	@RequestMapping("/customer/profile")
+	public ModelAndView viewProfile(HttpServletRequest request) {
+
+		userId = (Integer) request.getSession().getAttribute("userID");
+
+		ApplicationContext  ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		CustomerDashboardDaoImpl sdao = ctx.getBean("customerDashboardDaoImpl" , CustomerDashboardDaoImpl.class);
+
+		User user = sdao.getUserById(userId);
+		ModelAndView model = new ModelAndView("customer/customerUserDetails");
+		model.addObject(user);
+		return model;
+
+	}
 	
 }

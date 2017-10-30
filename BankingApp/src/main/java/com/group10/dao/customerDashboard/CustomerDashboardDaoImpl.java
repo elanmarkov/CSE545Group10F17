@@ -2,15 +2,9 @@ package com.group10.dao.customerDashboard;
 
 import java.util.List;
 
+import com.group10.dbmodels.*;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import com.group10.dbmodels.CheckingAccount;
-import com.group10.dbmodels.CompletedTransaction;
-import com.group10.dbmodels.CreditAccount;
-import com.group10.dbmodels.CreditCard;
-import com.group10.dbmodels.PendingTransaction;
-import com.group10.dbmodels.SavingsAccount;
 
 public class CustomerDashboardDaoImpl extends JdbcDaoSupport {
 
@@ -57,5 +51,10 @@ public class CustomerDashboardDaoImpl extends JdbcDaoSupport {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public User getUserById(int userId) {
+		String sql = "SELECT * FROM users WHERE id="+userId;
+		return (User) this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(User.class));
 	}
 }

@@ -40,7 +40,7 @@
 			authentication-failure-handler-ref="customAuthenticationSuccessHandler"
 	        ></form-login>
        <session-management invalid-session-url="/login" session-fixation-protection="newSession" >
-		   	<concurrency-control  max-sessions="1" error-if-maximum-exceeded="true" />
+		   	<concurrency-control  max-sessions="100" error-if-maximum-exceeded="true" />
 		</session-management>
 		<logout logout-success-url="/login/Logout" delete-cookies="JSESSIONID" invalidate-session="true"/>
 	<csrf />

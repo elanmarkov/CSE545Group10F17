@@ -105,7 +105,5 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 			 }
 		}
 
-//		public User getUserById(int userId) {
-//
-//		}
+
 }

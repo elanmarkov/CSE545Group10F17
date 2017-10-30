@@ -4,10 +4,10 @@
 	<title>My Profile</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style  type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 		#title{
@@ -21,8 +21,8 @@
 		.hidden{
 			visibility: hidden;
 		}
-		
-		
+
+
 	</style>
 
 
@@ -32,36 +32,36 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Home</a></li>
+			<li><a href="/BankingApp/customer/dashboard">Home</a></li>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transaction<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Deposit</a></li>
-					<li><a href="#">Withdraw</a></li>
+					<li><a href="/BankingApp/customer/deposit">Deposit</a></li>
+					<li><a href="/BankingApp/customer/withdraw">Withdraw</a></li>
 				</ul>
 			</li>
 
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Funds transfer<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Between accounts</a></li>
-					<li><a href="#">Send to others</a></li>
+					<li><a href="/BankingApp/customer/transferBetweenAccounts">Between accounts</a></li>
+					<li><a href="/BankingApp/customer/transferToOthers">Send to others</a></li>
 				</ul>
 			</li>
 
-			<li><a href="#">Pending Request</a></li>
+			<li><a href="/BankingApp/customer/pendingRequests">Pending Request</a></li>
 			<li><a href="/BankingApp/authorizeMerchant">Merchant Panel</a></li>
 		</ul>
 
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/customer/profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		</ul>
 	</div>
@@ -73,24 +73,24 @@
 		<div class="col-lg-14">
 			<div class="jumbotron">
 			<h3><strong>User Details</strong></h3>
-			
+
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
 					          <th>User ID</th>
 						      <th>Name</th>
-						      <th>Designation</th>
+						      <th>role</th>
 						      <th>Email</th>
 						      <th>Phone</th>
 						      <th>Address</th>
 					      </tr>
 					    </thead>
-					    
+
 					      <tbody>
         					<tr>
 	                    		<td>${user.id}</td>
                     			<td>${user.name}</td>
-                    			<td>${user.designation}</td>
+                    			<td>${user.role}</td>
                     			<td>${user.email}</td>
                     			<td>${user.phone}</td>
                     			<td>${user.address}</td>
@@ -104,39 +104,12 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="col-lg-14">
-			<div class="jumbotron">
-			<h3><strong>PII Information</strong></h3>			
-				<table class="table table-hover">
-					    <thead>
-					      <tr>
-					           <th>SSN</th>
-                               <th>Date of Birth</th>
-					      </tr>
-					    </thead>
-					    
-					      <tbody>
-        					<tr>
-	                    		<td>${user.ssn}</td>
-                    			<td>${user.dateOfBirth}</td>
-								
-	                		</tr>
-                        				
-	                </tbody>
-				  </table>
-			
-			
-
-			</div>
-		</div>
-	</div>
 
 </div>
 
 <div class="modal fade" id="modifyaccount" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -145,7 +118,7 @@
         </div>
         <div class="modal-body">
           <form action="/BankingApp/employee/internalreg" method="POST">
-				  		
+
 					  <div class="form-group">
 					    <label for="address">Address</label>
 					    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
@@ -165,12 +138,12 @@
 					    <label for="pincode">Zip Code</label>
 					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
 					  </div>
-					  
+
 					  <div class="form-group">
 					    <label for="phone">Phone Number</label>
 					    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
 					  </div>
-					  
+
 						<div id = "errorBox" class="form-group"></div>
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
@@ -182,14 +155,14 @@
 			<button type="button" class="btn btn-default" data-dismiss="modal" style="float:right">Close</button>
         </div>
       </div>
-      
+
     </div>
 
 </div>
 
 <div class="modal fade" id="changepassword" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -198,7 +171,7 @@
         </div>
         <div class="modal-body">
           <form action="/BankingApp/employee/internalreg" method="POST">
-				  		
+
 					  <div class="form-group">
 					    <label for="oldPassward">Old Password</label>
 					    <input type="password" class="form-control" id="oldPassward" name="oldPassward" placeholder="Old Password" required>
@@ -213,7 +186,7 @@
 					    <label for="confirmPassward">Confirm Password</label>
 					    <input type="password" class="form-control" id="confirmPassward" name="confirmPassward" placeholder="Confirm Password" required>
 					  </div>
-					  
+
 						<div id = "errorBox" class="form-group"></div>
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
@@ -225,14 +198,14 @@
 
         </div>
       </div>
-      
+
     </div>
 
 </div>
 
 
 
-	
+
 </main>
 
 <script language="JavaScript" type="text/javascript">
@@ -253,7 +226,7 @@
         }
         ;
     }
-</script> 
+</script>
 
 <script   src="https://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
