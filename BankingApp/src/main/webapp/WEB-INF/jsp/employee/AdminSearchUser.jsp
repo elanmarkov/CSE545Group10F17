@@ -67,7 +67,7 @@
 			<h3><strong>Search Employee</strong></h3>
 			<form class="form-margin" action = "/BankingApp/admin/searchInternalUser" method = "post">
 	        	<div>
-	        		<input class="form-control" type="text" name="employeeID" placeholder="Employee ID" required>
+	        		<input class="form-control" type="text" name="employeeID" placeholder="Employee Email" required>
 	        	</div>
  				  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
