@@ -3,7 +3,7 @@ package com.group10.dbmodels;
 public class User {
 	private int id;
 	private String name;
-  private String role;
+	private String role;
 	private String address;
 	private String city;
 	private String state;

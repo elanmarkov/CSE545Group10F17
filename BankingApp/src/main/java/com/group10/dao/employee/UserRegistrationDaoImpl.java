@@ -19,7 +19,7 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport
 		return true;
 	} 
 	
-	public void setInternalUser(String name, String role, String address, String city, String state, String country, String pincode, String phone, String email, String dob, String ssn, String username){
+	public void setInternalUser(String name, String role, String address, String city, String state, String country, String pincode, String phone, String email, String dob, String ssn){
 		String sql = "insert into users (name, role, address, city, state, country, zipcode, phone, email) values(?,?,?,?,?,?,?,?,?)";
 		this.getJdbcTemplate().update(sql, new Object[]{name, role, address, city, state, country, pincode, phone, email});
 
@@ -34,6 +34,13 @@ public class UserRegistrationDaoImpl extends JdbcDaoSupport
 		
 		String sql = "insert into user_login(username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked)  values(?,?,?,?,?,?,?,?)";
 		this.getJdbcTemplate().update(sql, new Object[]{username, password, 1, role, 1,1,1,1});	
+	}
+	
+	public void setLoginAttempts(String email, int attempts){
+		int userId = this.getJdbcTemplate().queryForObject("select id from users where email='"+email+"'", Integer.class);
+		
+		String sql = "insert into user_login_attempts(username, attempts)  values(?,?)";
+		this.getJdbcTemplate().update(sql, new Object[]{email, attempts});	
 	}
 	
 	public void setExternalUser(String name,String designation, String address, String city, String state, String country, String pincode, String phone, String email, String dob, String ssn, String username){
