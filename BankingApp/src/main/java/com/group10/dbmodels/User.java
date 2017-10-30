@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
 import java.security.cert.CertificateException;
-import java.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 import java.sql.Timestamp;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -139,11 +139,11 @@ public class User {
 
 		byte[] cipher = encrypt.doFinal(time.toString().getBytes(UTF_8));
 
-		return Base64.getEncoder().encodeToString(cipher);
+		return new String(Base64.encodeBase64(cipher);
 	}
 
 	public String decryptTimestamp(String cipherText) throws Exception {
-		byte[] bytes = Base64.getDecoder().decode(cipherText);
+		byte[] bytes = new String(Base64.decodeBase64(cipherText);
 		PrivateKey privKey = getPrivKeyFromStore();
 		Cipher decript = Cipher.getInstance("RSA");
 		decript.init(Cipher.DECRYPT_MODE, privKey);
@@ -159,7 +159,7 @@ public class User {
 
 		byte[] signature = privateSignature.sign();
 
-		return Base64.getEncoder().encodeToString(signature);
+		return new String(Base64.encodeBase64(signature);
 	}
 
 	public boolean verifyTimestamp(String plainText, String signature, PublicKey publicKey) throws Exception {
@@ -167,8 +167,8 @@ public class User {
 		publicSignature.initVerify(publicKey);
 		publicSignature.update(plainText.getBytes(UTF_8));
 
-		byte[] signatureBytes = Base64.getDecoder().decode(signature);
-		String decyphered = Base64.getEncoder().encodeToString(signatureBytes);
+		byte[] signatureBytes = new String(Base64.decodeBase64(signature);
+		String decyphered = new String(Base64.encodeBase64(signatureBytes);
 		System.out.println("Sig: " + decyphered);
 
 		return publicSignature.verify(signatureBytes);
@@ -180,11 +180,11 @@ public class User {
 
 		byte[] cipher = encrypt.doFinal(plainText.getBytes(UTF_8));
 
-		return Base64.getEncoder().encodeToString(cipher);
+		return new String(Base64.encodeBase64(cipher);
 	}
 
 	public String decryptPII(String cipherText) throws Exception {
-		byte[] bytes = Base64.getDecoder().decode(cipherText);
+		byte[] bytes = new String(Base64.decodeBase64(cipherText);
 		PrivateKey privKey = getPrivKeyFromStore();
 		Cipher decript = Cipher.getInstance("RSA");
 		decript.init(Cipher.DECRYPT_MODE, privKey);
