@@ -4,10 +4,10 @@
 	<title>Tier 1 Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -25,8 +25,8 @@
 			visibility: hidden;
 		}
 
-		
-		
+
+
 	</style>
 
 
@@ -37,7 +37,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 
@@ -62,7 +62,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -74,11 +74,11 @@
 			<div class="jumbotron">
 
 			<h3><strong>Creat User Accounts</strong></h3>
-			<form action="/BankingApp/employee/creatAccounts" method="post">
-					
+			<form action="/BankingApp/employee/createAccounts" method="post">
+
 					<div class="form-group">
-						<label>Username</label>
-						<input type="text" class="form-control" name="userName" placeholder="Username" required>
+						<label>User Email</label>
+						<input type="text" class="form-control" name="username" placeholder="User Email" required>
 					</div>
 
 					<div class="form-group">
@@ -97,7 +97,7 @@
 								</select>
 							<br>
 							<label>Credit Card</label>
-								<select class="form-control" name="checking">
+								<select class="form-control" name="credit">
 								  <option value="">--please select--</option>
 								  <option value="yes">Yes</option>
 								  <option value="no">No</option>

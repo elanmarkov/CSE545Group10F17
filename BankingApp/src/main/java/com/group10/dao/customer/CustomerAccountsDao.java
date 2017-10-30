@@ -43,11 +43,16 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 		public boolean createSavingsAccount(int userId) {
 			String query = "select count(*) from savings_accounts where userId="+userId;
 			int exists = this.getJdbcTemplate().queryForObject(query, Integer.class);
-			if(exists==1){
+			if(exists == 0){
 				Random rand = new java.util.Random();
 				String accNo= String.valueOf((int) (10000000*rand.nextFloat()));
 				String sql = "insert into savings_accounts (userId, accountNumber, balance) values (?,?,?)";
-				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0}); 
+				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0});
+
+				// Add to accNumToTableRel
+				sql = "INSERT INTO accNumToTableRel (accountNumber, `table`, userId) values (?,?,?)";
+				this.getJdbcTemplate().update(sql, new Object[]{accNo, "savings_accounts", userId});
+
 				return true;
 			}	
 			return false;
@@ -56,11 +61,16 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 		public boolean createCheckingAccount(int userId) {
 			String query = "select count(*) from checking_accounts where userId="+userId;
 			int exists = this.getJdbcTemplate().queryForObject(query, Integer.class);
-			if(exists==1){
+			if(exists == 0){
 				Random rand = new java.util.Random();
 				String accNo= String.valueOf((int) (10000000*rand.nextFloat()));
 				String sql = "insert into checking_accounts (userId, accountNumber, balance) values (?,?,?)";
-				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0}); 
+				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0});
+
+				// Add to accNumToTableRel
+				sql = "INSERT INTO accNumToTableRel (accountNumber, `table`, userId) values (?,?,?)";
+				this.getJdbcTemplate().update(sql, new Object[]{accNo, "checking_accounts", userId});
+
 				return true;
 			}	
 			return false;
@@ -70,13 +80,28 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 
 			String query = "select count(*) from credit_accounts where userId="+userId;
 			int exists = this.getJdbcTemplate().queryForObject(query, Integer.class);
-			if(exists==1){
+			if(exists == 0){
 				Random rand = new java.util.Random();
 				String accNo= String.valueOf((int) (10000000*rand.nextFloat()));
 				String sql = "insert into credit_accounts (userId, accountNumber, currentAmountDue) values (?,?,?)";
 				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0});
+
+				// Add to accNumToTableRel
+				sql = "INSERT INTO accNumToTableRel (accountNumber, `table`, userId) values (?,?,?)";
+				this.getJdbcTemplate().update(sql, new Object[]{accNo, "credit_accounts", userId});
+
 				return true;
 			}
 			return false;
+		}
+
+		public Integer getUserIdByEmail(String email) {
+			 String sql = "SELECT id FROM users WHERE email = '"+email+"'";
+			 try {
+			 	Integer userId = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+			 	return userId;
+			 } catch (Exception e) {
+			 	return null;
+			 }
 		}
 }

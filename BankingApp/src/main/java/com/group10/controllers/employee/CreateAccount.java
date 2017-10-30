@@ -31,39 +31,44 @@ public class CreateAccount {
 	}
 	
 	@RequestMapping(value = "/employee/createAccounts", method= RequestMethod.POST)
-	public ModelAndView createAccounts(HttpServletRequest request, @RequestParam("userId") int userId,@RequestParam("savings") String saving,@RequestParam("credit") String credit
+	public ModelAndView createAccounts(HttpServletRequest request, @RequestParam("username") String userEmail,@RequestParam("savings") String saving,@RequestParam("credit") String credit
 			, @RequestParam("checking") String checking, RedirectAttributes redir){
-		try{
+//		try{
 			ModelAndView model = new ModelAndView();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			CustomerAccountsDao cdao = ctx.getBean("customerAccountsDao", CustomerAccountsDao.class);		
-			if(saving.equals("yes")){
-				if(cdao.createSavingsAccount(userId)){
-					redir.addFlashAttribute("error_msg","Created savings account successfully");
-				//	model.setViewName("");
-				}else
-					redir.addFlashAttribute("error_msg","unable to create savings account");
+			CustomerAccountsDao cdao = ctx.getBean("customerAccountDao", CustomerAccountsDao.class);
+
+			Integer userId = cdao.getUserIdByEmail(userEmail);
+			if (userId != null) {
+
+				if (saving.equals("yes")) {
+					if (cdao.createSavingsAccount(userId)) {
+						redir.addFlashAttribute("error_msg", "Created savings account successfully");
+						//	model.setViewName("");
+					} else
+						redir.addFlashAttribute("error_msg", "unable to create savings account");
+				}
+				if (checking.equals("yes")) {
+					if (cdao.createCheckingAccount(userId))
+						redir.addFlashAttribute("error_msg", "Created checking account successfully");
+					else
+						redir.addFlashAttribute("error_msg", "unable to create checking account");
+
+				}
+				if (credit.equals("yes")) {
+					if (cdao.createCreditAccount(userId))
+						redir.addFlashAttribute("error_msg", "Created credit account successfully");
+					else
+						redir.addFlashAttribute("error_msg", "unable to create credit account");
+
+				}
 			}
-			if(checking.equals("yes"))	{
-				if(cdao.createCheckingAccount(userId))
-					redir.addFlashAttribute("error_msg","Created checking account successfully");
-				else
-					redir.addFlashAttribute("error_msg","unable to create checking account");
-	
-			}
-			if(credit.equals("yes"))	{
-				if(cdao.createCreditAccount(userId))
-					redir.addFlashAttribute("error_msg","Created credit account successfully");
-				else
-					redir.addFlashAttribute("error_msg","unable to create credit account");
-	
-			}
-			model.setViewName("employee/CreateUserAccounts");
+			model.setViewName("redirect:/employee/CreateUserAccounts");
 			ctx.close();
 			return model;
 			
-		}catch(Exception e){
-			throw new HandlerClass();
-		}
+//		}catch(Exception e){
+//			throw new HandlerClass();
+//		}
 	}
 }
