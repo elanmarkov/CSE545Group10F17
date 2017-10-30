@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.group10.dbmodels.PendingTransaction;
+import com.group10.dao.otp.SendOTPByMail;
 import com.group10.dbmodels.CompletedTransaction;
 
 public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
@@ -25,6 +28,15 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 		String updateSQL = "INSERT INTO pending_transactions (amount,initiatorID,stamp,toAccountID,description,fromAccountID) values (?,?,NOW(),?,?,?)";
 		this.getJdbcTemplate().update(updateSQL, new Object[]{ trans.getAmount(), trans.getInitiatorID(), trans.getToAccountID(), 
 				trans.getDescription(), trans.getFromAccountID()});
+         
+		if(amount > 5000) {
+        	 ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+             SendAlertByMail sender = (SendAlertByMail) context.getBean("SendOTPByMail");
+             sender.sendAlert(fromAccountID);
+             sender.sendAlert(toAccountID);
+             ((ClassPathXmlApplicationContext) context).close(); 
+         }
+        
 		return trans;
 	}
 	
