@@ -104,4 +104,8 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 			 	return null;
 			 }
 		}
+
+//		public User getUserById(int userId) {
+//
+//		}
 }

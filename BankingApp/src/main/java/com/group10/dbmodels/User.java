@@ -1,5 +1,16 @@
 package com.group10.dbmodels;
 
+import javax.crypto.Cipher;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.*;
+import java.security.cert.CertificateException;
+import java.util.Base64;
+import java.sql.Timestamp;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class User {
 	private int id;
 	private String name;
@@ -95,4 +106,89 @@ public class User {
 		this.id = id;
 	}
 
+	private static PrivateKey getPrivKeyFromStore() throws Exception {
+		//Generated with:
+		// keytool -genkeypair -alias TSAkey -storepass group10store -keypass SSis#1 -keyalg RSA -keystore keystore.jks
+		// CN=TSA, OU=Group10, O=Software Security, L=Phoenix, ST=AZ, C=AZ
+		// We are aware that for optimal security this should not be here but for ease of use and testing we will assume this is secure.
+		InputStream ins = User.class.getResourceAsStream("/keystore.jks");
+
+		KeyStore keyStore = KeyStore.getInstance("JCEKS");
+		keyStore.load(ins, "group10store".toCharArray());   //Keystore password
+		KeyStore.PasswordProtection keyPassword = new KeyStore.PasswordProtection("SSis#1".toCharArray());    //Key password
+
+		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("TSAkey", keyPassword);
+		PrivateKey privateKey = privateKeyEntry.getPrivateKey();
+
+		return privateKey;
+	}
+
+	public PublicKey getPublicKey() throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
+	{
+		InputStream ins = User.class.getResourceAsStream("/keystore.jks");
+		KeyStore keyStore = KeyStore.getInstance("JCEKS");
+		keyStore.load(ins, "group10store".toCharArray());   //Keystore password
+		java.security.cert.Certificate cert = keyStore.getCertificate("TSAkey");
+		PublicKey publicKey = cert.getPublicKey();
+		return publicKey;
+	}
+
+	public String encryptTimestamp(Timestamp time, PublicKey publicKey) throws Exception {
+		Cipher encrypt = Cipher.getInstance("RSA");
+		encrypt.init(Cipher.ENCRYPT_MODE, publicKey);
+
+		byte[] cipher = encrypt.doFinal(time.toString().getBytes(UTF_8));
+
+		return Base64.getEncoder().encodeToString(cipher);
+	}
+
+	public String decryptTimestamp(String cipherText) throws Exception {
+		byte[] bytes = Base64.getDecoder().decode(cipherText);
+		PrivateKey privKey = getPrivKeyFromStore();
+		Cipher decript = Cipher.getInstance("RSA");
+		decript.init(Cipher.DECRYPT_MODE, privKey);
+
+		return new String(decript.doFinal(bytes), UTF_8);
+	}
+
+	public String signTimestamp(Timestamp time) throws Exception {
+		PrivateKey privKey = getPrivKeyFromStore();
+		Signature privateSignature = Signature.getInstance("SHA256withRSA");
+		privateSignature.initSign(privKey);
+		privateSignature.update(time.toString().getBytes(UTF_8));
+
+		byte[] signature = privateSignature.sign();
+
+		return Base64.getEncoder().encodeToString(signature);
+	}
+
+	public boolean verifyTimestamp(String plainText, String signature, PublicKey publicKey) throws Exception {
+		Signature publicSignature = Signature.getInstance("SHA256withRSA");
+		publicSignature.initVerify(publicKey);
+		publicSignature.update(plainText.getBytes(UTF_8));
+
+		byte[] signatureBytes = Base64.getDecoder().decode(signature);
+		String decyphered = Base64.getEncoder().encodeToString(signatureBytes);
+		System.out.println("Sig: " + decyphered);
+
+		return publicSignature.verify(signatureBytes);
+	}
+
+	public String encryptPII(String plainText, PublicKey publicKey) throws Exception {
+		Cipher encrypt = Cipher.getInstance("RSA");
+		encrypt.init(Cipher.ENCRYPT_MODE, publicKey);
+
+		byte[] cipher = encrypt.doFinal(plainText.getBytes(UTF_8));
+
+		return Base64.getEncoder().encodeToString(cipher);
+	}
+
+	public String decryptPII(String cipherText) throws Exception {
+		byte[] bytes = Base64.getDecoder().decode(cipherText);
+		PrivateKey privKey = getPrivKeyFromStore();
+		Cipher decript = Cipher.getInstance("RSA");
+		decript.init(Cipher.DECRYPT_MODE, privKey);
+
+		return new String(decript.doFinal(bytes), UTF_8);
+	}
 }

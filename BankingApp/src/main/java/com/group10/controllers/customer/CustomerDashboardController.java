@@ -51,22 +51,14 @@ public class CustomerDashboardController {
 			List<CompletedTransaction> completedSavings = sdao.completedTransactions(savings.getAccountNumber());
 			model.addObject("pendingSavings", pendingSavings);
 			model.addObject("completedSavings", completedSavings);
-			try {
-				DownloadTransactions.createFile(completedSavings, savingsStatement);
-			} catch (IOException e) {
 
-			}
 		}
 		if (checking != null) {
 			List<PendingTransaction> pendingChecking = sdao.pendingTransactions(checking.getAccountNumber());
 			List<CompletedTransaction> completedChecking = sdao.completedTransactions(checking.getAccountNumber());
 			model.addObject("pendingChecking", pendingChecking);
 			model.addObject("completedChecking", completedChecking);
-			try {
-				DownloadTransactions.createFile(completedChecking, checkingStatement);
-			} catch (IOException e) {
 
-			}
 		}
 		if (credit != null) {
 			List<PendingTransaction> pendingCredit = sdao.pendingTransactions(credit.getAccountNumber());
@@ -75,10 +67,13 @@ public class CustomerDashboardController {
 			model.addObject("completedCredit", completedCredit);
 		}
 
-
-	    
 		return model;		
 
 	}
+
+//	@RequestMapping("/customer/profile")
+//	public ModelAndView viewProfile(HttpServletRequest request) {
+//
+//	}
 	
 }
