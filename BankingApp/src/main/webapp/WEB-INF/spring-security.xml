@@ -75,16 +75,16 @@
 	<beans:bean id = "myAuthentication" class = "com.group10.controllers.security.MyAuthentication">
 				<beans:property name = "userDetailsService" ref="customUserDetailsService"/>	
 			 	<beans:property name = "userDetails" ref="loginAttemptsDaoImpl"/>
+				<beans:property name = "passwordEncoder" ref="customPasswordEncoder"/>
 	</beans:bean>
 
-	<bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<property name="userDetailsService" ref="yourJdbcUserService" />
-		<property name="passwordEncoder" ref="encoder" />
-	</bean>
+	<beans:bean id="customPasswordEncoder" class="com.group10.controllers.security.CustomPasswordEncoder" >
+	</beans:bean>
 	
 	<authentication-manager>
-		<authentication-provider
-			ref = "myAuthentication"/>
+		<authentication-provider ref = "myAuthentication">
+
+		</authentication-provider>
 	</authentication-manager>
 			
 </beans:beans>
