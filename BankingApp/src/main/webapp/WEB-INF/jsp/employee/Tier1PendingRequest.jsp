@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 	<title>Tier 1 Pending Request Management</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -33,7 +33,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 <nav class="navbar navbar-default">
@@ -55,7 +55,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -78,7 +78,7 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-                        	<c:choose>			      
+                        	<c:choose>
 
 					    	<c:when test="${empty pending_list}">
                         			<tr>
@@ -95,7 +95,7 @@
 											<td>${transaction.amount}</td>
 											<td>${transaction.description}</td>
 											<td>
-												<form action = "/BankingApp/employee/tier1req" method = "post">
+												<form action = "/BankingApp/employee/Tier1PendingRequest" method = "post">
 		                                    	<input type="hidden" name="requestID" value="${transaction.id}">
 		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
@@ -108,10 +108,10 @@
 		                                   		</form>
 											</td>
                                 		</tr>
-                        				            
+
                             		</c:forEach>
                         		</c:otherwise>
-                        	</c:choose>			      
+                        	</c:choose>
 					    </tbody>
 					  </table>
 			</div>

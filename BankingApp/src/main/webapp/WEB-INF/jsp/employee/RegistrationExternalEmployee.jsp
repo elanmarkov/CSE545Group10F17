@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html> 
+<html>
 <head>
 	<title>Registration</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -32,8 +32,17 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
+
+<nav class="navbar navbar-default">
+	<div class="container">
+		<ul class="nav navbar-nav">
+			<li><a href="/BankingApp/employee/goHome">Home</a></li>
+
+		</ul>
+	</div>
+</nav>
 
 <br>
 
@@ -53,22 +62,21 @@
 
 
 			  		<div class="form-group">
-					<label for="email">Email</label>	      
+					<label for="email">Email</label>
 					<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-						      
+
 					</div>
 
-					
+
 					<div class="form-group">
 						<label for="select">Role</label>
 						        <select class="form-control" name="role" id="designation" required>
 						          <option value="">Please Select</option>
-						          <option value="ROLE_REGULAR">Regular</option>
-						          <option value="ROLE_MANAGER">Manager</option>
-						          <option value="ROLE_ADMIN">Admin</option>
+						          <option value="ROLE_CUSTOMER">Customer</option>
+						          <option value="ROLE_MERCHANT">Manager</option>
 						        </select>
 					</div>
-				  
+
 
 				  <div class="form-group">
 				    <label for="address">Address</label>
@@ -89,7 +97,7 @@
 				    <label for="pincode">Zip Code</label>
 				    <input type="text" class="form-control" id="pincode" name="zipcode" placeholder="Zip Code" required>
 				  </div>
-				  
+
 				  <div class="form-group">
 				    <label for="phone">Phone Number</label>
 				    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
@@ -109,7 +117,7 @@
 				    <label for="username">Username</label>
 				    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
 				  </div> -->
-				  
+
 					<div id = "errorBox" class="form-group"></div>
 				 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
@@ -172,9 +180,9 @@
                 $("#errorBox").html("State can contain only alphabets");
                 return false;
             }
-            
-            
-            
+
+
+
             var filter1 =  /^[0-9]+$/;
 
             if(!filter1.test(pincode))
@@ -198,7 +206,7 @@
                 $("#errorBox").html("Please Enter a Valid date of birth");
                 return false;
             }
-             
+
             var filterssn =  /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/;
             if(!filterssn.test(ssn))
             {
@@ -207,7 +215,7 @@
                 return false;
             }
 
-			
+
 
         ;
 
