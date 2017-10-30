@@ -15,7 +15,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.group10.dbmodels.PendingTransaction;
-import com.group10.dao.otp.SendOTPByMail;
 import com.group10.dbmodels.CompletedTransaction;
 
 public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
