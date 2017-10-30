@@ -70,7 +70,7 @@
 			</div>
 			
 		
-		</ul> -->
+		</ul> --> 
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>

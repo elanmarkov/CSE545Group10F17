@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 	<html lang="en">
 	<head>
 		<title>Tier 2 Search</title>

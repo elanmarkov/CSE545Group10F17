@@ -8,7 +8,7 @@
 			.logo{
 		
 			margin-bottom: 0px;
-			}
+			} 
 			#title{
 				margin: auto;
 				text-align: center;
