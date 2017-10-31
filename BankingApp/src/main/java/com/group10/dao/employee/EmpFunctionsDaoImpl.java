@@ -47,10 +47,14 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
 	}
 
-	public void deleteInternalUser(String employeeId) {
+	public void deleteUser(int employeeId) {
 		// TODO Auto-generated method stub
-		String sql = "delete from users where id="+employeeId;
-		this.getJdbcTemplate().update(sql);
+		String username = this.getJdbcTemplate().queryForObject("select username from users where id="+employeeId, String.class);
+		this.getJdbcTemplate().update("delete from users where id="+employeeId);
+		this.getJdbcTemplate().update("delete from user_login where username='"+username+"'");
+		this.getJdbcTemplate().update("delete from user_login_attempts where username='"+username+"'");
+		this.getJdbcTemplate().update("delete from pii_info where userId=");
+
 	}
 
 	public PII getUserPII(int userID) {
@@ -105,13 +109,12 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 	}
 
 	public void deleteExternalUser(int customerId) {
-		String sql = "delete from users where id="+customerId+" and role in ('ROLE_CUSTOMER','ROLE_MERCHANT')";
-		this.getJdbcTemplate().update(sql);
+
+		deleteUser(customerId);
 	}
 
 	public void deleteInternalUser(int employeeID) {
-		String sql = "delete from users where id="+employeeID+" and role in ('ROLE_ADMIN','ROLE_MANAGER','ROLE_REGULAR')";
-		this.getJdbcTemplate().update(sql);
+		deleteUser(employeeID);
 	}
 
 	public boolean existExternalUser(int customerID) {

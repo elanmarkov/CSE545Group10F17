@@ -281,7 +281,7 @@ public class Admin {
 	}
 
 	@RequestMapping(value = "/admin/deleteInternalUser", method =RequestMethod.POST)
-	public ModelAndView deleteInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeID, RedirectAttributes redir){
+	public ModelAndView deleteInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID, RedirectAttributes redir){
 		try{
 			ModelAndView model = new ModelAndView();
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
