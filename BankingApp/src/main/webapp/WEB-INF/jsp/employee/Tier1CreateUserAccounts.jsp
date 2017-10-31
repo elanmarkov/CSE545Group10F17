@@ -10,7 +10,7 @@
 
 		margin-bottom: 0px;
 		}
- 
+
 		#title{
 			/*color: #FAEBD7;*/
 			margin: auto;
@@ -47,21 +47,15 @@
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
-        	<!-- <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
-	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
-	          </ul>
-        	</li>
-
-        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
-		</ul> -->
-
+			<ul class="nav navbar-nav navbar-right">
+				<form action="/BankingApp/logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<button type="submit" class="btn btn-default navbar-btn">Log out</button>
+				</form>
+			</ul>
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 
 		</ul>
 	</div>

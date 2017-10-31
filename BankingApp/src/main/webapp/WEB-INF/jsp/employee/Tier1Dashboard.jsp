@@ -4,10 +4,10 @@
 	<title>Tier 1 Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="login.css"> -->
-	
+
 	<style type="text/css">
 		.logo{
-	
+
 		margin-bottom: 0px;
 		}
 
@@ -25,8 +25,8 @@
 			visibility: hidden;
 		}
 
-		
-		
+
+
 	</style>
 
 
@@ -37,7 +37,7 @@
 <div class="jumbotron logo">
 	<div class="container">
 	  <h2 id="title">GROUP10 BANK</h2>
-	</div>	
+	</div>
 </div>
 
 
@@ -48,22 +48,17 @@
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="/BankingApp/employee/Tier1Dashboard">Home</a></li>
-        	<!-- <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
-	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
-	          </ul>
-        	</li>
-
-        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
-		</ul> -->
-
+			
+			<ul class="nav navbar-nav navbar-right">
+				<form action="/BankingApp/logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<button type="submit" class="btn btn-default navbar-btn">Log out</button>
+				</form>
+			</ul>
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -84,8 +79,8 @@
 			  <a href="/BankingApp/employee/Tier1CreateUserAccounts"><button type="button" class="btn btn-default navbar-btn">Create</button></a>
 			</div>
 		</div>
- 
-		
+
+
 	</div>
 </div>
 
@@ -97,7 +92,7 @@
 			  <a href="/BankingApp/employee/Tier1PendingRequest"><button type="button" class="btn btn-default navbar-btn">View Details</button></a>
 			</div>
 		</div>
-		
+
 		<div class="col-lg-6">
 			<div class="jumbotron">
 			  <h3>Transaction Management</h3>
@@ -115,7 +110,7 @@
 </div>
 
 
- 
+
 
 
 

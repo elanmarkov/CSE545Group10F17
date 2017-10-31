@@ -68,8 +68,14 @@
 
 
 		<ul class="nav navbar-nav navbar-right">
+			<form action="/BankingApp/logout" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<button type="submit" class="btn btn-default navbar-btn">Log out</button>
+			</form>
+		</ul>
+		
+		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/customer/profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="#"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		</ul>
 	</div>
 </nav>
@@ -108,13 +114,13 @@
 							  <!-- <option value="">--please select the account transfer from--</option> -->
 							  <c:choose>
                         		<c:when test="${not empty savings}">
-									<option value="${savings.accountNumber}">Savings ${savings.accountNumber}</option>
+									<option value="${savings.accountNumber}">Savings ${savings.accountNumber} - balance: ${savings.balance}</option>
 								</c:when>
 	  	                      </c:choose>
 
 	  	                      <c:choose>
                         		<c:when test="${not empty checking}">
-							  		<option value="${checking.accountNumber}">Checking ${checking.accountNumber}</option>
+							  		<option value="${checking.accountNumber}">Checking ${checking.accountNumber} - balance: ${checking.balance}</option>
                         		</c:when>
                     		  </c:choose>
 									<c:choose>

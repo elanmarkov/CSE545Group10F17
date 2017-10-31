@@ -32,7 +32,7 @@
 		<intercept-url pattern="/depositMoney" access = "hasRole('ROLE_CUSTOMER')"/>
 
 		<form-login
-	        login-page="/login"
+	        login-page="/login/Login"
 	        login-processing-url="/j_spring_security_check"
 	        username-parameter="username"
             password-parameter="password"
@@ -42,7 +42,7 @@
        <session-management invalid-session-url="/login" session-fixation-protection="newSession" >
 		   	<concurrency-control  max-sessions="100" error-if-maximum-exceeded="true" />
 		</session-management>
-		<logout logout-success-url="/login/Logout" delete-cookies="JSESSIONID" invalidate-session="true"/>
+		<logout logout-success-url="/login" delete-cookies="JSESSIONID" invalidate-session="true"/>
 	<csrf />
 	</http>
 	

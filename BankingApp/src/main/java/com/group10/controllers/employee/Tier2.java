@@ -199,7 +199,7 @@ public class Tier2 {
 
 	@RequestMapping(value = "/tier2/searchInternalUser", method =RequestMethod.POST)
 	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID/*, RedirectAttributes redir*/){
-//		try{
+		try{
 
 			ModelAndView model =new ModelAndView();
 
@@ -220,11 +220,11 @@ public class Tier2 {
 			model.setViewName("/employee/Tier2SearchUser");
 			ctx.close();
 			return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-*/
+
 	}
 
 	@RequestMapping(value = "/tier2/searchExternalUser", method =RequestMethod.POST)

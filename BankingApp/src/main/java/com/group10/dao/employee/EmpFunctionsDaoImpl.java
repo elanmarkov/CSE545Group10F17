@@ -133,9 +133,18 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 
 	public boolean existTier1User(int employeeID) {
 		// TODO Auto-generated method stub
-		String sql = "select count(*) from users where id="+employeeID+" and role='ROLE_REGULAR";
-		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
+		String sql = "select count(*) from users where id=" + employeeID + " and role='ROLE_REGULAR";
+		try {
+			Integer count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
+			if (count >= 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
 		}
+	}
 
 	public User getTier1User(int employeeID) {
 		// TODO Auto-generated method stub

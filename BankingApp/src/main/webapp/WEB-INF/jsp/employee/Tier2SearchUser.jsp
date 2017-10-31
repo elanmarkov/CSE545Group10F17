@@ -1,12 +1,12 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 	<html lang="en">
 	<head>
 		<title>Tier 2 Search</title>
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		
+
 		<style type="text/css">
 			.logo{
-		
+
 			margin-bottom: 0px;
 			}
 			#title{
@@ -29,7 +29,7 @@
 	<div class="jumbotron logo">
 		<div class="container">
 		  <h2 id="title">GROUP10 BANK</h2>
-		</div>	
+		</div>
 	</div>
 
 
@@ -37,21 +37,16 @@
 	<div class="container">
 		<ul class="nav navbar-nav">
 			<li><a href="/BankingApp/employee/Tier2Dashboard">Home</a></li>
-        	<!-- <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Create User<span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="/BankingApp/employee/RegistrationInternalEmployee">Internal</a></li>
-	            <li><a href="/BankingApp/employee/RegistrationExternalEmployer">External</a></li>
-	          </ul>
-        	</li>
 
-        	<li><a href="/BankingApp/employee/PendingRequestManagement">Pending Request</a></li>
-		</ul> -->
-
+			<ul class="nav navbar-nav navbar-right">
+				<form action="/BankingApp/logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<button type="submit" class="btn btn-default navbar-btn">Log out</button>
+				</form>
+			</ul>
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/login/Logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 		
 		</ul>
 	</div>
@@ -62,7 +57,7 @@
 <div class="container" id="loginBox">
 	<div class="row">
 		<div class="col-lg-16">
-			<div class="jumbotron">		
+			<div class="jumbotron">
 				<h3><strong>Search Employee</strong></h3>
 					<form class="form-margin" action = "/BankingApp/tier2/searchInternalUser" method = "post">
 		            	<div>
@@ -74,7 +69,7 @@
 			       		<button type="submit" class="btn btn-sm btn-primary">Search Employee</button>
 				     </form>
 
-	
+
 					  <table class="table table-hover">
 						    <thead>
 						      <tr>
@@ -119,7 +114,7 @@
 <div class="container" id="loginBox">
 	<div class="row">
 		<div class="col-lg-16">
-			<div class="jumbotron">		
+			<div class="jumbotron">
 				<h3><strong>Search Customer</strong></h3>
 
 				<form class="form-margin" action = "/BankingApp/tier2/SearchExternalUser" method = "post">
@@ -172,7 +167,7 @@
 	                        		</c:otherwise>
 	                        	</c:choose>
 
-						    			      
+
 						    </tbody>
 	                    </table>
 	                </div>

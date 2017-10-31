@@ -38,10 +38,15 @@
 		<ul class="nav navbar-nav">
 			<li><a href="/BankingApp/employee/goHome">Home</a></li>
 
+			<ul class="nav navbar-nav navbar-right">
+				<form action="/BankingApp/logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<button type="submit" class="btn btn-default navbar-btn">Log out</button>
+				</form>
+			</ul>
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier1Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-			<a href="/BankingApp/logout"><button type="button" class="btn btn-default navbar-btn">Log out</button></a>
 
 		</ul>
 	</div>

@@ -11,4 +11,10 @@ public class WelcomeController {
 	public ModelAndView mymethod(){
 		return new ModelAndView("welcomepage");
 	}
+
+	@RequestMapping("/")
+	public ModelAndView loginRedirect(){
+		return new ModelAndView("redirect:/login");
+	}
+
 }
