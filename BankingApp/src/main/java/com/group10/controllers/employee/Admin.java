@@ -68,11 +68,19 @@ public class Admin {
 		return model;
 	}
 	@RequestMapping("/employee/SystemLogs")
-	public ModelAndView SystemLogs(){
+	public ModelAndView SystemLogs(HttpServletRequest request) throws Exception{
 		ModelAndView model = new ModelAndView();
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		LogsDaoImpl ldao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
+		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		setGlobals(request);
+		User user = fdao.getUser(userID); //adminID
 		List<DbLogs> loglist = ldao.getAllLogs();
+		for(int i = 0; i < loglist.size(); i++)
+		{
+			String signed = user.signTimestamp(loglist.get(i).getStamp());
+			ldao.saveLogs("TSA signing timestamp", signed.substring(0,128), userID, "Admin");
+		}
 		model.addObject("loglist", loglist);
 		model.setViewName("/employee/SystemLogs");
 		return model;
@@ -89,7 +97,7 @@ public class Admin {
 	}
 */
 	@RequestMapping(value = "/employee/internalreg", method =RequestMethod.POST)
-	public ModelAndView InternalRegister(@ModelAttribute("user") User newUser/*, RedirectAttributes redir*/){
+	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser/*, RedirectAttributes redir*/) throws Exception{
 	//	try{
 				ModelAndView model = new ModelAndView();
 
@@ -131,7 +139,13 @@ public class Admin {
 		if(isValidated){
 			OneTimePasswordDao otpDao = ctx.getBean("OneTimePasswordDao",OneTimePasswordDao.class);
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
+			
+			//encrypt PII
+			setGlobals(request);
+			User user = edao.getUser(userID);
+			ssn = user.encryptPII(ssn);
+			dob = user.encryptPII(dob);
+			
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
 			String password = encoder.encode(rawPassword); //change password upon first login
@@ -209,6 +223,11 @@ public class Admin {
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);
 			PII pii = fdao.getUserPII(userId);
+			//decrypt PII
+			setGlobals(request);
+			User admin = fdao.getUser(userID);
+			pii.setSsn(admin.decryptPII(pii.getSsn(), admin.getPublicKey()));
+			pii.setDob(admin.decryptPII(pii.getDob(), admin.getPublicKey()));
 			model.addObject("pii",pii);
 			model.setViewName("/employee/AdminUserDetails");
 			ldao.saveLogs("Modified internal account", "for"+userId, userID, "internal");
@@ -269,6 +288,13 @@ public class Admin {
 			ldao.saveLogs("Accessed details of employee", ""+employeeID, userID, "internal");
 			User user = fdao.getUser(employeeID);
 			PII pii = fdao.getUserPII(employeeID);
+			
+			//decrypt PII
+			setGlobals(request);
+			User admin = fdao.getUser(userID);
+			pii.setSsn(admin.decryptPII(pii.getSsn(), admin.getPublicKey()));
+			pii.setDob(admin.decryptPII(pii.getDob(), admin.getPublicKey()));
+			
 			model.addObject("pii", pii);
 			model.addObject("user",user);
 
@@ -310,6 +336,11 @@ public class Admin {
 			ldao.saveLogs("Accessed details of employee", ""+userID, userID, "internal");
 			User user = fdao.getUser(userID);
 			PII pii = fdao.getUserPII(userID);
+			//decrypt PII
+			setGlobals(request);
+			User admin = fdao.getUser(userID);
+			pii.setSsn(admin.encryptPII(pii.getSsn()));
+			pii.setDob(admin.encryptPII(pii.getDob()));
 			model.addObject("pii", pii);
 			model.addObject("user",user);
 
@@ -322,7 +353,7 @@ public class Admin {
 	}
 
 	@RequestMapping("/employee/AdminProfile")
-	public ModelAndView AdminProfilePage(HttpServletRequest request){
+	public ModelAndView AdminProfilePage(HttpServletRequest request) throws Exception{
 
 		userID = (Integer) request.getSession().getAttribute("userID");
 
@@ -335,6 +366,11 @@ public class Admin {
 		User user = fdao.getUser(userID);
 		model.addObject("user",user);
 		PII pii = fdao.getUserPII(userID);
+		//decrypt PII
+		setGlobals(request);
+		User admin = fdao.getUser(userID);
+		pii.setSsn(admin.encryptPII(pii.getSsn()));
+		pii.setDob(admin.encryptPII(pii.getDob()));
 		model.addObject("pii", pii);
 		//redir.addFlashAttribute("error_msg","Employee Found");
 		model.setViewName("/employee/AdminUserDetails");
@@ -358,6 +394,11 @@ public class Admin {
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);
 			PII pii = fdao.getUserPII(userId);
+			//decrypt PII
+			setGlobals(request);
+			User admin = fdao.getUser(userID);
+			pii.setSsn(admin.encryptPII(pii.getSsn()));
+			pii.setDob(admin.encryptPII(pii.getDob()));
 			model.addObject("pii",pii);
 			model.setViewName("/employee/AdminProfile");
 			ldao.saveLogs("Modified Admin account details", "for"+userId, userID, "internal");
