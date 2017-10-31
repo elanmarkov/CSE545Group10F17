@@ -49,7 +49,7 @@
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/employee/Tier2Profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
-		
+
 		</ul>
 	</div>
 </nav>
@@ -93,33 +93,7 @@
 		</div>
 	</div>
 
-	<!-- <div class="row">
-		<div class="col-lg-14">
-			<div class="jumbotron">
-			<h3><strong>PII Information</strong></h3>
-				<table class="table table-hover">
-					    <thead>
-					      <tr>
-					           <th>SSN</th>
-                               <th>Date of Birth</th>
-					      </tr>
-					    </thead>
 
-					      <tbody>
-        					<tr>
-	                    		<td>${user.ssn}</td>
-                    			<td>${user.dateOfBirth}</td>
-
-	                		</tr>
-
-	                </tbody>
-				  </table>
-
-
-
-			</div>
-		</div>
-	</div> -->
 
 </div>
 

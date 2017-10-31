@@ -41,9 +41,9 @@ public class Admin {
 	}
 
 	@ExceptionHandler(HandlerClass.class)
-    public String handleResourceNotFoundException() {
-        return "redirect:/exception";
-    }
+	public String handleResourceNotFoundException() {
+		return "redirect:/exception";
+	}
 
 	@RequestMapping("/employee/RegistrationInternalEmployee")
 	public  ModelAndView InternalRegisterform(){
@@ -68,19 +68,11 @@ public class Admin {
 		return model;
 	}
 	@RequestMapping("/employee/SystemLogs")
-	public ModelAndView SystemLogs(HttpServletRequest request) throws Exception{
+	public ModelAndView SystemLogs(){
 		ModelAndView model = new ModelAndView();
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		LogsDaoImpl ldao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
-		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-		setGlobals(request);
-		User user = fdao.getUser(userID); //adminID
 		List<DbLogs> loglist = ldao.getAllLogs();
-		for(int i = 0; i < loglist.size(); i++)
-		{
-			String signed = user.signTimestamp(loglist.get(i).getStamp());
-			ldao.saveLogs("TSA signing timestamp", signed.substring(0,128), userID, "Admin");
-		}
 		model.addObject("loglist", loglist);
 		model.setViewName("/employee/SystemLogs");
 		return model;
@@ -90,12 +82,12 @@ public class Admin {
 	public ModelAndView AdminSearchUser(){
 		return new ModelAndView("/employee/AdminSearchUser");
 	}
-/*
+
 	@RequestMapping("/employee/AdminUserDetails")
 	public ModelAndView AdminUserDetails(){
 		return new ModelAndView("/employee/AdminUserDetails");
 	}
-*/
+
 	@RequestMapping(value = "/employee/internalreg", method =RequestMethod.POST)
 	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser/*, RedirectAttributes redir*/) throws Exception{
 	//	try{
@@ -139,13 +131,13 @@ public class Admin {
 		if(isValidated){
 			OneTimePasswordDao otpDao = ctx.getBean("OneTimePasswordDao",OneTimePasswordDao.class);
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			
+
 			//encrypt PII
 			setGlobals(request);
 			User user = edao.getUser(userID);
 			ssn = user.encryptPII(ssn);
 			dob = user.encryptPII(dob);
-			
+
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
 			String password = encoder.encode(rawPassword); //change password upon first login
@@ -178,25 +170,25 @@ public class Admin {
 
 	@RequestMapping(value = "/employee/adminPendingRequest", method =RequestMethod.POST)
 	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") int requestId, @RequestParam("requestDecision") String reqDecision,
-			@RequestParam("userId") int userId/*,RedirectAttributes redir*/){
+										@RequestParam("userId") int userId/*,RedirectAttributes redir*/){
 
-	//	try{
-			ModelAndView model = new ModelAndView();
+		//	try{
+		ModelAndView model = new ModelAndView();
 
-			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-			ldao.saveLogs("pending request", reqDecision, userId, "internal");
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+		ldao.saveLogs("pending request", reqDecision, userId, "internal");
 
-			if(reqDecision.equals("approve"))
-				fdao.approveAdminRequest(requestId);
-			else
-				fdao.deletePendingRequest(requestId);
+		if(reqDecision.equals("approve"))
+			fdao.approveAdminRequest(requestId);
+		else
+			fdao.deletePendingRequest(requestId);
 		//	redir.addFlashAttribute("error_msg","Request"+reqDecision);
-			model.setViewName("/employee/AdminPendingRequest");
-			ldao.saveLogs("internal request"+reqDecision, "for"+userId, userID, "internal");
-			ctx.close();
-			return model;
+		model.setViewName("/employee/AdminPendingRequest");
+		ldao.saveLogs("internal request"+reqDecision, "for"+userId, userID, "internal");
+		ctx.close();
+		return model;
 /*
 		}catch(Exception e){
 			throw new HandlerClass();
@@ -206,8 +198,8 @@ public class Admin {
 
 	@RequestMapping(value = "/employee/adminModify", method =RequestMethod.POST)
 	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
-			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
-			 @RequestParam("id") int userId,RedirectAttributes redir){
+										@RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
+										@RequestParam("id") int userId,RedirectAttributes redir){
 		try{
 			ModelAndView model = new ModelAndView();
 
@@ -223,11 +215,6 @@ public class Admin {
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);
 			PII pii = fdao.getUserPII(userId);
-			//decrypt PII
-			setGlobals(request);
-			User admin = fdao.getUser(userID);
-			pii.setSsn(admin.decryptPII(pii.getSsn(), admin.getPublicKey()));
-			pii.setDob(admin.decryptPII(pii.getDob(), admin.getPublicKey()));
 			model.addObject("pii",pii);
 			model.setViewName("/employee/AdminUserDetails");
 			ldao.saveLogs("Modified internal account", "for"+userId, userID, "internal");
@@ -242,32 +229,35 @@ public class Admin {
 
 
 	@RequestMapping(value = "/admin/searchInternalUser", method =RequestMethod.POST)
-	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeEmail/*, RedirectAttributes redir*/){
+	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID/*, RedirectAttributes redir*/){
 //		try{
 
-			ModelAndView model =new ModelAndView();
+		ModelAndView model =new ModelAndView();
 
-			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
+		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
         /*
          * write the dao code for admin approval
          */
-			if(fdao.existInternalUserByEmail(employeeEmail))
-			{
-				ldao.saveLogs("searched for internal user", ""+employeeEmail, userID, "internal");
-				User employeeObj = fdao.getInternalUserByEmail(employeeEmail);
-				model.addObject("user",employeeObj);
-				//redir.addFlashAttribute("error_msg","Employee Found");
-				model.setViewName("/employee/AdminSearchUser");
-			}
-			else{
-				//redir.addFlashAttribute("error_msg","Employee Not Found");
-				model.setViewName("/employee/AdminSearchUser");
-			}
-			ctx.close();
-			return model;
+		if(fdao.existInteralUser(employeeID))
+		{
+			ldao.saveLogs("searched for internal user", ""+employeeID, userID, "internal");
+			User employeeObj = fdao.getUser(employeeID);
+			model.addObject("employeeObj",employeeObj);
+			PII pii = fdao.getUserPII(employeeID);
+			model.addObject("pii", pii);
+			model.addObject("user",employeeObj);
+			//redir.addFlashAttribute("error_msg","Employee Found");
+			model.setViewName("/employee/AdminSearchUser");
+		}
+		else{
+			//redir.addFlashAttribute("error_msg","Employee Not Found");
+			model.setViewName("/employee/AdminSearchUser");
+		}
+		ctx.close();
+		return model;
 /*
 		}catch(Exception e){
 			throw new HandlerClass();
@@ -276,7 +266,7 @@ public class Admin {
 	}
 
 
-	@RequestMapping(value = "/employee/showAccountDetails", method =RequestMethod.POST)
+	@RequestMapping(value = "/admin/showAccountDetails", method =RequestMethod.POST)
 	public ModelAndView showAccountDetails(HttpServletRequest request, @RequestParam("employeeID") int employeeID, RedirectAttributes redir){
 
 		try{
@@ -288,17 +278,10 @@ public class Admin {
 			ldao.saveLogs("Accessed details of employee", ""+employeeID, userID, "internal");
 			User user = fdao.getUser(employeeID);
 			PII pii = fdao.getUserPII(employeeID);
-			
-			//decrypt PII
-			setGlobals(request);
-			User admin = fdao.getUser(userID);
-			pii.setSsn(admin.decryptPII(pii.getSsn(), admin.getPublicKey()));
-			pii.setDob(admin.decryptPII(pii.getDob(), admin.getPublicKey()));
-			
 			model.addObject("pii", pii);
 			model.addObject("user",user);
 
-			model.setViewName("/employee/AdminSearchUserDetails");
+			model.setViewName("/employee/AdminUserDetails");
 			ctx.close();
 			return model;
 		}catch(Exception e){
@@ -315,48 +298,18 @@ public class Admin {
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 			fdao.deleteInternalUser(employeeID);
 			ldao.saveLogs("deleted internal user", ""+employeeID, userID, "internal");
-			model.setViewName("/employee/AdminSearchUser");
-			ctx.close();
-			return model;
-
-		}catch(Exception e){
-			throw new HandlerClass();
-		}
-
-	}
-
-	@RequestMapping("/employee/AdminUserDetails")
-	public ModelAndView AdminUserDetails(HttpServletRequest request, RedirectAttributes redir){
-		try{
-			ModelAndView model = new ModelAndView();
-			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-
-			ldao.saveLogs("Accessed details of employee", ""+userID, userID, "internal");
-			User user = fdao.getUser(userID);
-			PII pii = fdao.getUserPII(userID);
-			//decrypt PII
-			setGlobals(request);
-			User admin = fdao.getUser(userID);
-			pii.setSsn(admin.encryptPII(pii.getSsn()));
-			pii.setDob(admin.encryptPII(pii.getDob()));
-			model.addObject("pii", pii);
-			model.addObject("user",user);
-
 			model.setViewName("/employee/AdminUserDetails");
 			ctx.close();
 			return model;
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
+
 	}
 
 	@RequestMapping("/employee/AdminProfile")
-	public ModelAndView AdminProfilePage(HttpServletRequest request) throws Exception{
-
-		userID = (Integer) request.getSession().getAttribute("userID");
-
+	public ModelAndView AdminProfilePage(HttpServletRequest request){
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
@@ -366,21 +319,16 @@ public class Admin {
 		User user = fdao.getUser(userID);
 		model.addObject("user",user);
 		PII pii = fdao.getUserPII(userID);
-		//decrypt PII
-		setGlobals(request);
-		User admin = fdao.getUser(userID);
-		pii.setSsn(admin.encryptPII(pii.getSsn()));
-		pii.setDob(admin.encryptPII(pii.getDob()));
 		model.addObject("pii", pii);
 		//redir.addFlashAttribute("error_msg","Employee Found");
-		model.setViewName("/employee/AdminUserDetails");
+		model.setViewName("/employee/AdminProfile");
 		return model;
 	}
 
 	@RequestMapping(value = "/employee/AdminModify", method =RequestMethod.POST)
 	public ModelAndView ModifyPersonal(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
-			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
-			 @RequestParam("id") int userId,RedirectAttributes redir){
+									   @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
+									   @RequestParam("id") int userId,RedirectAttributes redir){
 		try{
 			ModelAndView model = new ModelAndView();
 
@@ -394,14 +342,9 @@ public class Admin {
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);
 			PII pii = fdao.getUserPII(userId);
-			//decrypt PII
-			setGlobals(request);
-			User admin = fdao.getUser(userID);
-			pii.setSsn(admin.encryptPII(pii.getSsn()));
-			pii.setDob(admin.encryptPII(pii.getDob()));
 			model.addObject("pii",pii);
 			model.setViewName("/employee/AdminProfile");
-			ldao.saveLogs("Modified Admin account details", "for"+userId, userID, "internal");
+			ldao.saveLogs("Modified Adnmin account details", "for"+userId, userID, "internal");
 
 			ctx.close();
 			return model;
@@ -410,4 +353,6 @@ public class Admin {
 			throw new HandlerClass();
 		}
 	}
+
+
 }

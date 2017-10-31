@@ -202,7 +202,7 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 	
 	public boolean checkPendingTransactionIDValidity(String transactionID, int userId) {
 		
-		String sql = "SELECT count(*) FROM pending_transactions WHERE (userId = "+userId+" AND transactionID = "+transactionID+")";
+		String sql = "SELECT count(*) FROM pending_transactions WHERE id = "+transactionID;
 		
 		Integer count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
 		
