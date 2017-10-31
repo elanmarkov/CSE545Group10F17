@@ -62,7 +62,7 @@ public class Tier2 {
 	}
 
 	@RequestMapping("/employee/externalreg")
-	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser, RedirectAttributes redir){
+	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser, RedirectAttributes redir) throws Exception{
 //		try{
 				ModelAndView model = new ModelAndView();
 
@@ -110,6 +110,12 @@ public class Tier2 {
 			String password = encoder.encode(rawPassword);
 
 			//Set Info
+			//encrypt PII
+			setGlobals(request);
+			User user = edao.getUser(userID);
+			ssn = user.encryptPII(ssn);
+			dob = user.encryptPII(dob);
+			
 			udao.setExternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, email);
 			udao.setLoginDetails(email, password, role, email);
 			udao.setLoginAttempts(email, 0);
@@ -199,7 +205,7 @@ public class Tier2 {
 
 	@RequestMapping(value = "/tier2/searchInternalUser", method =RequestMethod.POST)
 	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID/*, RedirectAttributes redir*/){
-		try{
+//		try{
 
 			ModelAndView model =new ModelAndView();
 
@@ -220,11 +226,11 @@ public class Tier2 {
 			model.setViewName("/employee/Tier2SearchUser");
 			ctx.close();
 			return model;
-
+/*
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-
+*/
 	}
 
 	@RequestMapping(value = "/tier2/searchExternalUser", method =RequestMethod.POST)
