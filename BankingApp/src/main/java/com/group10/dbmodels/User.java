@@ -159,7 +159,7 @@ public class User {
 
 		byte[] signature = privateSignature.sign();
 
-		return new String(Base64.encodeBase64(signature);
+		return new String(Base64.encodeBase64(signature));
 	}
 
 	public boolean verifyTimestamp(String plainText, String signature, PublicKey publicKey) throws Exception {
