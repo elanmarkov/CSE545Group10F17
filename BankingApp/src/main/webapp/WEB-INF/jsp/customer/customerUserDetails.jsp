@@ -65,7 +65,7 @@
 				<button type="submit" class="btn btn-default navbar-btn">Log out</button>
 			</form>
 		</ul>
-		
+
 
 		<ul class="nav navbar-nav navbar-right">
 			<a href="/BankingApp/customer/profile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
@@ -105,7 +105,7 @@
                         </tbody>
 					  </table>
 				<a href="#modifyaccount" class="btn btn-default"  data-toggle="modal">Modify Account</a>
-				<a href="#changepassword" class="btn btn-default" data-toggle="modal">Change Password</a>
+				<a href="/BankingApp/login/ChangePassword" class="btn btn-default" data-toggle="modal">Change Password</a>
 
 			</div>
 		</div>
@@ -155,6 +155,7 @@
 
 					  <button type="submit" class="btn btn-default" id="submitForm" onclick="Validate()" value="Submit">Submit</button>
 
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			  </form>
 
         </div>
@@ -166,7 +167,7 @@
     </div>
 
 </div>
-
+<%--
 <div class="modal fade" id="changepassword" role="dialog">
     <div class="modal-dialog">
 
@@ -208,7 +209,7 @@
 
     </div>
 
-</div>
+</div> --%>
 
 
 

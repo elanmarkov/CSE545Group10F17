@@ -257,7 +257,7 @@ public class Admin {
 	}
 
 
-	@RequestMapping(value = "/employee/AdminUserDetails", method =RequestMethod.POST)
+	@RequestMapping(value = "/employee/showAccountDetails", method =RequestMethod.POST)
 	public ModelAndView showAccountDetails(HttpServletRequest request, @RequestParam("employeeID") int employeeID, RedirectAttributes redir){
 
 		try{

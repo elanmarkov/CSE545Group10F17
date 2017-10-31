@@ -148,7 +148,7 @@
 									</tbody>
 									</table>
 
-							<a href="/BankingApp/customer/downloadCheckings"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
+							<a href="/BankingApp/customer/downloadCheckings"><button type="button" class="btn btn-default">Download Statements</button></a>
 						</div>
 				</div>
 
@@ -212,14 +212,13 @@
 									</tbody>
 									</table>
 
-							<a href="/BankingApp/customer/downloadSavings"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
+							<a href="/BankingApp/customer/downloadSavings"><button type="button" class="btn btn-default">Download Statements</button></a>
 		</div>
 	</div>
 
 	<div id="creditCard" class="tab-pane fade">
 		<p><strong><h4>Credit Card Number: <span>${credit.accountNumber}</span></h4></strong></p>
 		<p><strong><h4>Current Amount Due: $<span>${credit.currentAmountDue}</span></h4></strong></p>
-		<a href="/BankingApp/customer/payCredit"><button type="button" class="btn btn-default">Make Payment</button></a>
 		<br>
 		<div>
 			<p><h4>Pending Transactions</h4></p>
@@ -278,7 +277,7 @@
 									</tbody>
 									</table>
 
-							<a href="/BankingApp/customer/downloadCredit"><button type="button" class="btn btn-default">Download Statements (need to be updated)</button></a>
+							<a href="/BankingApp/customer/downloadCredit"><button type="button" class="btn btn-default">Download Statements</button></a>
 		</div>
 	</div>
 
