@@ -1,0 +1,21 @@
+-- Plaintext password: abcXYZ123!
+INSERT INTO user_login (username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked) VALUES ("admin@ss.com", "a0a1c1fd5bd5302996afd263581a22cf8aadcea2588018a617f5ab100c7c2c84", 1, "ROLE_ADMIN", 1, 1, 1, 1);
+INSERT INTO users (id, name, role, address, city, state, country, zipcode, phone, email) VALUES (0, 'Admin Istrator', 'ROLE_ADMIN', '123 Administrator Street', 'Temple', 'AZ', 'United States', '85281', '123-456-7890', 'admin@ss.com');
+INSERT INTO user_login_attempts (username, attempts) VALUES ('admin@ss.com', 0);
+INSERT INTO pii_info (id, userID, dob, ssn) VALUES (0, 1, '1-1-1970', '123-45-6789');
+INSERT INTO user_login (username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked) VALUES ("manager@ss.com", "a0a1c1fd5bd5302996afd263581a22cf8aadcea2588018a617f5ab100c7c2c84", 1, "ROLE_MANAGER", 1, 1, 1, 1);
+INSERT INTO users (id, name, role, address, city, state, country, zipcode, phone, email) VALUES (0, 'Man Ager', 'ROLE_MANAGER', '456 Management Street', 'Temple', 'AZ', 'United States', '85281', '123-456-7890', 'manager@ss.com');
+INSERT INTO user_login_attempts (username, attempts) VALUES ('manager@ss.com', 0);
+INSERT INTO pii_info (id, userID, dob, ssn) VALUES (0, 2, '1-1-1970', '123-45-6789');
+INSERT INTO user_login (username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked) VALUES ("regular@ss.com", "a0a1c1fd5bd5302996afd263581a22cf8aadcea2588018a617f5ab100c7c2c84", 1, "ROLE_REGULAR", 1, 1, 1, 1);
+INSERT INTO users (id, name, role, address, city, state, country, zipcode, phone, email) VALUES (0, 'Regular Employee', 'ROLE_REGULAR', '789 Employee Street', 'Temple', 'AZ', 'United States', '85281', '123-456-7890', 'regular@ss.com');
+INSERT INTO user_login_attempts (username, attempts) VALUES ('regular@ss.com', 0);
+INSERT INTO pii_info (id, userID, dob, ssn) VALUES (0, 3, '1-1-1970', '123-45-6789');
+INSERT INTO user_login (username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked) VALUES ("merchant@ss.com", "a0a1c1fd5bd5302996afd263581a22cf8aadcea2588018a617f5ab100c7c2c84", 1, "ROLE_MERCHANT", 1, 1, 1, 1);
+INSERT INTO users (id, name, role, address, city, state, country, zipcode, phone, email) VALUES (0, 'Merchant', 'ROLE_MERCHANT', '012 Merchant Street', 'Temple', 'AZ', 'United States', '85281', '123-456-7890', 'merchant@ss.com');
+INSERT INTO user_login_attempts (username, attempts) VALUES ('merchant@ss.com', 0);
+INSERT INTO pii_info (id, userID, dob, ssn) VALUES (0, 4, '1-1-1970', '123-45-6789');
+INSERT INTO user_login (username, password, enabled, role, accountNonExpired, accountNonLocked, credentialsNonExpired, otpNonLocked) VALUES ("customer@ss.com", "a0a1c1fd5bd5302996afd263581a22cf8aadcea2588018a617f5ab100c7c2c84", 1, "ROLE_CUSTOMER", 1, 1, 1, 1);
+INSERT INTO users (id, name, role, address, city, state, country, zipcode, phone, email) VALUES (0, 'Customer', 'ROLE_CUSTOMER', '345 Customer Street', 'Temple', 'AZ', 'United States', '85281', '123-456-7890', 'customer@ss.com');
+INSERT INTO user_login_attempts (username, attempts) VALUES ('customer@ss.com', 0);
+INSERT INTO pii_info (id, userID, dob, ssn) VALUES (0, 5, '1-1-1970', '123-45-6789');
