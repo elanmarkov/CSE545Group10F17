@@ -63,6 +63,16 @@
 	</div>
 </div>
 
+
+
+
+	<div class=container>
+		<c:if test="${not empty error}">
+		    ${error}
+		</c:if>	
+			
+	</div>
+
 <div class="container" id="loginBox">
 	<div class="row">
 		<div class="col-lg-6">

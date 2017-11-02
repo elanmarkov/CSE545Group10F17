@@ -36,7 +36,7 @@ public class LoginAttemptsDaoImpl extends JdbcDaoSupport {
 		this.getJdbcTemplate().update(sql);
 	}
 
-	private boolean isUserExists(String username) {
+	public boolean isUserExists(String username) {
 		String sql = "select count(*) from user_login where username='"+username+"'";
 		return this.getJdbcTemplate().queryForObject(sql,Integer.class)==1?true:false;
 	}

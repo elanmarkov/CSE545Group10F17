@@ -20,7 +20,9 @@ public class MyAuthentication extends DaoAuthenticationProvider {
 			ldao.resetFailAttempts(username);
 			return auth;
 		} catch (BadCredentialsException e) {
-			ldao.updateFailAttempts(username);
+			if(ldao.isUserExists(username)){
+				ldao.updateFailAttempts(username);
+			}
 			throw e;
 		} catch (LockedException e) {
 			String error = "User Locked due to exceeded wrong credentials.";
