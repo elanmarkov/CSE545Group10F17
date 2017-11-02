@@ -23,16 +23,9 @@ public class MyAuthentication extends DaoAuthenticationProvider {
 			ldao.updateFailAttempts(username);
 			throw e;
 		} catch (LockedException e) {
-			String error = "";
-			int userAttempts = ldao.getNoUserAttempts(username);
-			if (userAttempts>3) {
-				ldao.lockUserAccount(username);
-
-			} else {
-				error = e.getMessage();
-			}
-
-			throw new LockedException(error);
+			String error = "User Locked due to exceeded wrong credentials.";
+			
+ 		throw new LockedException(error);
 		}
 	}
 	public LoginAttemptsDaoImpl getUserDetails() {
