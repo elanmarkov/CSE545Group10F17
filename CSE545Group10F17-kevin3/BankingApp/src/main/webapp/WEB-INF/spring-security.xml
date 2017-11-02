@@ -76,8 +76,8 @@
 	<beans:bean id = "myAuthentication" class = "com.group10.controllers.security.MyAuthentication">
 				<beans:property name = "userDetailsService" ref="customUserDetailsService"/>	
 			 	<beans:property name = "userDetails" ref="loginAttemptsDaoImpl"/>
-		<!--  		<beans:property name = "passwordEncoder" ref="customPasswordEncoder"/>
-	-->
+		  		<beans:property name = "passwordEncoder" ref="customPasswordEncoder"/>
+	
 	</beans:bean>
 
 	<beans:bean id="customPasswordEncoder" class="com.group10.controllers.security.CustomPasswordEncoder" >
