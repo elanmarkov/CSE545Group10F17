@@ -20,6 +20,7 @@ import com.group10.dao.customerDashboard.CustomerDashboardDaoImpl;
 import com.group10.dbmodels.CheckingAccount;
 import com.group10.dbmodels.CompletedTransaction;
 import com.group10.dbmodels.CreditAccount;
+import com.group10.dbmodels.CreditCard;
 import com.group10.dbmodels.PendingTransaction;
 import com.group10.dbmodels.SavingsAccount;
 import com.itextpdf.text.Document;
@@ -255,7 +256,7 @@ public class Download {
             int userId=(Integer)request.getSession().getAttribute("userID");
             ClassPathXmlApplicationContext  ctx = new ClassPathXmlApplicationContext("DaoDetails.xml"); 
     	    CustomerDashboardDaoImpl sdao = ctx.getBean("customerDashboardDaoImpl" , CustomerDashboardDaoImpl.class);
-    	    CreditAccount credit = sdao.creditAccountDetails(userId);
+    	    CreditAccount credit = sdao.creditAccount(userId);
 
     	    
     	    List<PendingTransaction> pendingCredit = new ArrayList<PendingTransaction>();

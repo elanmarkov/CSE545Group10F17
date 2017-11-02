@@ -1,12 +1,6 @@
 package com.group10.dbmodels;
 
-import java.math.BigInteger;
-
 public class CreditAccount {
-	private int id;
-	private int userId;
-	private String accountNumber;
-	private double currentAmountDue;
 	public int getId() {
 		return id;
 	}
@@ -25,10 +19,15 @@ public class CreditAccount {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-	public double getCurrentAmountDue() {
-		return currentAmountDue;
+
+	public double getBalance() {
+		return balance;
 	}
-	public void setCurrentAmountDue(double currentAmountDue) {
-		this.currentAmountDue = currentAmountDue;
-	} 
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+	private int id;
+	private int userId;
+	private String accountNumber;
+	private double balance;
 }

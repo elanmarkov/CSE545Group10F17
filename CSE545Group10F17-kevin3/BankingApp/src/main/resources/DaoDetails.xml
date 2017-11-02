@@ -23,10 +23,7 @@
 	  	<property name="password" value="1234"></property> 
 	 </bean>
 	 
-	 <bean id = "jdbcSupport" class="com.group10.dao.JdbcSupport">
-	 	<property name="dataSource" ref="dataSource"/>
-	 </bean>
-	 
+	
 	 <bean id = "logsDaoImpl" class="com.group10.dao.logs.LogsDaoImpl">
 	 	<property name="dataSource" ref="dataSource"/>
 	 </bean>

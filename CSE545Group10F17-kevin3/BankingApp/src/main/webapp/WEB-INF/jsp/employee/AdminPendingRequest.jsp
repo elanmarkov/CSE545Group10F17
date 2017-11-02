@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +42,7 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<ul class="nav navbar-nav">
-			<li><a href="/BankingApp/employee/AdminProfile">Home</a></li>
+			<li><a href="/BankingApp/employee/AdminDashboard">Home</a></li>
 
 			<ul class="nav navbar-nav navbar-right">
 				<form action="/BankingApp/logout" method="post">
@@ -50,7 +52,7 @@
 			</ul>
 
 		<ul class="nav navbar-nav navbar-right">
-			<a href="/BankingApp/employee/AdminUserDetails"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
+			<a href="/BankingApp/employee/AdminProfile"><button type="button" class="btn btn-default navbar-btn">My Profile</button></a>
 
 		</ul>
 	</div>
@@ -60,9 +62,7 @@
 	<div class="row">
 		<div class="col-lg-16">
 			<div class="jumbotron">
-			<div class="panel-body no-padding" style="overflow-y: scroll; max-height:400px;">
 			<h3><strong>Pending Request Management</strong></h3>
-			  <form action="/BankingApp/employee/adminreq" method="post">
 				  <table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -98,6 +98,7 @@
 											<td>
 												<form action = "/BankingApp/employee/adminPendingRequest" method = "post">
 		                                    		<input type="hidden" name="requestID" value="${list.id}">
+ 		                                    		<input type="hidden" name="userId" value="${list.userId}">
 		                                    		<select id="requestType" name="requestDecision" required>
 				       									<option value="">Please Select</option>
 				          								<option value="approve">Approve</option>
@@ -114,7 +115,6 @@
                         	</c:choose>
 					    </tbody>
 					  </table>
-			  </form>
 			</div>
 			</div>
 		</div>

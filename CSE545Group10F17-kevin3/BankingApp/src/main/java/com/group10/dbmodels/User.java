@@ -106,35 +106,33 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	// old stuff
+
 	private PrivateKey getPrivKeyFromStore() throws Exception {
-		//Generated with:
-		// keytool -genkeypair -alias TSAkey -storepass group10store -keypass SSis#1 -keyalg RSA -keystore keystore.jks
-		// CN=TSA, OU=Group10, O=Software Security, L=Phoenix, ST=AZ, C=AZ
-		// We are aware that for optimal security this should not be here but for ease of use and testing we will assume this is secure.
-    	if(this.role.compareTo("USER_ADMIN") == 0) {
-    		FileInputStream is = new FileInputStream("C:\\Users\\Mauricio\\Documents\\school\\CSE 545\\FinalBanking\\CSE545Group10F17\\BankingApp\\src\\main\\java\\com\\group10\\dbmodels\\keystore.jks");
+		if(this.role.compareTo("USER_ADMIN") == 0 ){
+			//Generated with:
+			// keytool -genkeypair -alias TSAkey -storepass group10store -keypass SSis#1 -keyalg RSA -keystore keystore.jks
+			// CN=TSA, OU=Group10, O=Software Security, L=Phoenix, ST=AZ, C=AZ
+			// We are aware that for optimal security this should not be here but for ease of use and testing we will assume this is secure.
+	    	FileInputStream is = new FileInputStream("/home/CSE545Group10F17/BankingApp/src/main/java/com/group10/dbmodels/keystore.jks");
 
-    		KeyStore keyStore = KeyStore.getInstance("JCEKS");
-    		keyStore.load(is, "group10store".toCharArray());   //Keystore password
-    		KeyStore.PasswordProtection keyPassword = new KeyStore.PasswordProtection("SSis#1".toCharArray());    //Key password
+			KeyStore keyStore = KeyStore.getInstance("JCEKS");
+			keyStore.load(is, "group10store".toCharArray());   //Keystore password
+			KeyStore.PasswordProtection keyPassword = new KeyStore.PasswordProtection("SSis#1".toCharArray());    //Key password
 
-    		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("TSAkey", keyPassword);
-    		PrivateKey privateKey = privateKeyEntry.getPrivateKey();
+			KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("TSAkey", keyPassword);
+			PrivateKey privateKey = privateKeyEntry.getPrivateKey();
 
-    		return privateKey;
-    	}
-    	else {
-    		return null;
-    	}
+			return privateKey;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public PublicKey getPublicKey() throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
 	{
-		FileInputStream is = new FileInputStream("C:\\Users\\Mauricio\\Documents\\school\\CSE 545\\FinalBanking\\CSE545Group10F17\\BankingApp\\src\\main\\java\\com\\group10\\dbmodels\\keystore.jks");
+		FileInputStream is = new FileInputStream("/home/CSE545Group10F17/BankingApp/src/main/java/com/group10/dbmodels/keystore.jks");
 		KeyStore keyStore = KeyStore.getInstance("JCEKS");
-		keyStore.load(is, "group10store".toCharArray());   //Keystore password
 		java.security.cert.Certificate cert = keyStore.getCertificate("TSAkey");
 		PublicKey publicKey = cert.getPublicKey();
 		return publicKey;
@@ -176,11 +174,11 @@ public class User {
 
 		byte[] signatureBytes = Base64.decodeBase64(signature);
 		String decyphered = new String(Base64.encodeBase64(signatureBytes));
-		System.out.println("Sig: " + decyphered);
 
 		return publicSignature.verify(signatureBytes);
 	}
-
+	
+	//only admin can see PII and sysLogs
 	public String decryptPII(String plainText, PublicKey publicKey) throws Exception {
 		Cipher encrypt = Cipher.getInstance("RSA");
 		encrypt.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -190,7 +188,6 @@ public class User {
 		return new String(Base64.encodeBase64(cipher));
 	}
 
-	
 	public String encryptPII(String cipherText) throws Exception {
 		byte[] bytes = Base64.decodeBase64(cipherText);
 		PrivateKey privKey = getPrivKeyFromStore();

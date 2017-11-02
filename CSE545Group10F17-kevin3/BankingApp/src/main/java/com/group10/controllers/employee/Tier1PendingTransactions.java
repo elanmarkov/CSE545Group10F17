@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.transaction.ExternalTransactionDaoImpl;
 import com.group10.dbmodels.PendingTransaction;
 
@@ -22,7 +23,7 @@ public class Tier1PendingTransactions {
 
 	@RequestMapping("/employee/Tier1TransactionManagement")
 	public  ModelAndView loadPendingReqPage(HttpServletRequest request){
-
+	try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ModelAndView model = new ModelAndView("/employee/Tier1TransactionManagement");
@@ -31,11 +32,16 @@ public class Tier1PendingTransactions {
 		List<PendingTransaction> trans = extDao.getPendingNonCriticalTransactions();
 		model.addObject("transaction_list", trans);
 		return model;
+	}catch(Exception e){
+		throw new HandlerClass();
+	}
+	
+	
 	}
 	
 	@RequestMapping(value = "/tier1/transactionReview", method = RequestMethod.POST) 
 	public ModelAndView reviewedTransaction(HttpServletRequest request, @RequestParam("transactionID") String transId, @RequestParam("requestDecision") String requestDecision, RedirectAttributes redir) {
-
+		try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 		int reviewerId = userId;
 		String role = (String) request.getSession().getAttribute("role");
@@ -53,11 +59,14 @@ public class Tier1PendingTransactions {
 		
 		ModelAndView model = new ModelAndView("redirect:/employee/Tier1TransactionManagement");
 		return model;
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 	}
 	
 	@RequestMapping(value = "/tier1/transactionNew", method = RequestMethod.POST)
 	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") String fromAccountNumber, @RequestParam("receiverAccountNumber") String toAccountNumber, @RequestParam("amountToAdd") double amount) {
-
+		try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -72,5 +81,8 @@ public class Tier1PendingTransactions {
 		
 		ModelAndView model = new ModelAndView("redirect:/employee/Tier1TransactionManagement");
 		return model;
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 	}
 }

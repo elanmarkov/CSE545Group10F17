@@ -61,9 +61,9 @@ public class Tier2 {
 		return new ModelAndView("/employee/RegistrationExternalEmployee");
 	}
 
-	@RequestMapping("/employee/externalreg")
-	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser, RedirectAttributes redir) throws Exception{
-//		try{
+	@RequestMapping(value ="/employee/externalreg", method =RequestMethod.POST)
+	public ModelAndView ExternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser, RedirectAttributes redir) throws Exception{
+		try{
 				ModelAndView model = new ModelAndView();
 
 		String name = newUser.getName();
@@ -89,15 +89,19 @@ public class Tier2 {
 		{
 			if(validator.validateName(word) == false) {
 				isValidated = false;
-	           redir.addFlashAttribute("error_message",word+" Not Valid");
+				
+	        //   redir.addFlashAttribute("error_message",word+" Not Valid");
 			}
 		}
 
 		//check if the username and phone number are unique
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
 		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-		if(udao.isUnique(username, number, email, "users")==false)
-		{	isValidated = false;
+		if(udao.isUnique(username, number)==false)
+		{	
+			isValidated = false;
+			String error_msg="email/number/username already exists. Select new ones ";
+			model.addObject("error_msg", error_msg);
 			redir.addFlashAttribute("error_message","email/number/username already exists. Select new ones");
 		}
 
@@ -113,36 +117,34 @@ public class Tier2 {
 			//encrypt PII
 			setGlobals(request);
 			User user = edao.getUser(userID);
-			ssn = user.encryptPII(ssn);
-			dob = user.encryptPII(dob);
-			
+						
 			udao.setExternalUser(name, role, address, city, state, country, pincode, number, email, dob, ssn, email);
 			udao.setLoginDetails(email, password, role, email);
 			udao.setLoginAttempts(email, 0);
 
 			// Create OTP and send Email
 			ClassPathXmlApplicationContext ctx2 = new ClassPathXmlApplicationContext("DaoDetails.xml");
-			OneTimePasswordDao odao = ctx2.getBean("OneTimePasswordDao", OneTimePasswordDao.class);
-			String message = odao.checkEmailSendOTP(email);
-
+			
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Successful",userID, "internal");
         	//redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-            model.setViewName("redirect:/employee/goHome");
-
+			role = (String) request.getSession().getAttribute("role");
+            if(role.compareTo("ROLE_MANAGER")==0) {model.setViewName("/employee/Tier2Dashboard");}
+            else {model.setViewName("/employee/Tier1Dashboard");}
+			//model.setViewName("/employee/Tier1Dashboard");
 		}
 		else{
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Failed",userID, "internal");
-            model.setViewName("/employee/RegistrationInternalEmployee");
+            model.setViewName("/employee/RegistrationExternalEmployee");
 		}
 		ctx.close();
-
+		
 		return model;
 
-//		}catch(Exception e){
-//			throw new HandlerClass();
-//		}
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 	}
 
 
@@ -154,7 +156,7 @@ public class Tier2 {
 
 	@RequestMapping("/employee/Tier2PendingRequest")
 	public ModelAndView tier2PendingRequest(){
-
+		try{
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		ModelAndView model = new ModelAndView();
@@ -163,13 +165,16 @@ public class Tier2 {
 		model.setViewName("/employee/Tier2PendingRequest");
 		ctx.close();
 		return model;
+	}catch(Exception e){
+		throw new HandlerClass();
+	}
 	}
 
 	@RequestMapping(value = "/tier2/pendingRequest", method =RequestMethod.POST)
 	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") int requestId, @RequestParam("requestDecision") String reqDecision,
 			@RequestParam("userId") int userId, RedirectAttributes redir){
 
-	//	try{
+		try{
 			ModelAndView model = new ModelAndView();
 
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -185,11 +190,11 @@ public class Tier2 {
 			model.setViewName("/employee/Tier2PendingRequest");
 			ctx.close();
 			return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-*/	}
+	}
 
 
 	@RequestMapping("/employee/Tier2SearchUser")
@@ -204,17 +209,17 @@ public class Tier2 {
 
 
 	@RequestMapping(value = "/tier2/searchInternalUser", method =RequestMethod.POST)
-	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID/*, RedirectAttributes redir*/){
-//		try{
+	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeEmail/*, RedirectAttributes redir*/){
+		try{
 
 			ModelAndView model =new ModelAndView();
 
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-
-			if(fdao.existTier1User(employeeID))
+			if(fdao.existTier1User(employeeEmail))
 			{
+				int employeeID = fdao.getUserIdByName(employeeEmail);
 				ldao.saveLogs("searched for internal user", ""+employeeID, userID, "internal");
 				User employeeObj = fdao.getTier1User(employeeID);
 				model.addObject("employeeObj",employeeObj);
@@ -226,25 +231,25 @@ public class Tier2 {
 			model.setViewName("/employee/Tier2SearchUser");
 			ctx.close();
 			return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-*/
+
 	}
 
 	@RequestMapping(value = "/tier2/searchExternalUser", method =RequestMethod.POST)
-	public ModelAndView searchExternalUser(HttpServletRequest request, @RequestParam("customerID") int customerID/*, RedirectAttributes redir*/){
-//		try{
+	public ModelAndView searchExternalUser(HttpServletRequest request, @RequestParam("customerID") String customerEmail/*, RedirectAttributes redir*/){
+		try{
 
 			ModelAndView model =new ModelAndView();
 
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-
-			if(fdao.existExternalUser(customerID))
+			if(fdao.existExternalUser(customerEmail))
 			{
+				int customerID = fdao.getUserIdByName(customerEmail);
 				ldao.saveLogs("searched for external user", ""+customerID, userID, "external");
 				User customerObj = fdao.getExternalUser(customerID);
 				model.addObject("customerObj",customerObj);
@@ -256,11 +261,11 @@ public class Tier2 {
 			model.setViewName("/employee/Tier2SearchUser");
 			ctx.close();
 			return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-*/
+
 	}
 
 	@RequestMapping(value = "/tier2/showInternalAccount", method =RequestMethod.POST)
@@ -271,7 +276,6 @@ public class Tier2 {
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-
 			ldao.saveLogs("Accessed details of employee", ""+employeeID, userID, "internal");
 			User user = fdao.getTier1User(employeeID);
 			model.addObject("user",user);
@@ -292,7 +296,6 @@ public class Tier2 {
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-
 			ldao.saveLogs("Accessed details of customer", ""+customerID, userID, "external");
 			User user = fdao.getExternalUser(customerID);
 			model.addObject("user",user);
@@ -314,7 +317,7 @@ public class Tier2 {
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 			fdao.deleteExternalUser(customerID);
 			ldao.saveLogs("deleted external user", ""+customerID, userID, "external");
-			model.setViewName("/employee/Tier2UserDetails");
+			model.setViewName("/employee/Tier2SearchUser");
 			ctx.close();
 			return model;
 
@@ -356,6 +359,7 @@ public class Tier2 {
 
 	@RequestMapping("/employee/Tier2Profile")
 	public ModelAndView Tier2ProfilePage(HttpServletRequest request){
+	try{
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
@@ -369,13 +373,17 @@ public class Tier2 {
 		//redir.addFlashAttribute("error_msg","Employee Found");
 		model.setViewName("/employee/Tier2Profile");
 		return model;
+	}catch(Exception e){
+		throw new HandlerClass();
+	}
 	}
 
+	// Modify his personal account
 	@RequestMapping(value = "/employee/tier2Modify", method =RequestMethod.POST)
 	public ModelAndView modifyRequests(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
 			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
 			 @RequestParam("id") int userId,RedirectAttributes redir){
-		//try{
+		try{
 			ModelAndView model = new ModelAndView();
 
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -385,8 +393,8 @@ public class Tier2 {
 			/*  write the dao code for admin modify
 	         *
 	        */
-			fdao.generateInternalRequest(address, city, state, zipcode, country, phone, userID);
-			redir.addFlashAttribute("error_msg","Generated request for account modification for "+userID);
+			fdao.generateInternalRequest(address, city, state, country, zipcode, phone, userId);
+			redir.addFlashAttribute("error_msg","Generated request for account modification for "+userId);
 
 			User user = fdao.getUser(userID);
 			model.addObject("user",user);
@@ -397,14 +405,14 @@ public class Tier2 {
 
 			ctx.close();
 			return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-	*/}
+	}
 
 	@RequestMapping("/employee/Tier2CreateUserAccounts")
-	public ModelAndView createAccount(){
+	public ModelAndView createAccount2(){
 
 		return new ModelAndView("/employee/Tier2CreateUserAccounts");
 	}

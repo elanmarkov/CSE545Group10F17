@@ -33,19 +33,23 @@ public class Tier2PendingTransactions {
 
 	@RequestMapping("/employee/Tier2TransactionManagement")
 	public  ModelAndView loadPendingReqPage(HttpServletRequest request){
-
+		try{
 		ModelAndView model = new ModelAndView("/employee/Tier2TransactionManagement");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		ExternalTransactionDaoImpl extDao = ctx.getBean("externalTransactionDaoImpl",ExternalTransactionDaoImpl.class);
 		List<PendingTransaction> trans = extDao.getAllPendingTransactions();
 		model.addObject("transaction_list", trans);
 		return model;
+
+	}catch(Exception e){
+		throw new HandlerClass();
+	}
 	}
 	
 	@RequestMapping(value = "/tier2/transactionReview", method = RequestMethod.POST) 
 	public ModelAndView reviewedTransaction(HttpServletRequest request, @RequestParam("transactionID") String transId, 
 			@RequestParam("requestDecision") String requestDecision, RedirectAttributes redir) {
-
+		try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 		int reviewerId = userId;
 		String role = (String) request.getSession().getAttribute("role");
@@ -61,7 +65,10 @@ public class Tier2PendingTransactions {
 
 		ModelAndView model = new ModelAndView("redirect:/employee/Tier2TransactionManagement");
 		return model;
-	}
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
+		}
 	
 	@RequestMapping(value = "/tier2/transactionNew", method = RequestMethod.POST)
 	public ModelAndView newTransaction(HttpServletRequest request, @RequestParam("senderAccountNumber") String fromAccountID,

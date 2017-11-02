@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.customer.CustomerAccountsDao;
 import com.group10.dao.transaction.ExternalTransactionDaoImpl;
 import com.group10.dbmodels.*;
@@ -23,9 +25,14 @@ public class CutomerWithdrawlDepositController {
 
 	private int userId;
 	
+	@ExceptionHandler(HandlerClass.class)
+	public String handleResourceNotFoundException() {
+		return "redirect:/exception";
+	}
+	
 	@RequestMapping("/customer/deposit")
 	public  ModelAndView loadDespositPage(HttpServletRequest request){
-
+		try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -39,12 +46,15 @@ public class CutomerWithdrawlDepositController {
 		model.addObject("savings", savings);
 		model.addObject("credit", credit);
 		return model;
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 	}
 	
 	@RequestMapping("/depositMoney")
 	public ModelAndView despositMoney(HttpServletRequest request, @RequestParam("accountNumber") String accountNumber,
 			@RequestParam("amount") double amount, RedirectAttributes redir) {
-
+		try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -58,12 +68,15 @@ public class CutomerWithdrawlDepositController {
 			return new ModelAndView("redirect:/customer/deposit");
 			//redir.addFlashAttribute("error_message",accountNumber+" Not Valid");
 		}
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 
 	}
 	
 	@RequestMapping("/customer/withdraw")
 	public  ModelAndView loadWithdrawPage(HttpServletRequest request){
-
+		try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -75,12 +88,15 @@ public class CutomerWithdrawlDepositController {
 		model.addObject("checking", checking);
 		model.addObject("savings", savings);
 		return model;
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 	}
 	
 	@RequestMapping("/withdrawMoney")
 	public ModelAndView withdrawMoney(HttpServletRequest request, @RequestParam("amount") double amount,
 									  @RequestParam("accountNumber") String accountNumber, RedirectAttributes redir) {
-
+		try{
 		userId = (Integer) request.getSession().getAttribute("userID");
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -92,6 +108,9 @@ public class CutomerWithdrawlDepositController {
 		} else {
 			return new ModelAndView("redirect:/customer/withdraw");
 			//redir.addFlashAttribute("error_message",accountNumber+" Not Valid");
-		}		
+		}	
+		}catch(Exception e){
+			throw new HandlerClass();
+		}
 	}
 }

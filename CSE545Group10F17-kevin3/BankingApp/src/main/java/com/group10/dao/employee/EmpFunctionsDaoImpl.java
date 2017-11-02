@@ -46,14 +46,18 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		String sql = "select count(*) from users where id="+employeeID;
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
 	}
-
+	public boolean existUser(String email) {
+		// TODO Auto-generated method stub
+		String sql = "select count(*) from users where email='"+email+"'";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
+	}
 	public void deleteUser(int employeeId) {
 		// TODO Auto-generated method stub
-		String username = this.getJdbcTemplate().queryForObject("select username from users where id="+employeeId, String.class);
+		String username = this.getJdbcTemplate().queryForObject("select email from users where id="+employeeId, String.class);
 		this.getJdbcTemplate().update("delete from users where id="+employeeId);
 		this.getJdbcTemplate().update("delete from user_login where username='"+username+"'");
 		this.getJdbcTemplate().update("delete from user_login_attempts where username='"+username+"'");
-		this.getJdbcTemplate().update("delete from pii_info where userId=");
+		this.getJdbcTemplate().update("delete from pii_info where userId="+employeeId);
 
 	}
 
@@ -122,6 +126,13 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 				String sql = "select count(*) from users where id="+customerID+ " and role in ('ROLE_CUSTOMER','ROLE_MERCHANT')";
 				return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
 	}
+	
+	public boolean existExternalUser(String email) {
+		// TODO Auto-generated method stub
+				String sql = "select count(*) from users where email='"+email+ "' and role in ('ROLE_CUSTOMER','ROLE_MERCHANT')";
+				return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
+	}
+	
 	public boolean existInternalUser(int employeeID) {
 		// TODO Auto-generated method stub
 				String sql = "select count(*) from users where id="+employeeID+" and role in ('ROLE_ADMIN','ROLE_MANAGER','ROLE_REGULAR')";
@@ -136,7 +147,7 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 
 	public boolean existTier1User(int employeeID) {
 		// TODO Auto-generated method stub
-		String sql = "select count(*) from users where id=" + employeeID + " and role='ROLE_REGULAR";
+		String sql = "select count(*) from users where id=" + employeeID + " and role='ROLE_REGULAR'";
 		try {
 			Integer count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
 			if (count >= 1) {
@@ -148,7 +159,11 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 			return false;
 		}
 	}
-
+	
+	public boolean existTier1User(String email) {
+		String sql = "select count(*) from users where email='" + email + "' and role='ROLE_REGULAR'";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
+	}
 	public User getTier1User(int employeeID) {
 		// TODO Auto-generated method stub
 		String sql = "select * from users where id="+employeeID+" and role ='ROLE_REGULAR'";
@@ -174,7 +189,7 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		this.getJdbcTemplate().update(sql);
 	}
 
-	public void generateInternalRequest(String address, String city, String state, String zipcode, String country,
+	public void generateInternalRequest(String address, String city, String state, String country, String zipcode,
 			String phone, int userId) {
 		String sql = "insert into pending_internal_requests (userId,address,city,state,country,zipcode,phone) values ("+
 				userId + ",'"+address+"','"+city+"','"+state +"','"+country+"','"+zipcode+"','"+phone+"')";
@@ -188,6 +203,16 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 		String sql = "select count(*) from users where id="+employeeID+" and role in ('ROLE_MANAGER','ROLE_REGULAR')";
 		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
 	}
+	
+	public boolean existInteralUser(String email) {
+		// TODO Auto-generated method stub
+		String sql = "select count(*) from users where email='"+email+"' and role in ('ROLE_MANAGER','ROLE_REGULAR')";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==1?true:false;
+	}
 
-
+	public void createExternalRequest(String address, String city, String state, String country, String zipcode,
+			String phone, int userId) {
+		String sql = "insert into pending_ac_requests (userId, address, state, city, country, zipcode, phone) values ("+userId+"','"+address+"','"+city+"','"+state+"','"+country+"','"+zipcode+"')";
+		this.getJdbcTemplate().update(sql);
+	}
 }

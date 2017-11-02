@@ -89,8 +89,8 @@ public class Admin {
 	}
 
 	@RequestMapping(value = "/employee/internalreg", method =RequestMethod.POST)
-	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser/*, RedirectAttributes redir*/) throws Exception{
-	//	try{
+	public ModelAndView InternalRegister(HttpServletRequest request, @ModelAttribute("user") User newUser, RedirectAttributes redir) throws Exception{
+		try{
 				ModelAndView model = new ModelAndView();
 
 		String name = newUser.getName();
@@ -123,9 +123,12 @@ public class Admin {
 		//check if the username and phone number are unique
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
 		EmpFunctionsDaoImpl edao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
-		if(udao.isUnique(username, number, email, "users")==false)
-		{	isValidated = false;
-		//	redir.addFlashAttribute("error_message","email/number/username already exists. Select new ones");
+		if(udao.isUnique(username,number)==false)
+		{	
+			isValidated = false;
+			String error_msg="email/number/username already exists. Select new ones";
+			model.addObject("error_msg", error_msg);
+			redir.addFlashAttribute("error_message","email/number/username already exists. Select new ones");
 		}
 
 		if(isValidated){
@@ -135,9 +138,7 @@ public class Admin {
 			//encrypt PII
 			setGlobals(request);
 			User user = edao.getUser(userID);
-			ssn = user.encryptPII(ssn);
-			dob = user.encryptPII(dob);
-
+			
 			Random rand = new Random();
 			String rawPassword = Long.toString((long) (rand.nextInt(999999 - 100000) + 100000));
 			String password = encoder.encode(rawPassword); //change password upon first login
@@ -149,30 +150,30 @@ public class Admin {
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Successful",userID, "internal");
         	//redir.addFlashAttribute("error_msg","Registration successful. Password sent to " + newUser.getEmail());
-            model.setViewName("redirect:/employee/AdminDashboard");
+            model.setViewName("/employee/AdminDashboard");
 
 		}
 		else{
 			LogsDaoImpl logsDao= ctx.getBean("logsDaoImpl",LogsDaoImpl.class);
 			logsDao.saveLogs("Internal User creation","Failed",userID, "internal");
-            model.setViewName("redirect:/employee/RegistrationInternalEmployee");
+            model.setViewName("/employee/RegistrationInternalEmployee");
 		}
 		ctx.close();
 
 		return model;
-	/*
+	
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-		*/
+		
 	}
 
 
 	@RequestMapping(value = "/employee/adminPendingRequest", method =RequestMethod.POST)
 	public ModelAndView pendingRequests(HttpServletRequest request, @RequestParam("requestID") int requestId, @RequestParam("requestDecision") String reqDecision,
-										@RequestParam("userId") int userId/*,RedirectAttributes redir*/){
+										@RequestParam("userId") int userId,RedirectAttributes redir){
 
-		//	try{
+		try{
 		ModelAndView model = new ModelAndView();
 
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -184,16 +185,16 @@ public class Admin {
 			fdao.approveAdminRequest(requestId);
 		else
 			fdao.deletePendingRequest(requestId);
-		//	redir.addFlashAttribute("error_msg","Request"+reqDecision);
+			redir.addFlashAttribute("error_msg","Request"+reqDecision);
 		model.setViewName("/employee/AdminPendingRequest");
 		ldao.saveLogs("internal request"+reqDecision, "for"+userId, userID, "internal");
 		ctx.close();
 		return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-*/	}
+	}
 
 
 	@RequestMapping(value = "/employee/adminModify", method =RequestMethod.POST)
@@ -229,8 +230,8 @@ public class Admin {
 
 
 	@RequestMapping(value = "/admin/searchInternalUser", method =RequestMethod.POST)
-	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") int employeeID/*, RedirectAttributes redir*/){
-//		try{
+	public ModelAndView searchInternalUser(HttpServletRequest request, @RequestParam("employeeID") String employeeEmail/*, RedirectAttributes redir*/){
+		try{
 
 		ModelAndView model =new ModelAndView();
 
@@ -238,11 +239,9 @@ public class Admin {
 		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
-        /*
-         * write the dao code for admin approval
-         */
-		if(fdao.existInteralUser(employeeID))
+		if(fdao.existInteralUser(employeeEmail))
 		{
+	        int employeeID = fdao.getUserIdByName(employeeEmail);
 			ldao.saveLogs("searched for internal user", ""+employeeID, userID, "internal");
 			User employeeObj = fdao.getUser(employeeID);
 			model.addObject("employeeObj",employeeObj);
@@ -258,11 +257,11 @@ public class Admin {
 		}
 		ctx.close();
 		return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-*/
+
 	}
 
 
@@ -298,7 +297,7 @@ public class Admin {
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 			fdao.deleteInternalUser(employeeID);
 			ldao.saveLogs("deleted internal user", ""+employeeID, userID, "internal");
-			model.setViewName("/employee/AdminUserDetails");
+			model.setViewName("/employee/AdminSearchUser");
 			ctx.close();
 			return model;
 
@@ -329,7 +328,7 @@ public class Admin {
 	public ModelAndView ModifyPersonal(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
 									   @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
 									   @RequestParam("id") int userId,RedirectAttributes redir){
-		//try{
+		try{
 			ModelAndView model = new ModelAndView();
 
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
@@ -348,11 +347,11 @@ public class Admin {
 
 			ctx.close();
 			return model;
-/*
+
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
-*/	}
+	}
 
 
 }

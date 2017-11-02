@@ -100,7 +100,7 @@
 										<th>Initiator ID</th>
 										<th>Payer</th>
 										<th>Payee</th>
-										<th>Amount</th>
+										<th>Amount available to spend</th>
 										<th>Date</th>
 										<th>Description</th>
 									</tr>
@@ -217,9 +217,53 @@
 	</div>
 
 	<div id="creditCard" class="tab-pane fade">
-		<p><strong><h4>Credit Card Number: <span>${credit.accountNumber}</span></h4></strong></p>
-		<p><strong><h4>Current Amount Due: $<span>${credit.currentAmountDue}</span></h4></strong></p>
-		<br>
+		
+		<div>
+		 <form action="/BankingApp/customer/creditPayment" method="POST">
+		  <button type="submit" class="btn btn-default" id="submitForm" value="Submit">Make Payment</button>
+		</div>
+		
+		
+		
+		
+		
+		<div>
+		
+		<table class="table table-hover">
+			
+			<thead>
+				<tr>
+					<th>Credit Card Number</th>
+					<th>UserId</th>
+					<th>CVV</th>
+					<th>Credit Limit</th>
+					<th>Amount Due</th>
+					<th>Cycle Date</th>
+					<th>Due Date</th>
+					<th>Last Bill Amount</th>
+					<th>APR(%)</th>
+				</tr>
+			</thead>
+			
+			<thead>
+				<tr>
+					<th>${creditCard.creditCardNumber}</th>
+					<th>${creditCard.userId}</th>
+					<th>${creditCard.cvv}</th>
+					<th>${creditCard.creditLimit}</th>
+					<th>${creditCard.currentAmountDue}</th>
+					<th>${creditCard.cycleDate}</th>
+					<th>${creditCard.dueDate}</th>
+					<th>${creditCard.lastBillAmount}</th>
+					<th>${creditCard.apr}</th>
+				
+				</tr>
+			</thead>
+		</table>
+		</div>
+		
+		
+		
 		<div>
 			<p><h4>Pending Transactions</h4></p>
 							<table class="table table-hover">

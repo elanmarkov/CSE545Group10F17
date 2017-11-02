@@ -3,6 +3,7 @@
  */
 package com.group10.dao.customer;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -31,9 +32,19 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 	}
 
 	public CreditAccount getCreditAccount(int userID) {
-		String sql = "SELECT * FROM credit_accounts WHERE userID = " + userID;
+		String sql = "SELECT * FROM credit_accounts WHERE userId = " + userID;
 		try {
 			return  (CreditAccount)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(CreditAccount.class));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
+	public CreditCard getCreditCard(int userID) {
+		String sql = "SELECT * FROM credit_cards WHERE userId = " + userID;
+		try {
+			return  (CreditCard)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(CreditCard.class));
 		} catch (Exception e) {
 			return null;
 		}
@@ -83,16 +94,30 @@ public class CustomerAccountsDao extends JdbcDaoSupport {
 			if(exists == 0){
 				Random rand = new java.util.Random();
 				String accNo= String.valueOf((int) (10000000*rand.nextFloat()));
-				String sql = "insert into credit_accounts (userId, accountNumber, currentAmountDue) values (?,?,?)";
-				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 0});
-
+				String sql = "insert into credit_accounts (userId, accountNumber, balance) values (?,?,?)";
+				this.getJdbcTemplate().update(sql, new Object[]{userId, accNo, 1000});
+			
 				// Add to accNumToTableRel
 				sql = "INSERT INTO accNumToTableRel (accountNumber, `table`, userId) values (?,?,?)";
 				this.getJdbcTemplate().update(sql, new Object[]{accNo, "credit_accounts", userId});
 
+				String cvv= String.valueOf((int) (1000*rand.nextFloat()));
+				
+				String query2 = "insert into credit_cards (creditCardNumber,userId, cvv, creditLimit, currentAmountDue, cycleDate, dueDate, lastBillAmount, apr) values (?,?,?,?,?,NOW(),NOW(),?,?)";
+				this.getJdbcTemplate().update(query2, new Object[]{accNo, userId, cvv, 1000,0,0,15});
+				
+				
 				return true;
 			}
 			return false;
+		}
+		
+		public String getCheckingAccNumber(int userId){
+			return this.getJdbcTemplate().queryForObject("select accountNumber from checking_accounts where userId="+userId, String.class);
+		}
+		
+		public String getCreditAccNumber(int userId){
+			return this.getJdbcTemplate().queryForObject("select creditCardNumber from credit_cards where userId="+userId, String.class);
 		}
 
 		public Integer getUserIdByEmail(String email) {

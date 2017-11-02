@@ -154,8 +154,8 @@
 					  </div>
 
 					  <div class="form-group">
-					    <label for="pincode">Zip Code</label>
-					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					    <label for="zipcode">Zip Code</label>
+					    <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zip Code" required>
 					  </div>
 
 					  <div class="form-group">

@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 	<html>
 	<head>
@@ -50,7 +52,12 @@
 	</div>
 </nav>
 
-
+	<div>
+		<c:if test="${not empty error_msg}">
+		    Error Occured: ${error_msg}
+		</c:if>	
+			
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-10">

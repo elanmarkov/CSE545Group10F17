@@ -164,7 +164,7 @@ CREATE TABLE credit_accounts (
     id int NOT NULL AUTO_INCREMENT,
     userId int NOT NULL,
     accountNumber varchar(255) NOT NULL, -- Credit card account numbers will be larger ints (full credit card number)
-    currentAmountDue double NOT NULL,
+    balance double NOT NULL,
     PRIMARY KEY (id)
 );
 

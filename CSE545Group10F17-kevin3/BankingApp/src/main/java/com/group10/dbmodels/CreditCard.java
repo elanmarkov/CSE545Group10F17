@@ -1,75 +1,76 @@
 package com.group10.dbmodels;
 
-import java.math.BigInteger;
-import java.sql.Date;
-
 public class CreditCard {
-	private float interest;
-	private int credit_limit;
-	private BigInteger available_balance;
-	private BigInteger current_amount_due;
-	private Date cycle_date;
-	private Date due_date;
-	private int account_number;
-	private BigInteger last_bill_amount;
-	private float apr;
+	private int id;
+	private String creditCardNumber;
+	private int userId;
+	private int cvv;
+	private double creditLimit;
+	private double currentAmountDue;
+	private String cycleDate;
+	private String dueDate;
+	private double lastBillAmount;
+	private double apr;
 	
-	public float getInterest() {
-		return interest;
+	public int getId() {
+		return id;
 	}
-	public void setInterest(float interest) {
-		this.interest = interest;
+	public void setId(int id) {
+		this.id = id;
 	}
-	
-	public int getCredit_limit() {
-		return credit_limit;
+	public String getCreditCardNumber() {
+		return creditCardNumber;
 	}
-	public void setCredit_limit(int credit_limit) {
-		this.credit_limit = credit_limit;
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
 	}
-	public BigInteger getAvailable_balance() {
-		return available_balance;
+
+	public int getCvv() {
+		return cvv;
 	}
-	public void setAvailable_balance(BigInteger available_balance) {
-		this.available_balance = available_balance;
+	public void setCvv(int cvv) {
+		this.cvv = cvv;
 	}
-	public BigInteger getCurrent_amount_due() {
-		return current_amount_due;
+	public double getCreditLimit() {
+		return creditLimit;
 	}
-	public void setCurrent_amount_due(BigInteger current_amount_due) {
-		this.current_amount_due = current_amount_due;
+	public void setCreditLimit(double creditLimit) {
+		this.creditLimit = creditLimit;
 	}
-	public Date getCycle_date() {
-		return cycle_date;
+	public double getCurrentAmountDue() {
+		return currentAmountDue;
 	}
-	public void setCycle_date(Date cycle_date) {
-		this.cycle_date = cycle_date;
+	public void setCurrentAmountDue(double currentAmountDue) {
+		this.currentAmountDue = currentAmountDue;
 	}
-	public Date getDue_date() {
-		return due_date;
+	public String getCycleDate() {
+		return cycleDate;
 	}
-	public void setDue_date(Date due_date) {
-		this.due_date = due_date;
+	public void setCycleDate(String cycleDate) {
+		this.cycleDate = cycleDate;
 	}
-	public int getAccount_number() {
-		return account_number;
+	public String getdueDate() {
+		return dueDate;
 	}
-	public void setAccount_number(int account_number) {
-		this.account_number = account_number;
+	public void setdueDate(String dueDate) {
+		this.dueDate = dueDate;
 	}
-	public BigInteger getLast_bill_amount() {
-		return last_bill_amount;
+	public double getLastBillAmount() {
+		return lastBillAmount;
 	}
-	public void setLast_bill_amount(BigInteger last_bill_amount) {
-		this.last_bill_amount = last_bill_amount;
+	public void setLastBillAmount(double lastBillAmount) {
+		this.lastBillAmount = lastBillAmount;
 	}
-	public float getApr() {
+	public double getApr() {
 		return apr;
 	}
-	public void setApr(float apr) {
+	public void setApr(double apr) {
 		this.apr = apr;
 	}
-	
-
-
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 }

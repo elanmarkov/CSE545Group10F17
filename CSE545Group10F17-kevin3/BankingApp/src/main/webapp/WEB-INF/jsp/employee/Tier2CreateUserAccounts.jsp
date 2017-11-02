@@ -61,6 +61,14 @@
 	</div>
 </nav>
 
+<div>
+		<c:if test="${not empty error_msg}">
+		     ${error_msg}
+		</c:if>	
+			
+	</div>
+
+
 
 <div class="container-fluid" id="loginBox">
 	<div class="row">

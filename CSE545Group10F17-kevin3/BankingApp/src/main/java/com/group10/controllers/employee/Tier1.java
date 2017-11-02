@@ -77,7 +77,7 @@ public class Tier1 {
 
 
 	@RequestMapping(value = "/tier1/searchExternalUser", method =RequestMethod.POST)
-	public ModelAndView searchExternalUser(HttpServletRequest request, @RequestParam("customerID") int customerID/*, RedirectAttributes redir*/){
+	public ModelAndView searchExternalUser(HttpServletRequest request, @RequestParam("customerID") String customerEmail, RedirectAttributes redir){
 		try{
 
 		ModelAndView model =new ModelAndView();
@@ -85,16 +85,16 @@ public class Tier1 {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-
-		if(fdao.existUser(customerID))
+		if(fdao.existExternalUser(customerEmail))
 		{
+			int customerID = fdao.getUserIdByName(customerEmail);
 			ldao.saveLogs("searched for external user", ""+customerID, userID, "external");
 			User customerObj = fdao.getExternalUser(customerID);
 			model.addObject("customerObj",customerObj);
-			//redir.addFlashAttribute("error_msg","Employee Found");
+			redir.addFlashAttribute("error_msg","Employee Found");
 		}
 		else{
-			//redir.addFlashAttribute("error_msg","Employee Not Found");
+			redir.addFlashAttribute("error_msg","Employee Not Found");
 		}
 		model.setViewName("/employee/Tier1SearchUser");
 		ctx.close();
@@ -139,7 +139,7 @@ public class Tier1 {
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 
-			fdao.modify(address, city, state, zipcode, country, phone, userId);
+			fdao.modify(address, city, state, country, zipcode, phone, userId);
 			redir.addFlashAttribute("error_msg","Modified the address for "+userId);
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);
@@ -158,11 +158,12 @@ public class Tier1 {
 
 	@RequestMapping("/employee/Tier1Profile")
 	public ModelAndView Tier1ProfilePage(HttpServletRequest request){
+	try{
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 		LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
 		ModelAndView model = new ModelAndView();
-		userID = (Integer)request.getSession().getAttribute("UserID");
+		userID = (Integer)request.getSession().getAttribute("userID");
 		ldao.saveLogs("modified for profile user", ""+userID, userID, "internal");
 		User user = fdao.getUser(userID);
 		model.addObject("user",user);
@@ -171,6 +172,9 @@ public class Tier1 {
 		//redir.addFlashAttribute("error_msg","Employee Found");
 		model.setViewName("/employee/Tier1Profile");
 		return model;
+	}catch(Exception e){
+		throw new HandlerClass();
+	}
 	}
 
 	@RequestMapping(value = "/employee/tier1Modify", method =RequestMethod.POST)
@@ -183,12 +187,8 @@ public class Tier1 {
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-			userID = (Integer)request.getSession().getAttribute("UserID");
-
-			/*  write the dao code for admin modify
-	         *
-	        */
-
+			userID = (Integer)request.getSession().getAttribute("userID");
+	
 			fdao.generateInternalRequest(address, city, state, zipcode, country, phone, userID);
 			redir.addFlashAttribute("error_msg","Generated request for account modification for "+userID);
 			User user = fdao.getUser(userID);

@@ -43,15 +43,18 @@ public class CustomerDashboardDaoImpl extends JdbcDaoSupport {
 			return null;
 		}
 	}
+	
+	
 
-	public CreditAccount creditAccountDetails(int userId){
-		String query = "select * from credit_accounts where userId=" + userId;
+	public CreditAccount creditAccount(int userID) {
+		String sql = "SELECT * FROM credit_accounts WHERE userId = " + userID;
 		try {
-			return (CreditAccount) this.getJdbcTemplate().queryForObject(query, new BeanPropertyRowMapper(CreditAccount.class));
+			return  (CreditAccount)this.getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper(CreditAccount.class));
 		} catch (Exception e) {
 			return null;
 		}
 	}
+	
 
 	public User getUserById(int userId) {
 		String sql = "SELECT * FROM users WHERE id="+userId;

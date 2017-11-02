@@ -98,6 +98,10 @@ public class ForgotPassword {
 
 		ModelAndView model = new ModelAndView();
 		String username = (String)request.getSession().getAttribute("forgotpassemail");
+		if(username == null){
+			username = (String) request.getSession().getAttribute("username");
+		}
+		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 		UserRegistrationDaoImpl udao = ctx.getBean("userRegistrationDaoImpl", UserRegistrationDaoImpl.class);
 

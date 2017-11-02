@@ -124,7 +124,7 @@
           <h4 class="modal-title"><strong>Account Info</strong></h4>
         </div>
         <div class="modal-body">
-          <form action="/BankingApp/employee/internalreg" method="POST">
+          <form action="/BankingApp/customer/modify" method="POST">
 
 					  <div class="form-group">
 					    <label for="address">Address</label>

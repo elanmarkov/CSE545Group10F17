@@ -10,13 +10,11 @@ import com.group10.dbmodels.User;
 
 public class UserRegistrationDaoImpl extends JdbcDaoSupport  
 {
-	public boolean isUnique(String username, String phone, String email, String table) {
+	public boolean isUnique(String username, String phone) {
 		// TODO Auto-generated method stub
-		String sql = "select count(*) from "+table+ " where name='"+username+"' and phone='"+phone+"' and email='"+email+"'";
-		int count = this.getJdbcTemplate().queryForObject(sql, Integer.class);
-		if(count>0)	
-			return false;
-		return true;
+		String sql = "select count(*) from users where email='"+username+"' and phone='"+phone+"'";
+		return this.getJdbcTemplate().queryForObject(sql, Integer.class)==0?true:false;
+		
 	} 
 	
 	public void setInternalUser(String name, String role, String address, String city, String state, String country, String pincode, String phone, String email, String dob, String ssn){

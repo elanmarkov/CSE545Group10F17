@@ -64,6 +64,13 @@
 </nav>
 
 
+	<div>
+		<c:if test="${not empty error_msg}">
+		    <h3> ${error_msg} </h3>
+		</c:if>	
+			
+	</div>
+
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6">

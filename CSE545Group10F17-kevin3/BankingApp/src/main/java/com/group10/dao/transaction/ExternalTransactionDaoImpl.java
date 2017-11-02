@@ -146,11 +146,13 @@ public class ExternalTransactionDaoImpl extends JdbcDaoSupport  {
 				double balance = this.getJdbcTemplate().queryForObject(balanceSQL, Double.class);
 				
 				//Subtract differnce (balance - amount)
-				if (table.equals("credit_accounts")) {
-					balance = balance - pendTrans.getAmount();
-				} else {
+				if (table.equals("credit_accounts")) 
+					{
+						double amountToSpend = 1000-balance;
+						String sql2 = "update credit_cards set currentAmountDue="+ amountToSpend + " where creditCardNumber="+pendTrans.getToAccountID();
+						this.getJdbcTemplate().update(sql2);
+					}
 					balance = balance + pendTrans.getAmount();
-				}
 				
 				//Update table with new balance
 				String updateSQL = "UPDATE "+table+" SET balance = "+balance+" WHERE accountNumber="+pendTrans.getToAccountID();

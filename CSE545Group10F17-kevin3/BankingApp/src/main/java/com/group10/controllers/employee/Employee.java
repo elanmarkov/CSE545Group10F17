@@ -57,14 +57,14 @@ public class Employee {
 
 		String role = (String) request.getSession().getAttribute("role");
 
-		if (role.equals("ROLE_ADMIN")) {
-			return new ModelAndView(("redirect:/employee/AdminDashboard"));
-		} else if (role.equals("ROLE_MANAGER")) {
-			return new ModelAndView("redirect:/employee/Tier2Dashboard");
-		} else if (role.equals("ROLE_REGULAR")) {
-			return new ModelAndView("redirect:/employee/Tier1Dashboard");
+		if (role.compareTo("ROLE_ADMIN")==0) {
+			return new ModelAndView("/employee/AdminDashboard");
+		} else if (role.compareTo("ROLE_MANAGER")==0) {
+			return new ModelAndView("/employee/Tier2Dashboard");
+		} else if (role.compareTo("ROLE_REGULAR")==0) {
+			return new ModelAndView("/employee/Tier1Dashboard");
 		} else {
-			return new ModelAndView("redirect:/login");
+			return new ModelAndView("/login");
 		}
 	}
 	

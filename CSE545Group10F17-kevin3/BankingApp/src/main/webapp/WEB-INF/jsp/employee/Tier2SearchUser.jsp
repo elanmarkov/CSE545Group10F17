@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -61,7 +63,7 @@
 				<h3><strong>Search Employee</strong></h3>
 					<form class="form-margin" action = "/BankingApp/tier2/searchInternalUser" method = "post">
 		            	<div>
-		            		<input class="form-control" type="text" name="employeeID" placeholder="Employee ID" required>
+		            		<input class="form-control" type="text" name="employeeID" placeholder="Employee Email" required>
 		            	</div>
 		            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
@@ -105,7 +107,6 @@
 	                        	</c:choose>
 						    </tbody>
 						  </table>
-				  </form>
 				</div>
 			</div>
 		</div>
@@ -119,7 +120,7 @@
 
 				<form class="form-margin" action = "/BankingApp/tier2/searchExternalUser" method = "post">
 					<div>
-	            		<input class="form-control" type="text" name="customerID" placeholder="Customer ID">
+	            		<input class="form-control" type="text" name="customerID" placeholder="Customer Email" required>
 	            	</div>
 	            	<br>
 	            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -138,7 +139,7 @@
 	                        </thead>
 	                        <tbody>
 						    	<c:choose>
-	                        		<c:when test="${empty employeeObj}">
+	                        		<c:when test="${empty customerObj}">
 	                        			<tr>
 	                                    	<td colspan="3">No Results</td>
 	                                	</tr>
