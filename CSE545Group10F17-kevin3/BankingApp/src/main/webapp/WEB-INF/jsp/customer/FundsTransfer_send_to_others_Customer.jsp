@@ -125,7 +125,7 @@
                     		  </c:choose>
 									<c:choose>
 										<c:when test="${not empty credit}">
-														<option value="${credit.accountNumber}">Checking: ${credit.accountNumber} - balance: ${credit.currentAmountDue}</option>
+														<option value="${credit.accountNumber}">Checking: ${credit.accountNumber} - balance: ${credit.balance}</option>
 											</c:when>
 								</c:choose>
 							</select>

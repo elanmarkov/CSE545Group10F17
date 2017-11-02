@@ -10,6 +10,7 @@ import com.group10.dbmodels.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,7 +28,14 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerDashboardController {
 
 	int userId;
-
+	
+	
+	@ExceptionHandler(HandlerClass.class)
+	public String handleResourceNotFoundException() {
+		return "redirect:/exception";
+	}
+	
+	
 	@RequestMapping("/customer/dashboard")
 	public ModelAndView display(HttpServletRequest request){
 	try{	
@@ -93,20 +101,20 @@ public class CustomerDashboardController {
 	@RequestMapping("/customer/modify")
 	public ModelAndView internalModify(HttpServletRequest request, @RequestParam("address") String address, @RequestParam("state") String state,  @RequestParam("city") String city ,
 			 @RequestParam("zipcode") String zipcode, @RequestParam("country") String country, @RequestParam("phone") String phone,
-			 @RequestParam("id") int userId,RedirectAttributes redir){
+			RedirectAttributes redir){
 		try{
 			ModelAndView model = new ModelAndView();
 
 			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
 			EmpFunctionsDaoImpl fdao = ctx.getBean("empFunctionsDaoImpl",EmpFunctionsDaoImpl.class);
 			LogsDaoImpl ldao = ctx.getBean("logsDaoImpl", LogsDaoImpl.class);
-
+			int userId = (Integer) request.getSession().getAttribute("userID");
 			fdao.createExternalRequest(address, city, state, country, zipcode, phone, userId);
 			redir.addFlashAttribute("error_msg","Modified the address for "+userId);
 			User user = fdao.getUser(userId);
 			model.addObject("user",user);
-			model.setViewName("/employee/Tier2UserDetails");
-			ldao.saveLogs("Modified internal account", "address change", userId, "internal");
+			model.setViewName("/customer/CustomerDashboard");
+			ldao.saveLogs("Modified internal account", "address change", userId, "external");
 
 			ctx.close();
 			return model;

@@ -212,7 +212,7 @@ public class EmpFunctionsDaoImpl extends JdbcDaoSupport{
 
 	public void createExternalRequest(String address, String city, String state, String country, String zipcode,
 			String phone, int userId) {
-		String sql = "insert into pending_ac_requests (userId, address, state, city, country, zipcode, phone) values ("+userId+"','"+address+"','"+city+"','"+state+"','"+country+"','"+zipcode+"')";
+		String sql = "insert into pending_ac_requests (userId, address, city, state, country, zipcode, phone) values ("+userId+",'"+address+"','"+city+"','"+state+"','"+country+"','"+zipcode+"','"+phone+"')";
 		this.getJdbcTemplate().update(sql);
 	}
 }

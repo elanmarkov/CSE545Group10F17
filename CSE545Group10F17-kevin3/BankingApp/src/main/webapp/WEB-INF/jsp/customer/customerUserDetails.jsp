@@ -140,15 +140,19 @@
 					    <label for="state">State</label>
 					    <input type="text" class="form-control" id="state" name="state" placeholder="State" required>
 					  </div>
-
 					  <div class="form-group">
-					    <label for="pincode">Zip Code</label>
-					    <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Zip Code" required>
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="country" required>
 					  </div>
 
 					  <div class="form-group">
+					    <label for="zipcode">Zip Code</label>
+					    <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zip Code" required>
+					  </div>
+
+					   <div class="form-group">
 					    <label for="phone">Phone Number</label>
-					    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
+					    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
 					  </div>
 
 						<div id = "errorBox" class="form-group"></div>
