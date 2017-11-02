@@ -109,6 +109,14 @@
                                     		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     		<button type="submit" class="btn btn-sm btn-primary">Delete Account</button>
                                     	</form>
+                                    	
+                                    	<form action = "/BankingApp/admin/unlockUser" method = "post" style="display:inline">
+	                                    		<input type="hidden" name="username" value="${user.email}">
+	                                    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+	                                    		<button type="submit" class="btn btn-sm btn-primary">Unlock Account</button>
+	                                    </form>
+                                    	
                         			</td>
                         		</tr>
                 		</c:otherwise>

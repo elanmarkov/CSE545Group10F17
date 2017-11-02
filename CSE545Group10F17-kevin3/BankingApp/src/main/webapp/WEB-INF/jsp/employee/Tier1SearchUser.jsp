@@ -102,6 +102,14 @@
 
 	                                    		<button type="submit" class="btn btn-sm btn-primary">Show Account</button>
 	                                    	</form>
+	                                    	
+	                                    	
+	                                    	<form action = "/BankingApp/tier1/unlockUser" method = "post" style="display:inline">
+	                                    		<input type="hidden" name="username" value="${customerObj.email}">
+	                                    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+	                                    		<button type="submit" class="btn btn-sm btn-primary">Unlock Account</button>
+	                                    	</form>
                             			</td>
                             		</tr>
                     		</c:otherwise>

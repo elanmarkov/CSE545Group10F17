@@ -20,6 +20,7 @@ import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
 import com.group10.dao.employee.Validator;
+import com.group10.dao.loginAttempts.LoginAttemptsDaoImpl;
 import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.PII;
@@ -351,6 +352,18 @@ public class Admin {
 		}catch(Exception e){
 			throw new HandlerClass();
 		}
+	}
+
+	
+
+	@RequestMapping(value ="/admin/unlockUser", method =RequestMethod.POST)
+	public ModelAndView unlockUserAdmin(HttpServletRequest request,@RequestParam("username") String username) {
+		ModelAndView model =new ModelAndView();
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		LoginAttemptsDaoImpl ldao = ctx.getBean("loginAttemptsDaoImpl",LoginAttemptsDaoImpl.class);;
+		ldao.unLockUserAccount(username);
+		model.setViewName("/employee/AdminSearchUser");
+		return model;
 	}
 
 

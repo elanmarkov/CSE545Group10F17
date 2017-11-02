@@ -20,7 +20,7 @@ public class LoginAttemptsDaoImpl extends JdbcDaoSupport {
 		int attempts = this.getJdbcTemplate().queryForObject("select attempts from user_login_attempts where username='"+username+"'", Integer.class)+1;
 		String sql = "update user_login_attempts set attempts="+attempts+ " where username='"+username+"'";
 		this.getJdbcTemplate().update(sql);	
-		if(attempts>5){
+		if(attempts>3){
 			this.getJdbcTemplate().update("update user_login set accountNonLocked = 0 WHERE username ='"+username+"'");
 		}
 	}
@@ -48,7 +48,7 @@ public class LoginAttemptsDaoImpl extends JdbcDaoSupport {
 	}
 	
 	public void unLockUserAccount(String username){
-		String sql = "update user_login set enable=1 where username='"+username+"'";
+		String sql = "update user_login set accountNonLocked=1 where username='"+username+"'";
 		this.getJdbcTemplate().update(sql);
 	}
 

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.group10.controllers.security.HandlerClass;
 import com.group10.dao.employee.EmpFunctionsDaoImpl;
 import com.group10.dao.employee.UserRegistrationDaoImpl;
+import com.group10.dao.loginAttempts.LoginAttemptsDaoImpl;
 import com.group10.dao.logs.LogsDaoImpl;
 import com.group10.dbmodels.DbLogs;
 import com.group10.dbmodels.User;
@@ -211,6 +212,15 @@ public class Tier1 {
 		return new ModelAndView("/employee/Tier1CreateUserAccounts");
 	}
 
+	@RequestMapping(value ="/tier1/unlockUser", method =RequestMethod.POST)
+	public ModelAndView unlockUser(HttpServletRequest request,@RequestParam("username") String username) {
+		ModelAndView model =new ModelAndView();
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("DaoDetails.xml");
+		LoginAttemptsDaoImpl ldao = ctx.getBean("loginAttemptsDaoImpl",LoginAttemptsDaoImpl.class);;
+		ldao.unLockUserAccount(username);
+		model.setViewName("/employee/Tier1SearchUser");
+		return model;
+	}
 
 
 }
